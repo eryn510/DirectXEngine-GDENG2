@@ -1,9 +1,2 @@
 ﻿  AppWindow.cpp
-  DeviceContext.cpp
-  GraphicsEngine.cpp
-  main.cpp
-  SwapChain.cpp
-  VertexBuffer.cpp
-  VertexShader.cpp
-  Generating Code...
-  DirectXGame.vcxproj -> C:\FILES\CODING\PROJECTS\REPOSITORY\DirectXGame\DirectXGame\Debug\DirectXGame.exe
+  DirectXGame.vcxproj -> D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\Debug\DirectXGame.exe
