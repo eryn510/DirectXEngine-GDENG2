@@ -1,4 +1,5 @@
 #include "AppWindow.h"
+#include <Windows.h>
 
 #include "DeviceContext.h"
 
@@ -10,7 +11,15 @@ struct vec3
 struct vertex
 {
 	vec3 position;
+	vec3 position1;
 	vec3 color;
+	vec3 color1;
+};
+
+_declspec(align(16))
+struct constant
+{
+	unsigned int m_time;
 };
 
 AppWindow::AppWindow()
@@ -35,10 +44,10 @@ void AppWindow::onCreate()
 	vertex list[]
 	{
 		//	X - Y - Z	QUAD
-		{-0.5, -0.5, 0.0f,		1,0,0}, //POS1
-		{-0.5, 0.5, 0.0f,		0,1,0}, //POS2
-		{0.5, -0.5, 0.0f,		0,0,1}, //POS3
-		{0.5, 0.5, 0.0f,		1,1,0} //POS4
+		{-0.5, -0.5, 0.0f,	-0.32, -0.11, 0.0f,	   0,0,0,    0,1,0}, //POS1
+		{-0.5, 0.5, 0.0f,	-0.11, 0.78, 0.0f,	   1,1,0,    0,1,1}, //POS2
+		{0.5, -0.5, 0.0f,	0.75, -0.73, 0.0f,	   0,0,1,    1,0,0}, //POS3
+		{0.5, 0.5, 0.0f,	0.88, 0.77, 0.0f,	   1,1,0,    0,0,1} //POS4
 	};
 	//*/
 
@@ -88,6 +97,13 @@ void AppWindow::onCreate()
 
 	GraphicsEngine::get()->releaseCompiledShader();
 
+
+	constant cc;
+	cc.m_time = 0;
+
+	m_cb = GraphicsEngine::get()->createConstantBuffer();
+	m_cb->load(&cc, sizeof(constant));
+
 }
 
 void AppWindow::onUpdate()
@@ -99,6 +115,16 @@ void AppWindow::onUpdate()
 	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
 	RECT rc = this->getClientWindowRect();
 	GraphicsEngine::get()->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
+
+
+	constant cc;
+	cc.m_time = ::GetTickCount();
+
+	m_cb->update(GraphicsEngine::get()->getImmediateDeviceContext(), &cc);
+
+	GraphicsEngine::get()->getImmediateDeviceContext()->setConstantBuffer(m_vs, m_cb);
+	GraphicsEngine::get()->getImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb);
+
 
 	//SET DEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
 	GraphicsEngine::get()->getImmediateDeviceContext()->setVertexShader(m_vs);
