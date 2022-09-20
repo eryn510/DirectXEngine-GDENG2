@@ -1,5 +1,4 @@
 ﻿  AppWindow.cpp
-C:\FILES\CODING\PROJECTS\REPOSITORY\DirectXGame\DirectXEngine-GDENG2\DirectXGame\DirectXGame\AppWindow.cpp(51,2): warning C4305: 'initializing': truncation from 'double' to 'float'
-  VertexBuffer.cpp
-  Generating Code...
+C:\FILES\CODING\PROJECTS\REPOSITORY\DirectXGame\DirectXEngine-GDENG2\DirectXGame\DirectXGame\AppWindow.cpp(48,115): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\FILES\CODING\PROJECTS\REPOSITORY\DirectXGame\DirectXEngine-GDENG2\DirectXGame\DirectXGame\AppWindow.cpp(180,30): warning C4244: '=': conversion from 'DWORD' to 'float', possible loss of data
   DirectXGame.vcxproj -> C:\FILES\CODING\PROJECTS\REPOSITORY\DirectXGame\DirectXEngine-GDENG2\DirectXGame\Debug\DirectXGame.exe
