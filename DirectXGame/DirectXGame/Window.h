@@ -21,6 +21,8 @@ public:
 	virtual void onCreate()=0;
 	virtual void onUpdate()=0;
 	virtual void onDestroy()=0;
+	virtual void onFocus() = 0;
+	virtual void onKillFocus() = 0;
 
 protected:
 	HWND m_hwnd;

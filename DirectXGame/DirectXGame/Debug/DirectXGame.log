@@ -12,6 +12,12 @@ D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(
 D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(61,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(62,20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\AppWindow.cpp(238,30): warning C4244: '=': conversion from 'DWORD' to 'float', possible loss of data
+  ConstantBuffer.cpp
+  DeviceContext.cpp
+  GraphicsEngine.cpp
+  IndexBuffer.cpp
   InputSystem.cpp
+  VertexBuffer.cpp
+  main.cpp
   Generating Code...
   DirectXGame.vcxproj -> D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\Debug\DirectXGame.exe

@@ -16,6 +16,22 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 			window->onCreate();
 			break;
 		}
+	case WM_SETFOCUS:
+	{
+		//Event for Window Focus
+		Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+		//THIS SNIPPET OF CODE WILL RECOVER THE POINTER "THIS" FROM THE SPECIAL STRUCTURE DATA IDENTIFIED BY HWND
+		window->onFocus();
+		break;
+	}
+	case WM_KILLFOCUS:
+	{
+		//Event for Window Lost Focus
+		Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+		//THIS SNIPPET OF CODE WILL RECOVER THE POINTER "THIS" FROM THE SPECIAL STRUCTURE DATA IDENTIFIED BY HWND
+		window->onKillFocus();
+		break;
+	}
 	case WM_DESTROY:
 		{
 			//Event for Window Destroy
@@ -123,6 +139,14 @@ void Window::onUpdate()
 void Window::onDestroy()
 {
 	m_is_run = false;
+}
+
+void Window::onFocus()
+{
+}
+
+void Window::onKillFocus()
+{
 }
 
 Window::~Window()
