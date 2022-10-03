@@ -12,12 +12,23 @@ class PixelShader;
 class GraphicsEngine
 {
 public:
-	GraphicsEngine();
 	//initialize graphics engine and DirectX 11 device
 	bool init();
 	//release resources loaded
 	bool release();
+
+public:
+	static GraphicsEngine* getInstance();
+	static void initialize();
+	static void destroy();
+
+private:
+	GraphicsEngine();
 	~GraphicsEngine();
+	GraphicsEngine(GraphicsEngine const&) {};
+	GraphicsEngine& operator=(GraphicsEngine const&) {};
+	static GraphicsEngine* sharedInstance;
+
 
 public:
 	SwapChain* createSwapChain();
@@ -32,9 +43,6 @@ public:
 	bool compileVertexShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size);
 	bool compilePixelShader(const wchar_t* file_name, const char* entry_point_name, void** shader_byte_code, size_t* byte_code_size);
 	void releaseCompiledShader();
-
-public:
-	static GraphicsEngine* get();
 
 private:
 	DeviceContext* m_imm_device_context;

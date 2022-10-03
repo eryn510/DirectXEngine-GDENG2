@@ -9,6 +9,8 @@
 
 #include <d3dcompiler.h>
 
+GraphicsEngine* GraphicsEngine::sharedInstance = NULL;
+
 GraphicsEngine::GraphicsEngine()
 {
 }
@@ -74,6 +76,25 @@ bool GraphicsEngine::release()
 
 	m_d3d_device->Release();
 	return true;
+}
+
+GraphicsEngine* GraphicsEngine::getInstance()
+{
+	return sharedInstance;
+}
+
+void GraphicsEngine::initialize()
+{
+	sharedInstance = new GraphicsEngine();
+	sharedInstance->init();
+}
+
+void GraphicsEngine::destroy()
+{
+	if (sharedInstance != NULL)
+	{
+		sharedInstance->release();
+	}
 }
 
 GraphicsEngine::~GraphicsEngine()
@@ -166,8 +187,3 @@ void GraphicsEngine::releaseCompiledShader()
 	if (m_blob) m_blob->Release();
 }
 
-GraphicsEngine* GraphicsEngine::get()
-{
-	static GraphicsEngine engine;
-	return &engine;
-}

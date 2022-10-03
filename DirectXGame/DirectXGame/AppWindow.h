@@ -13,12 +13,25 @@
 class AppWindow : public Window, public InputListener
 {
 public:
-	AppWindow();
-
 	void updateQuadPosition();
 
-	~AppWindow();
+public:
+	static AppWindow* getInstance();
+	static void initialize();
+	static void destroy();
 
+
+private:
+	AppWindow();
+	~AppWindow();
+	AppWindow(AppWindow const&) {};
+	AppWindow& operator=(AppWindow const&) {};
+	static AppWindow* sharedInstance;
+
+public:
+	void createGraphicsWindow();
+
+public:
 	virtual void onCreate() override;
 	virtual void onUpdate() override;
 	virtual void onDestroy() override;
@@ -41,6 +54,7 @@ private:
 	PixelShader* m_ps;
 	ConstantBuffer* m_cb;
 	IndexBuffer* m_ib;
+	GraphicsEngine* graphEngine;
 
 
 private:
