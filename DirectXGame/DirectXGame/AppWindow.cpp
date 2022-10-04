@@ -6,23 +6,7 @@
 #include "GraphicsEngine.h"
 
 #include "DeviceContext.h"
-
-
-struct vertex
-{
-	Vector3D position;
-	Vector3D color;
-	Vector3D color1;
-};
-
-_declspec(align(16))
-struct constant
-{
-	Matrix4x4 m_world;
-	Matrix4x4 m_view;
-	Matrix4x4 m_proj;
-	unsigned int m_time;
-};
+#include "PrimitiveManager.h"
 
 AppWindow* AppWindow::sharedInstance = NULL;
 
@@ -104,8 +88,8 @@ void AppWindow::updateQuadPosition()
 		4.0f
 	);
 
-
-	m_cb->update(graphEngine->getImmediateDeviceContext(), &cc);
+	for (auto cube : primMngr->cube_list)
+		cube->cube_cb->update(graphEngine->getImmediateDeviceContext(), &cc);
 }
 
 AppWindow::~AppWindow()
@@ -118,14 +102,17 @@ void AppWindow::createGraphicsWindow()
 
 	GraphicsEngine::initialize();
 	graphEngine = GraphicsEngine::getInstance();
+	PrimitiveManager::initialize();
+	primMngr = PrimitiveManager:: getInstance();
 
 	m_swap_chain = graphEngine->createSwapChain();
 
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain->init(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
-	///*
-	//RECTANGLE RAINBOW
+	void* shader_byte_code = nullptr;
+	size_t size_shader = 0;
+
 	vertex vertex_list[]
 	{
 		//	X - Y - Z
@@ -141,71 +128,47 @@ void AppWindow::createGraphicsWindow()
 		{Vector3D(-0.5f, 0.5f, 0.5f),		Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS7
 		{Vector3D(-0.5f, -0.5f, 0.5f),		Vector3D(0,1,0),    Vector3D(0,0.2f,0)} //POS8
 	};
-	//*/
 
-	/*
-	//TRIANGLE RAINBOW
-	vertex list[]
+	vertex vertex_list1[]
 	{
-		//	X - Y - Z	TRI
-		{-0.5, -0.5, 0.0f,		1,0,0}, //POS1
-		{0, 0.5, 0.0f,		0,1,0}, //POS2
-		{0.5, -0.5, 0.0f,		0,0,1}, //POS3
-	};
-	*/
+		//	X - Y - Z
+		//FRONT FACE
+		{Vector3D(-1.0f, -1.0f, -1.0f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
+		{Vector3D(-1.0f, -0.5f, -1.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
+		{Vector3D(-0.5f, -0.5f, -1.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
+		{Vector3D(-0.5f, -1.0f, -1.0f),		Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
 
-	/*
-	//RECTANGLE GREEN
-	vertex list[]
-	{
-		//	X - Y - Z	QUAD
-		{-0.5, -0.5, 0.0f,		0,1,0}, //POS1
-		{-0.5, 0.5, 0.0f,		0,1,0}, //POS2
-		{0.5, -0.5, 0.0f,		0,1,0}, //POS3
-		{0.5, 0.5, 0.0f,		0,1,0} //POS4
-	};
-	*/
-
-	m_vb = graphEngine->createVertexBuffer();
-	UINT size_list = ARRAYSIZE(vertex_list);
-
-	unsigned int index_list[] =
-	{
-		//FRONT SIDE
-		0,1,2, //FIRST TRIANGLE
-		2,3,0, //SECOND TRIANGLE
-		//BACK SIDE
-		4,5,6,
-		6,7,4,
-		//TOP SIDE
-		1,6,5,
-		5,2,1,
-		//BOTTOM SIDE
-		7,0,3,
-		3,4,7,
-		//RIGHT SIDE
-		3,2,5,
-		5,4,3,
-		//LEFT SIDE
-		7,6,1,
-		1,0,7
+		//BACK FACE
+		{Vector3D(-0.5f, -1.0f, -0.5f),		Vector3D(0,1,0),    Vector3D(0,0.2f,0)}, //POS5
+		{Vector3D(-0.5f, -0.5f, -0.5f),		Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS6
+		{Vector3D(-1.0f, -0.5f, -0.5f),		Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS7
+		{Vector3D(-1.0f, -1.0f, -0.5f),		Vector3D(0,1,0),    Vector3D(0,0.2f,0)} //POS8
 	};
 
-	m_ib = graphEngine->createIndexBuffer();
-	UINT size_index_list = ARRAYSIZE(index_list);
+	vertex vertex_list2[]
+	{
+		//	X - Y - Z
+		//FRONT FACE
+		{Vector3D(1.0f, 1.0f, 1.0f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
+		{Vector3D(1.0f, 0.5f, 1.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
+		{Vector3D(0.5f, 0.5f, 1.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
+		{Vector3D(0.5f, 1.0f, 1.0f),		Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
 
-	m_ib->load(index_list, size_index_list);
-
-
-	void* shader_byte_code = nullptr;
-	size_t size_shader = 0;
+		//BACK FACE
+		{Vector3D(0.5f, 1.0f, 0.5f),		Vector3D(0,1,0),    Vector3D(0,0.2f,0)}, //POS5
+		{Vector3D(0.5f, 0.5f, 0.5f),		Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS6
+		{Vector3D(1.0f, 0.5f, 0.5f),		Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS7
+		{Vector3D(1.0f, 1.0f, 0.5f),		Vector3D(0,1,0),    Vector3D(0,0.2f,0)} //POS8
+	};
 
 	//Vertex Shader
 	graphEngine->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
 
 	m_vs = graphEngine->createVertexShader(shader_byte_code, size_shader);
 
-	m_vb->load(vertex_list, sizeof(vertex), size_list, shader_byte_code, size_shader);
+	primMngr->createCube(vertex_list, shader_byte_code, size_shader);
+	primMngr->createCube(vertex_list1, shader_byte_code, size_shader);
+	primMngr->createCube(vertex_list2, shader_byte_code, size_shader);
 
 	graphEngine->releaseCompiledShader();
 
@@ -216,12 +179,6 @@ void AppWindow::createGraphicsWindow()
 
 	graphEngine->releaseCompiledShader();
 
-
-	constant cc;
-	cc.m_time = 0;
-
-	m_cb = graphEngine->createConstantBuffer();
-	m_cb->load(&cc, sizeof(constant));
 }
 
 void AppWindow::onCreate()
@@ -245,23 +202,20 @@ void AppWindow::onUpdate()
 
 	updateQuadPosition();
 
-
-	graphEngine->getImmediateDeviceContext()->setConstantBuffer(m_vs, m_cb);
-	graphEngine->getImmediateDeviceContext()->setConstantBuffer(m_ps, m_cb);
+	for (auto cube : primMngr->cube_list)
+	{
+		graphEngine->getImmediateDeviceContext()->setConstantBuffer(m_vs, cube->cube_cb);
+		graphEngine->getImmediateDeviceContext()->setConstantBuffer(m_ps, cube->cube_cb);
+	}
 
 
 	//SET DEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
 	graphEngine->getImmediateDeviceContext()->setVertexShader(m_vs);
 	graphEngine->getImmediateDeviceContext()->setPixelShader(m_ps);
 
-	//SET THE VERTICES OF THE TRIANGLE TO DRAW
-	graphEngine->getImmediateDeviceContext()->setVertexBuffer(m_vb);
-
-	//SET THE INIDICES OF THE TRIANGLE TO DRAW
-	graphEngine->getImmediateDeviceContext()->setIndexBuffer(m_ib);
-
-	//FINALLY DRAW THE TRIANGLE
-	graphEngine->getImmediateDeviceContext()->drawIndexedTriangleList(m_ib->getSizeIndexList(), 0, 0);
+	for (auto cube : primMngr->cube_list)
+		cube->update();
+	
 	m_swap_chain->present(true);
 
 
@@ -274,12 +228,10 @@ void AppWindow::onDestroy()
 {
 	Window::onDestroy();
 	m_swap_chain->release();
-	m_vb->release();
-	m_ib->release();
-	m_cb->release();
 	m_vs->release();
 	m_ps->release();
 	graphEngine->release();
+	primMngr->release();
 }
 
 void AppWindow::onFocus()

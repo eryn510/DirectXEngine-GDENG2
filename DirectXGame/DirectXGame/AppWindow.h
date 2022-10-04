@@ -3,12 +3,16 @@
 #include "GraphicsEngine.h"
 #include "SwapChain.h"
 #include "DeviceContext.h"
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
 #include "ConstantBuffer.h"
+#include "Cube.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
 #include "InputListener.h"
+#include "PrimitiveManager.h"
+
+#include "Vector3D.h"
+#include "Matrix4x4.h"
+
 
 class AppWindow : public Window, public InputListener
 {
@@ -49,12 +53,11 @@ public:
 
 private:
 	SwapChain* m_swap_chain;
-	VertexBuffer* m_vb;
 	VertexShader* m_vs; 
 	PixelShader* m_ps;
 	ConstantBuffer* m_cb;
-	IndexBuffer* m_ib;
 	GraphicsEngine* graphEngine;
+	PrimitiveManager* primMngr;
 
 
 private:
@@ -69,5 +72,14 @@ private:
 	float m_rot_y = 0.0f;
 	
 	float m_scale_cube = 1;
+	
 };
 
+_declspec(align(16))
+struct constant
+{
+	Matrix4x4 m_world;
+	Matrix4x4 m_view;
+	Matrix4x4 m_proj;
+	unsigned int m_time;
+};
