@@ -1,6 +1,14 @@
 #pragma once
 #include <list>
 #include "Cube.h"
+#include "Quad.h"
+
+enum PrimitiveType
+{
+	TRIANGLE = 0,
+	QUAD,
+	CUBE
+};
 
 class AppWindow;
 
@@ -23,10 +31,11 @@ public:
 	void update();
 	void release();
 
-	void createCube(vertex vertex_list[], void* shader_byte_code, size_t size_shader);
+	void create(vertex vertex_list[], void* shader_byte_code, size_t size_shader, PrimitiveType primType);
 
 private:
 	std::list<Cube*> cube_list;
+	std::list<Quad*> quad_list;
 
 private:
 	friend class AppWindow;

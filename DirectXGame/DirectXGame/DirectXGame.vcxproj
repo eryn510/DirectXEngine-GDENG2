@@ -146,7 +146,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AGameObject.cpp" />
     <ClCompile Include="AppWindow.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
     <ClCompile Include="Cube.cpp" />
@@ -157,6 +156,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="PrimitiveManager.cpp" />
+    <ClCompile Include="Quad.cpp" />
     <ClCompile Include="SwapChain.cpp" />
     <ClCompile Include="VertexBuffer.cpp" />
     <ClCompile Include="VertexShader.cpp" />
@@ -176,6 +176,7 @@
     <ClInclude Include="PixelShader.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="PrimitiveManager.h" />
+    <ClInclude Include="Quad.h" />
     <ClInclude Include="SwapChain.h" />
     <ClInclude Include="Vector3D.h" />
     <ClInclude Include="VertexBuffer.h" />

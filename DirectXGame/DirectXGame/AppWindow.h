@@ -4,7 +4,6 @@
 #include "SwapChain.h"
 #include "DeviceContext.h"
 #include "ConstantBuffer.h"
-#include "Cube.h"
 #include "VertexShader.h"
 #include "PixelShader.h"
 #include "InputListener.h"
@@ -75,11 +74,3 @@ private:
 	
 };
 
-_declspec(align(16))
-struct constant
-{
-	Matrix4x4 m_world;
-	Matrix4x4 m_view;
-	Matrix4x4 m_proj;
-	unsigned int m_time;
-};

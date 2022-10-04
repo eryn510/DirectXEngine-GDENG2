@@ -96,3 +96,12 @@ public:
 public:
 	float m_mat[4][4] = {};
 };
+
+_declspec(align(16))
+struct constant
+{
+	Matrix4x4 m_world;
+	Matrix4x4 m_view;
+	Matrix4x4 m_proj;
+	unsigned int m_time;
+};

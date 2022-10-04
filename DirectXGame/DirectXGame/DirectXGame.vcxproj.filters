@@ -52,6 +52,9 @@
     <Filter Include="GameEngine\Managers\GameObject\Primitives\Cube">
       <UniqueIdentifier>{73744ff9-b87a-401c-adcc-e4433ebe0f4e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\Managers\GameObject\Primitives\Quad">
+      <UniqueIdentifier>{41b27d90-b0cf-4260-a742-bf94e7e0f6e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -90,12 +93,14 @@
     <ClCompile Include="InputSystem.cpp">
       <Filter>GameEngine\InputSystem</Filter>
     </ClCompile>
-    <ClCompile Include="AGameObject.cpp" />
     <ClCompile Include="PrimitiveManager.cpp">
       <Filter>GameEngine\Managers\GameObject\Primitives</Filter>
     </ClCompile>
     <ClCompile Include="Cube.cpp">
       <Filter>GameEngine\Managers\GameObject\Primitives\Cube</Filter>
+    </ClCompile>
+    <ClCompile Include="Quad.cpp">
+      <Filter>GameEngine\Managers\GameObject\Primitives\Quad</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +157,9 @@
     </ClInclude>
     <ClInclude Include="Cube.h">
       <Filter>GameEngine\Managers\GameObject\Primitives\Cube</Filter>
+    </ClInclude>
+    <ClInclude Include="Quad.h">
+      <Filter>GameEngine\Managers\GameObject\Primitives\Quad</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

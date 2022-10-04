@@ -60,7 +60,7 @@ void AppWindow::updateQuadPosition()
 
 	*/
 
-	//*
+	/*
 	//WITH INPUT
 	cc.m_world.setScale(Vector3D(m_scale_cube, m_scale_cube, m_scale_cube));
 
@@ -76,9 +76,9 @@ void AppWindow::updateQuadPosition()
 	temp.setIdentity();
 	temp.setRotationZ(0.0f);
 	cc.m_world *= temp;
-	//*/
+	*/
 
-
+	cc.m_world.setTranslation(Vector3D(0.0f, 0.0f, 0.0f));
 	cc.m_view.setIdentity();
 	cc.m_proj.setOrthoLH
 	(
@@ -88,8 +88,12 @@ void AppWindow::updateQuadPosition()
 		4.0f
 	);
 
+
 	for (auto cube : primMngr->cube_list)
-		cube->cube_cb->update(graphEngine->getImmediateDeviceContext(), &cc);
+		cube->m_cb->update(graphEngine->getImmediateDeviceContext(), &cc);
+
+	for (auto quad : primMngr->quad_list)
+		quad->m_cb->update(graphEngine->getImmediateDeviceContext(), &cc);
 }
 
 AppWindow::~AppWindow()
@@ -113,6 +117,14 @@ void AppWindow::createGraphicsWindow()
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
 
+	//Vertex Shader
+	graphEngine->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
+
+	m_vs = graphEngine->createVertexShader(shader_byte_code, size_shader);
+
+
+
+	/*
 	vertex vertex_list[]
 	{
 		//	X - Y - Z
@@ -160,15 +172,45 @@ void AppWindow::createGraphicsWindow()
 		{Vector3D(1.0f, 0.5f, 0.5f),		Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS7
 		{Vector3D(1.0f, 1.0f, 0.5f),		Vector3D(0,1,0),    Vector3D(0,0.2f,0)} //POS8
 	};
+	
+	primMngr->create(vertex_list, shader_byte_code, size_shader, CUBE);
+	primMngr->create(vertex_list1, shader_byte_code, size_shader, CUBE);
+	primMngr->create(vertex_list2, shader_byte_code, size_shader, CUBE);
+	*/
 
-	//Vertex Shader
-	graphEngine->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
+	vertex vertex_list3[]
+	{
+		//	X - Y - Z
+		//FRONT FACE
+		{Vector3D(-0.5f, -0.5f, 0.0f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
+		{Vector3D(-0.5f, 0.5f, 0.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
+		{Vector3D(0.5f, 0.5f, 0.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
+		{Vector3D(0.5f, -0.5f, 0.0f),		Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
+	};
 
-	m_vs = graphEngine->createVertexShader(shader_byte_code, size_shader);
+	vertex vertex_list4[]
+	{
+		//	X - Y - Z
+		//FRONT FACE
+		{Vector3D(-1.0f, -1.0f, 0.0f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
+		{Vector3D(-1.0f, -0.5f, 0.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
+		{Vector3D(-0.5f, -0.5f, 0.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
+		{Vector3D(-0.5f, -1.0f, 0.0f),		Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
+	};
 
-	primMngr->createCube(vertex_list, shader_byte_code, size_shader);
-	primMngr->createCube(vertex_list1, shader_byte_code, size_shader);
-	primMngr->createCube(vertex_list2, shader_byte_code, size_shader);
+	vertex vertex_list5[]
+	{
+		//	X - Y - Z
+		//FRONT FACE
+		{Vector3D(1.0f, 1.0f, 0.0f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
+		{Vector3D(1.0f, 0.5f, 0.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
+		{Vector3D(0.5f, 0.5f, 0.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
+		{Vector3D(0.5f, 1.0f, 0.0f),		Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
+	};
+
+	primMngr->create(vertex_list3, shader_byte_code, size_shader, QUAD);
+	primMngr->create(vertex_list4, shader_byte_code, size_shader, QUAD);
+	primMngr->create(vertex_list5, shader_byte_code, size_shader, QUAD);
 
 	graphEngine->releaseCompiledShader();
 
@@ -204,8 +246,14 @@ void AppWindow::onUpdate()
 
 	for (auto cube : primMngr->cube_list)
 	{
-		graphEngine->getImmediateDeviceContext()->setConstantBuffer(m_vs, cube->cube_cb);
-		graphEngine->getImmediateDeviceContext()->setConstantBuffer(m_ps, cube->cube_cb);
+		graphEngine->getImmediateDeviceContext()->setConstantBuffer(m_vs, cube->m_cb);
+		graphEngine->getImmediateDeviceContext()->setConstantBuffer(m_ps, cube->m_cb);
+	}
+
+	for (auto quad : primMngr->quad_list)
+	{
+		graphEngine->getImmediateDeviceContext()->setConstantBuffer(m_vs, quad->m_cb);
+		graphEngine->getImmediateDeviceContext()->setConstantBuffer(m_ps, quad->m_cb);
 	}
 
 
@@ -215,6 +263,9 @@ void AppWindow::onUpdate()
 
 	for (auto cube : primMngr->cube_list)
 		cube->update();
+
+	for (auto quad : primMngr->quad_list)
+		quad->update();
 	
 	m_swap_chain->present(true);
 

@@ -43,11 +43,25 @@ void PrimitiveManager::release()
 		cube->release();
 }
 
-void PrimitiveManager::createCube(vertex vertex_list[], void* shader_byte_code, size_t size_shader)
+void PrimitiveManager::create(vertex vertex_list[], void* shader_byte_code, size_t size_shader, PrimitiveType primType)
 {
-	Cube *cube = new Cube(vertex_list, shader_byte_code, size_shader);
-	cube->create();
-	this->cube_list.push_back(cube);
+	if (primType == TRIANGLE) 
+	{
+
+	}
+	else if (primType == QUAD) 
+	{
+		Quad* quad = new Quad(vertex_list, shader_byte_code, size_shader);
+		quad->create();
+		this->quad_list.push_back(quad);
+	}
+	else if (primType == CUBE) 
+	{
+		Cube* cube = new Cube(vertex_list, shader_byte_code, size_shader);
+		cube->create();
+		this->cube_list.push_back(cube);
+	}
+		
 }
 
 

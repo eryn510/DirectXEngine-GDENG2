@@ -3,14 +3,6 @@
 #include "GraphicsEngine.h"
 #include "Vector3D.h"
 
-
-struct vertex
-{
-	Vector3D position;
-	Vector3D color;
-	Vector3D color1;
-};
-
 class AppWindow;
 class PrimitiveManager;
 
@@ -30,9 +22,9 @@ public:
 	GraphicsEngine *graphEngine = GraphicsEngine::getInstance();
 
 private:
-	VertexBuffer* cube_vb;
-	IndexBuffer* cube_ib;
-	ConstantBuffer* cube_cb;
+	VertexBuffer* m_vb;
+	IndexBuffer* m_ib;
+	ConstantBuffer* m_cb;
 
 private:
 	vertex vertex_list[8] = {};
