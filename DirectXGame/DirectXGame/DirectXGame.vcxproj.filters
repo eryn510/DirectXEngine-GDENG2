@@ -161,6 +161,9 @@
     <ClInclude Include="Quad.h">
       <Filter>GameEngine\Managers\GameObject\Primitives\Quad</Filter>
     </ClInclude>
+    <ClInclude Include="Vector4D.h">
+      <Filter>GameEngine\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader.fx">

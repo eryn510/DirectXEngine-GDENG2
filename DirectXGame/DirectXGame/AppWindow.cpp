@@ -33,7 +33,7 @@ void AppWindow::destroy()
 	}
 }
 
-void AppWindow::updateQuadPosition()
+void AppWindow::update()
 {
 	constant cc;
 	cc.m_time = ::GetTickCount();
@@ -58,9 +58,8 @@ void AppWindow::updateQuadPosition()
 
 	cc.m_world *= temp;
 
-	*/
 
-	/*
+	
 	//WITH INPUT
 	cc.m_world.setScale(Vector3D(m_scale_cube, m_scale_cube, m_scale_cube));
 
@@ -76,10 +75,37 @@ void AppWindow::updateQuadPosition()
 	temp.setIdentity();
 	temp.setRotationZ(0.0f);
 	cc.m_world *= temp;
+	
 	*/
 
-	cc.m_world.setTranslation(Vector3D(0.0f, 0.0f, 0.0f));
-	cc.m_view.setIdentity();
+	//cc.m_world.setTranslation(Vector3D(0.0f, 0.0f, 0.0f));
+
+	cc.m_world.setIdentity();
+
+	Matrix4x4 world_cam;
+	world_cam.setIdentity();
+
+	temp.setIdentity();
+	temp.setRotationX(m_rot_x);
+	world_cam *= temp;
+
+	temp.setIdentity();
+	temp.setRotationY(m_rot_y);
+	world_cam *= temp;
+
+
+	Vector3D new_pos = m_world_cam.getTranslation() + world_cam.getZDirection() * (m_forward * 0.3f);
+
+	new_pos = new_pos + world_cam.getXDirection() * (m_rightward * 0.3f);
+
+	world_cam.setTranslation(new_pos);
+
+	m_world_cam = world_cam;
+
+	world_cam.inverse();
+
+	cc.m_view = world_cam;
+	/*
 	cc.m_proj.setOrthoLH
 	(
 		(this->getClientWindowRect().right - this->getClientWindowRect().left) / 300.0f,
@@ -87,7 +113,12 @@ void AppWindow::updateQuadPosition()
 		-4.0f,
 		4.0f
 	);
+	*/
 
+	int width = (this->getClientWindowRect().right - this->getClientWindowRect().left);
+	int height = (this->getClientWindowRect().bottom - this->getClientWindowRect().top);
+
+	cc.m_proj.setPerspectiveFovLH(1.57f, ((float)width / (float)height), 0.1f, 100.0f);
 
 	for (auto cube : primMngr->cube_list)
 		cube->m_cb->update(graphEngine->getImmediateDeviceContext(), &cc);
@@ -103,6 +134,7 @@ AppWindow::~AppWindow()
 void AppWindow::createGraphicsWindow()
 {
 	InputSystem::get()->addListener(this);
+	InputSystem::get()->showCursor(false);
 
 	GraphicsEngine::initialize();
 	graphEngine = GraphicsEngine::getInstance();
@@ -114,6 +146,8 @@ void AppWindow::createGraphicsWindow()
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain->init(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
+	m_world_cam.setTranslation(Vector3D(0.0f, 0.0f, -2.0f));
+
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
 
@@ -124,7 +158,7 @@ void AppWindow::createGraphicsWindow()
 
 
 
-	/*
+	
 	vertex vertex_list[]
 	{
 		//	X - Y - Z
@@ -176,7 +210,7 @@ void AppWindow::createGraphicsWindow()
 	primMngr->create(vertex_list, shader_byte_code, size_shader, CUBE);
 	primMngr->create(vertex_list1, shader_byte_code, size_shader, CUBE);
 	primMngr->create(vertex_list2, shader_byte_code, size_shader, CUBE);
-	*/
+	
 
 	vertex vertex_list3[]
 	{
@@ -242,7 +276,7 @@ void AppWindow::onUpdate()
 	graphEngine->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
 
 
-	updateQuadPosition();
+	update();
 
 	for (auto cube : primMngr->cube_list)
 	{
@@ -299,31 +333,41 @@ void AppWindow::onKeyDown(int key)
 {
 	if (key == 'W')
 	{
-		m_rot_x += 3.14f * m_delta_time;
+		//m_rot_x += 3.14f * m_delta_time;
+		m_forward = 1.0f;
 	}
 	else if (key == 'S')
 	{
-		m_rot_x -= 3.14f * m_delta_time;
+		//m_rot_x -= 3.14f * m_delta_time;
+		m_forward = -1.0f;
 	}
 	if (key == 'A')
 	{
-		m_rot_y += 3.14f * m_delta_time;
+		//m_rot_y += 3.14f * m_delta_time;
+		m_rightward = -1.0f;
 	}
 	else if (key == 'D')
 	{
-		m_rot_y -= 3.14f * m_delta_time;
+		//m_rot_y -= 3.14f * m_delta_time;
+		m_rightward = 1.0f;
 	}
 }
 
 void AppWindow::onKeyUp(int key)
 {
-
+	m_forward = 0.0f;
+	m_rightward = 0.0f;
 }
 
-void AppWindow::onMouseMove(const Point& delta_mouse_pos)
+void AppWindow::onMouseMove(const Point& mouse_pos)
 {
-	m_rot_x -= delta_mouse_pos.m_y * m_delta_time;
-	m_rot_y -= delta_mouse_pos.m_x * m_delta_time;
+	int width = (this->getClientWindowRect().right - this->getClientWindowRect().left);
+	int height = (this->getClientWindowRect().bottom - this->getClientWindowRect().top);
+
+	m_rot_x += (mouse_pos.m_y - (height / 2.0f)) * m_delta_time * 0.1f;
+	m_rot_y += (mouse_pos.m_x - (width / 2.0f)) * m_delta_time * 0.1f;
+
+	InputSystem::get()->setCursorPosition(Point(width / 2.0f, height / 2.0f));
 }
 
 void AppWindow::onLeftMouseDown(const Point& delta_mouse_pos)
