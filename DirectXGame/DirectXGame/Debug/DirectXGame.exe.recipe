@@ -2,12 +2,12 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>C:\FILES\CODING\PROJECTS\REPOSITORY\DirectXGame\DirectXEngine-GDENG2\DirectXGame\Debug\DirectXGame.exe</FullPath>
+      <FullPath>D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\Debug\DirectXGame.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles>
     <ContentFile>
-      <FullPath>C:\FILES\CODING\PROJECTS\REPOSITORY\DirectXGame\DirectXEngine-GDENG2\DirectXGame\Debug\shader.cso</FullPath>
+      <FullPath>D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\Debug\shader.cso</FullPath>
     </ContentFile>
   </ContentFiles>
   <SatelliteDlls />

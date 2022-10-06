@@ -55,7 +55,8 @@ void Quad::update()
 	graphEngine->getImmediateDeviceContext()->setIndexBuffer(this->m_ib);
 
 	//FINALLY DRAW THE TRIANGLE
-	graphEngine->getImmediateDeviceContext()->drawIndexedTriangleList(this->m_ib->getSizeIndexList(), 0, 0);
+	graphEngine->getImmediateDeviceContext()->drawTriangleStrip(this->m_vb->getSizeVertexList(), 0);
+	//graphEngine->getImmediateDeviceContext()->drawIndexedTriangleList(this->m_ib->getSizeIndexList(), 0, 0);
 }
 
 void Quad::release()

@@ -60,9 +60,10 @@ private:
 
 
 private:
-	float m_old_delta;
-	float m_new_delta;
 	float m_delta_time;
+	float m_elapsed_time;
+	float m_anim_time;
+	float m_anim_speed = 1;
 
 	float m_delta_pos;
 	float m_delta_scale;
@@ -74,6 +75,8 @@ private:
 
 	float m_forward = 0.0f;
 	float m_rightward = 0.0f;
+
+	bool isPerspective;
 
 	Matrix4x4 m_world_cam;
 	

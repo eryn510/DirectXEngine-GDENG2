@@ -1,4 +1,5 @@
 #pragma once
+#include "EngineTime.h"
 
 class AGameObject
 {

@@ -55,6 +55,9 @@
     <Filter Include="GameEngine\Managers\GameObject\Primitives\Quad">
       <UniqueIdentifier>{41b27d90-b0cf-4260-a742-bf94e7e0f6e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\EngineTime">
+      <UniqueIdentifier>{8a9681d6-935f-4ee5-a7e4-91c4b36033d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -101,6 +104,9 @@
     </ClCompile>
     <ClCompile Include="Quad.cpp">
       <Filter>GameEngine\Managers\GameObject\Primitives\Quad</Filter>
+    </ClCompile>
+    <ClCompile Include="EngineTime.cpp">
+      <Filter>GameEngine\EngineTime</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,6 +169,9 @@
     </ClInclude>
     <ClInclude Include="Vector4D.h">
       <Filter>GameEngine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineTime.h">
+      <Filter>GameEngine\EngineTime</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
