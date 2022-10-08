@@ -43,7 +43,7 @@ void PrimitiveManager::release()
 		cube->release();
 }
 
-void PrimitiveManager::create(vertex vertex_list[], void* shader_byte_code, size_t size_shader, PrimitiveType primType)
+void PrimitiveManager::create(float radius, Vector3D centerVertex, vertex vertex_list[], void* shader_byte_code, size_t size_shader, PrimitiveType primType)
 {
 	if (primType == TRIANGLE) 
 	{
@@ -60,6 +60,12 @@ void PrimitiveManager::create(vertex vertex_list[], void* shader_byte_code, size
 		Cube* cube = new Cube(vertex_list, shader_byte_code, size_shader);
 		cube->create();
 		this->cube_list.push_back(cube);
+	}
+	else if (primType == CIRCLE)
+	{
+		Circle* circle = new Circle(radius, centerVertex, shader_byte_code, size_shader);
+		circle->create();
+		this->circle_list.push_back(circle);
 	}
 		
 }

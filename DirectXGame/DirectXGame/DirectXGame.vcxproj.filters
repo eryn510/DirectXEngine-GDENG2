@@ -58,6 +58,9 @@
     <Filter Include="GameEngine\EngineTime">
       <UniqueIdentifier>{8a9681d6-935f-4ee5-a7e4-91c4b36033d7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\Managers\GameObject\Primitives\Circle">
+      <UniqueIdentifier>{b636b3a4-f8bc-4962-91a1-2af0288c2450}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -107,6 +110,9 @@
     </ClCompile>
     <ClCompile Include="EngineTime.cpp">
       <Filter>GameEngine\EngineTime</Filter>
+    </ClCompile>
+    <ClCompile Include="Circle.cpp">
+      <Filter>GameEngine\Managers\GameObject\Primitives\Circle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +178,9 @@
     </ClInclude>
     <ClInclude Include="EngineTime.h">
       <Filter>GameEngine\EngineTime</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>GameEngine\Managers\GameObject\Primitives\Circle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

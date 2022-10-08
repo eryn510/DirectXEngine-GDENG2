@@ -2,12 +2,14 @@
 #include <list>
 #include "Cube.h"
 #include "Quad.h"
+#include "Circle.h"
 
 enum PrimitiveType
 {
 	TRIANGLE = 0,
 	QUAD,
-	CUBE
+	CUBE,
+	CIRCLE
 };
 
 class AppWindow;
@@ -31,11 +33,12 @@ public:
 	void update();
 	void release();
 
-	void create(vertex vertex_list[], void* shader_byte_code, size_t size_shader, PrimitiveType primType);
+	void create(float radius, Vector3D centerVertex, vertex vertex_list[], void* shader_byte_code, size_t size_shader, PrimitiveType primType);
 
 private:
 	std::list<Cube*> cube_list;
 	std::list<Quad*> quad_list;
+	std::list<Circle*> circle_list;
 
 private:
 	friend class AppWindow;

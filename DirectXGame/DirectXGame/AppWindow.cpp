@@ -45,7 +45,7 @@ void AppWindow::update()
 
 	m_delta_scale += m_delta_time / 0.55f;
 
-	std::cout << (sin(m_anim_time) + 1.0f) << std::endl;
+	//std::cout << (sin(m_anim_time) + 1.0f) << std::endl;
 
 	if (m_delta_pos > 1.0f)
 		m_delta_pos = 0;
@@ -169,6 +169,9 @@ void AppWindow::update()
 
 	for (auto quad : primMngr->quad_list)
 		quad->m_cb->update(graphEngine->getImmediateDeviceContext(), &cc);
+
+	for (auto circle : primMngr->circle_list)
+		circle->m_cb->update(graphEngine->getImmediateDeviceContext(), &cc);
 }
 
 AppWindow::~AppWindow()
@@ -204,95 +207,96 @@ void AppWindow::createGraphicsWindow()
 
 
 
-	/*
+	
 	vertex vertex_list[]
 	{
 		//	X - Y - Z
 		//FRONT FACE
-		{Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
-		{Vector3D(-0.5f, 0.5f, -0.5f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
-		{Vector3D(0.5f, 0.5f, -0.5f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
-		{Vector3D(0.5f, -0.5f, -0.5f),		Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
+		{Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
+		{Vector3D(-0.5f, 0.5f, -0.5f),	Vector3D(-0.5f, 0.5f, -0.5f),	Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
+		{Vector3D(0.5f, 0.5f, -0.5f),	Vector3D(0.5f, 0.5f, -0.5f),	Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
+		{Vector3D(0.5f, -0.5f, -0.5f),	Vector3D(0.5f, -0.5f, -0.5f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
 
 		//BACK FACE
-		{Vector3D(0.5f, -0.5f, 0.5f),		Vector3D(0,1,0),    Vector3D(0,0.2f,0)}, //POS5
-		{Vector3D(0.5f, 0.5f, 0.5f),		Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS6
-		{Vector3D(-0.5f, 0.5f, 0.5f),		Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS7
-		{Vector3D(-0.5f, -0.5f, 0.5f),		Vector3D(0,1,0),    Vector3D(0,0.2f,0)} //POS8
+		{Vector3D(0.5f, -0.5f, 0.5f),	Vector3D(0.5f, -0.5f, 0.5f),	Vector3D(0,1,0),    Vector3D(0,0.2f,0)}, //POS5
+		{Vector3D(0.5f, 0.5f, 0.5f),	Vector3D(0.5f, 0.5f, 0.5f),	Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS6
+		{Vector3D(-0.5f, 0.5f, 0.5f),	Vector3D(-0.5f, 0.5f, 0.5f),	Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS7
+		{Vector3D(-0.5f, -0.5f, 0.5f),	Vector3D(-0.5f, -0.5f, 0.5f),	Vector3D(0,1,0),    Vector3D(0,0.2f,0)} //POS8
 	};
 
 	vertex vertex_list1[]
 	{
 		//	X - Y - Z
 		//FRONT FACE
-		{Vector3D(-1.0f, -1.0f, -1.0f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
-		{Vector3D(-1.0f, -0.5f, -1.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
-		{Vector3D(-0.5f, -0.5f, -1.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
-		{Vector3D(-0.5f, -1.0f, -1.0f),		Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
+		{Vector3D(-1.0f, -1.0f, -1.0f),	Vector3D(-1.0f, -1.0f, -1.0f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
+		{Vector3D(-1.0f, -0.5f, -1.0f),	Vector3D(-1.0f, -0.5f, -1.0f),	Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
+		{Vector3D(-0.5f, -0.5f, -1.0f),	Vector3D(-0.5f, -0.5f, -1.0f),	Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
+		{Vector3D(-0.5f, -1.0f, -1.0f),	Vector3D(-0.5f, -1.0f, -1.0f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
 
 		//BACK FACE
-		{Vector3D(-0.5f, -1.0f, -0.5f),		Vector3D(0,1,0),    Vector3D(0,0.2f,0)}, //POS5
-		{Vector3D(-0.5f, -0.5f, -0.5f),		Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS6
-		{Vector3D(-1.0f, -0.5f, -0.5f),		Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS7
-		{Vector3D(-1.0f, -1.0f, -0.5f),		Vector3D(0,1,0),    Vector3D(0,0.2f,0)} //POS8
+		{Vector3D(-0.5f, -1.0f, -0.5f),	Vector3D(-0.5f, -1.0f, -0.5f),	Vector3D(0,1,0),    Vector3D(0,0.2f,0)}, //POS5
+		{Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS6
+		{Vector3D(-1.0f, -0.5f, -0.5f),	Vector3D(-1.0f, -0.5f, -0.5f),	Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS7
+		{Vector3D(-1.0f, -1.0f, -0.5f),	Vector3D(-1.0f, -1.0f, -0.5f),	Vector3D(0,1,0),    Vector3D(0,0.2f,0)} //POS8
 	};
 
 	vertex vertex_list2[]
 	{
 		//	X - Y - Z
 		//FRONT FACE
-		{Vector3D(1.0f, 1.0f, 1.0f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
-		{Vector3D(1.0f, 0.5f, 1.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
-		{Vector3D(0.5f, 0.5f, 1.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
-		{Vector3D(0.5f, 1.0f, 1.0f),		Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
+		{Vector3D(1.0f, 1.0f, 1.0f),  Vector3D(1.0f, 1.0f, 1.0f),		Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
+		{Vector3D(1.0f, 0.5f, 1.0f),  Vector3D(1.0f, 0.5f, 1.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
+		{Vector3D(0.5f, 0.5f, 1.0f),  Vector3D(0.5f, 0.5f, 1.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
+		{Vector3D(0.5f, 1.0f, 1.0f),  Vector3D(0.5f, 1.0f, 1.0f),		Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
 
 		//BACK FACE
-		{Vector3D(0.5f, 1.0f, 0.5f),		Vector3D(0,1,0),    Vector3D(0,0.2f,0)}, //POS5
-		{Vector3D(0.5f, 0.5f, 0.5f),		Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS6
-		{Vector3D(1.0f, 0.5f, 0.5f),		Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS7
-		{Vector3D(1.0f, 1.0f, 0.5f),		Vector3D(0,1,0),    Vector3D(0,0.2f,0)} //POS8
+		{Vector3D(0.5f, 1.0f, 0.5f),  Vector3D(0.5f, 1.0f, 0.5f),		Vector3D(0,1,0),    Vector3D(0,0.2f,0)}, //POS5
+		{Vector3D(0.5f, 0.5f, 0.5f),  Vector3D(0.5f, 0.5f, 0.5f),		Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS6
+		{Vector3D(1.0f, 0.5f, 0.5f),  Vector3D(1.0f, 0.5f, 0.5f),		Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS7
+		{Vector3D(1.0f, 1.0f, 0.5f),  Vector3D(1.0f, 1.0f, 0.5f),		Vector3D(0,1,0),    Vector3D(0,0.2f,0)} //POS8
 	};
 	
-	primMngr->create(vertex_list, shader_byte_code, size_shader, CUBE);
-	primMngr->create(vertex_list1, shader_byte_code, size_shader, CUBE);
-	primMngr->create(vertex_list2, shader_byte_code, size_shader, CUBE);
+	primMngr->create(0, Vector3D(0, 0, 0), vertex_list, shader_byte_code, size_shader, CUBE);
+	primMngr->create(0, Vector3D(0, 0, 0), vertex_list1, shader_byte_code, size_shader, CUBE);
+	primMngr->create(0, Vector3D(0, 0, 0), vertex_list2, shader_byte_code, size_shader, CUBE);
 	
 
 	vertex vertex_list3[]
 	{
 		//	X - Y - Z
 		//FRONT FACE
-		{Vector3D(-0.5f, -0.5f, 0.0f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
-		{Vector3D(-0.5f, 0.5f, 0.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
-		{Vector3D(0.5f, 0.5f, 0.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
-		{Vector3D(0.5f, -0.5f, 0.0f),		Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
+		{Vector3D(-0.5f, -0.5f, 0.0f),  Vector3D(-0.5f, -0.5f, 0.0f),		Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
+		{Vector3D(-0.5f, 0.5f, 0.0f),	Vector3D(-0.5f, 0.5f, 0.0f),	Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
+		{Vector3D(0.5f, 0.5f, 0.0f),	Vector3D(0.5f, 0.5f, 0.0f),	Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
+		{Vector3D(0.5f, -0.5f, 0.0f),	Vector3D(0.5f, -0.5f, 0.0f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
 	};
 
 	vertex vertex_list4[]
 	{
 		//	X - Y - Z
 		//FRONT FACE
-		{Vector3D(-1.0f, -1.0f, 0.0f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
-		{Vector3D(-1.0f, -0.5f, 0.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
-		{Vector3D(-0.5f, -0.5f, 0.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
-		{Vector3D(-0.5f, -1.0f, 0.0f),		Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
+		{Vector3D(-1.0f, -1.0f, 0.0f),	Vector3D(-1.0f, -1.0f, 0.0f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
+		{Vector3D(-1.0f, -0.5f, 0.0f),	Vector3D(-1.0f, -0.5f, 0.0f),	Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
+		{Vector3D(-0.5f, -0.5f, 0.0f),	Vector3D(-0.5f, -0.5f, 0.0f),	Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
+		{Vector3D(-0.5f, -1.0f, 0.0f),	Vector3D(-0.5f, -1.0f, 0.0f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
 	};
 
 	vertex vertex_list5[]
 	{
 		//	X - Y - Z
 		//FRONT FACE
-		{Vector3D(1.0f, 1.0f, 0.0f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
-		{Vector3D(1.0f, 0.5f, 0.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
-		{Vector3D(0.5f, 0.5f, 0.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
-		{Vector3D(0.5f, 1.0f, 0.0f),		Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
+		{Vector3D(1.0f, 1.0f, 0.0f),  Vector3D(1.0f, 1.0f, 0.0f),		Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
+		{Vector3D(1.0f, 0.5f, 0.0f),  Vector3D(1.0f, 0.5f, 0.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
+		{Vector3D(0.5f, 0.5f, 0.0f),  Vector3D(0.5f, 0.5f, 0.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
+		{Vector3D(0.5f, 1.0f, 0.0f),  Vector3D(0.5f, 1.0f, 0.0f),		Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
 	};
 
-	primMngr->create(vertex_list3, shader_byte_code, size_shader, QUAD);
-	primMngr->create(vertex_list4, shader_byte_code, size_shader, QUAD);
-	primMngr->create(vertex_list5, shader_byte_code, size_shader, QUAD);
-	*/
+	primMngr->create(0, Vector3D(0, 0, 0), vertex_list3, shader_byte_code, size_shader, QUAD);
+	primMngr->create(0, Vector3D(0, 0, 0), vertex_list4, shader_byte_code, size_shader, QUAD);
+	primMngr->create(0, Vector3D(0, 0, 0), vertex_list5, shader_byte_code, size_shader, QUAD);
+	
 
+	/*
 	vertex vertex_list6[]
 	{
 		//	X - Y - Z
@@ -314,8 +318,10 @@ void AppWindow::createGraphicsWindow()
 	};
 
 	primMngr->create(vertex_list7, shader_byte_code, size_shader, QUAD);
-
-
+	*/
+	
+	primMngr->create(1, Vector3D(0, 0, 0), nullptr, shader_byte_code, size_shader, CIRCLE);
+	
 	graphEngine->releaseCompiledShader();
 
 	//Pixel Shader
@@ -361,6 +367,12 @@ void AppWindow::onUpdate()
 		graphEngine->getImmediateDeviceContext()->setConstantBuffer(m_ps, quad->m_cb);
 	}
 
+	for (auto circle : primMngr->circle_list)
+	{
+		graphEngine->getImmediateDeviceContext()->setConstantBuffer(m_vs, circle->m_cb);
+		graphEngine->getImmediateDeviceContext()->setConstantBuffer(m_ps, circle->m_cb);
+	}
+
 
 	//SET DEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
 	graphEngine->getImmediateDeviceContext()->setVertexShader(m_vs);
@@ -371,6 +383,9 @@ void AppWindow::onUpdate()
 
 	for (auto quad : primMngr->quad_list)
 		quad->update();
+
+	for (auto circle : primMngr->circle_list)
+		circle->update();
 	
 	m_swap_chain->present(true);
 
