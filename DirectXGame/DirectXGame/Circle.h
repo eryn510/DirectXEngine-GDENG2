@@ -27,7 +27,7 @@ private:
 	ConstantBuffer* m_cb;
 
 private:
-	static const int arcCount = 60;
+	static const int arcCount = 120;
 	Vector3D centerPoint;
 	float radius;
 
