@@ -21,7 +21,6 @@ Circle::~Circle()
 void Circle::create()
 {
 	float theta;
-	float circumference = 2 * M_PI * this->radius; 
 	std::setprecision(3);
 
 	Vector3D vertexPoints[arcCount] = {};
@@ -30,14 +29,15 @@ void Circle::create()
 	for (int i = 1; i < arcCount; ++i)
 	{
 		theta = (2 * M_PI / static_cast<float>(arcCount)) * i;
-		vertexPoints[i] = { floorf((this->centerPoint.m_x + (cos(theta) * this->radius)) * 100) / 100, floorf((this->centerPoint.m_y - (sin(theta) * this->radius)) * 100) / 100, this->centerPoint.m_z};
+		vertexPoints[i] = { floorf((this->centerPoint.m_x + (cos(theta) * this->radius)) * 100) / 100,
+			floorf((this->centerPoint.m_y - (sin(theta) * this->radius)) * 100) / 100, this->centerPoint.m_z};
+		//std::cout << "(" << vertexPoints[i].m_x << "," << vertexPoints[i].m_y << ")" << std::endl;
 	}
 
 	unsigned int index_list[arcCount * 3] = { };
 
 	int indice2 = 1;
 	int indice3 = 2;
-	int counter = 0;
 
 	
 	for (int i = 0; i < (arcCount * 3) - 3; i += 3)
@@ -45,9 +45,11 @@ void Circle::create()
 		index_list[i] = 0;
 		index_list[i + 1] = indice2;
 		index_list[i + 2] = indice3;
-
+		
 		indice2++;
 		indice3++;
+
+		std::cout << index_list[i] << "," << index_list[i + 1] << "," << index_list[i + 2] << std::endl;
 	}
 
 	index_list[(arcCount * 3) - 3] = 0;
