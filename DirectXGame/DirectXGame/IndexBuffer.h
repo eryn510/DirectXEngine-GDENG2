@@ -1,12 +1,11 @@
 #pragma once
 #include "AppWindow.h"
-
-class DeviceContext;
+#include "Prerequisites.h"
 
 class IndexBuffer
 {
 public:
-	IndexBuffer();
+	IndexBuffer(RenderSystem* system);
 	bool load(void* list_indices, UINT size_list);
 	UINT getSizeIndexList();
 	bool release();
@@ -17,6 +16,7 @@ private:
 
 private:
 	ID3D11Buffer* m_buffer;
+	RenderSystem* m_system = nullptr;
 
 private:
 	friend class DeviceContext;

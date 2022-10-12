@@ -165,13 +165,13 @@ void AppWindow::update()
 	//*/
 
 	for (auto cube : primMngr->cube_list)
-		cube->m_cb->update(graphEngine->getImmediateDeviceContext(), &cc);
+		cube->m_cb->update(m_render_system->getImmediateDeviceContext(), &cc);
 
 	for (auto quad : primMngr->quad_list)
-		quad->m_cb->update(graphEngine->getImmediateDeviceContext(), &cc);
+		quad->m_cb->update(m_render_system->getImmediateDeviceContext(), &cc);
 
 	for (auto circle : primMngr->circle_list)
-		circle->m_cb->update(graphEngine->getImmediateDeviceContext(), &cc);
+		circle->m_cb->update(m_render_system->getImmediateDeviceContext(), &cc);
 }
 
 AppWindow::~AppWindow()
@@ -187,10 +187,11 @@ void AppWindow::createGraphicsWindow()
 	graphEngine = GraphicsEngine::getInstance();
 	PrimitiveManager::initialize();
 	primMngr = PrimitiveManager:: getInstance();
+	m_render_system = graphEngine->getRenderSystem();
 
 	this->isPerspective = true;
 
-	m_swap_chain = graphEngine->createSwapChain();
+	m_swap_chain = m_render_system->createSwapChain();
 
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain->init(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
@@ -201,9 +202,9 @@ void AppWindow::createGraphicsWindow()
 	size_t size_shader = 0;
 
 	//Vertex Shader
-	graphEngine->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
+	m_render_system->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
 
-	m_vs = graphEngine->createVertexShader(shader_byte_code, size_shader);
+	m_vs = m_render_system->createVertexShader(shader_byte_code, size_shader);
 
 
 
@@ -322,14 +323,14 @@ void AppWindow::createGraphicsWindow()
 	
 	primMngr->create(1, Vector3D(0, 0, 0), nullptr, shader_byte_code, size_shader, CIRCLE);
 	
-	graphEngine->releaseCompiledShader();
+	m_render_system->releaseCompiledShader();
 
 	//Pixel Shader
-	graphEngine->compilePixelShader(L"PixelShader.hlsl", "psmain", &shader_byte_code, &size_shader);
+	m_render_system->compilePixelShader(L"PixelShader.hlsl", "psmain", &shader_byte_code, &size_shader);
 
-	m_ps = graphEngine->createPixelShader(shader_byte_code, size_shader);
+	m_ps = m_render_system->createPixelShader(shader_byte_code, size_shader);
 
-	graphEngine->releaseCompiledShader();
+	m_render_system->releaseCompiledShader();
 
 }
 
@@ -346,37 +347,37 @@ void AppWindow::onUpdate()
 	InputSystem::get()->update();
 
 	//CLEAR RENDER TARGET
-	graphEngine->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain, 0, 0.3f, 0.4f, 1);
+	m_render_system->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain, 0, 0.3f, 0.4f, 1);
 
 	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
 	RECT rc = this->getClientWindowRect();
-	graphEngine->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
+	m_render_system->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
 
 
 	update();
 
 	for (auto cube : primMngr->cube_list)
 	{
-		graphEngine->getImmediateDeviceContext()->setConstantBuffer(m_vs, cube->m_cb);
-		graphEngine->getImmediateDeviceContext()->setConstantBuffer(m_ps, cube->m_cb);
+		m_render_system->getImmediateDeviceContext()->setConstantBuffer(m_vs, cube->m_cb);
+		m_render_system->getImmediateDeviceContext()->setConstantBuffer(m_ps, cube->m_cb);
 	}
 
 	for (auto quad : primMngr->quad_list)
 	{
-		graphEngine->getImmediateDeviceContext()->setConstantBuffer(m_vs, quad->m_cb);
-		graphEngine->getImmediateDeviceContext()->setConstantBuffer(m_ps, quad->m_cb);
+		m_render_system->getImmediateDeviceContext()->setConstantBuffer(m_vs, quad->m_cb);
+		m_render_system->getImmediateDeviceContext()->setConstantBuffer(m_ps, quad->m_cb);
 	}
 
 	for (auto circle : primMngr->circle_list)
 	{
-		graphEngine->getImmediateDeviceContext()->setConstantBuffer(m_vs, circle->m_cb);
-		graphEngine->getImmediateDeviceContext()->setConstantBuffer(m_ps, circle->m_cb);
+		m_render_system->getImmediateDeviceContext()->setConstantBuffer(m_vs, circle->m_cb);
+		m_render_system->getImmediateDeviceContext()->setConstantBuffer(m_ps, circle->m_cb);
 	}
 
 
 	//SET DEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
-	graphEngine->getImmediateDeviceContext()->setVertexShader(m_vs);
-	graphEngine->getImmediateDeviceContext()->setPixelShader(m_ps);
+	m_render_system->getImmediateDeviceContext()->setVertexShader(m_vs);
+	m_render_system->getImmediateDeviceContext()->setPixelShader(m_ps);
 
 	for (auto cube : primMngr->cube_list)
 		cube->update();

@@ -57,6 +57,7 @@ private:
 	ConstantBuffer* m_cb;
 	GraphicsEngine* graphEngine;
 	PrimitiveManager* primMngr;
+	RenderSystem* m_render_system;
 
 
 private:
