@@ -27,43 +27,38 @@ void Quad::create()
 
 
 	//Vertex Buffer Creation
-	this->m_vb = graphEngine->createVertexBuffer();
 	UINT size_list = ARRAYSIZE(this->vertex_list);
-
-	this->m_vb->load(this->vertex_list, sizeof(vertex), size_list, this->shader_byte_code, size_shader);
+	this->m_vb = m_system->createVertexBuffer(this->vertex_list, sizeof(vertex), size_list, this->shader_byte_code, size_shader);
 
 	//Index Buffer Creation
-	this->m_ib = graphEngine->createIndexBuffer();
 	UINT size_index_list = ARRAYSIZE(index_list);
+	this->m_ib = m_system->createIndexBuffer(index_list, size_index_list);
 
-	this->m_ib->load(index_list, size_index_list);
-
+	//Constant Buffer Creation
 	constant cc;
 	cc.m_time = 0;
-
-	this->m_cb = graphEngine->createConstantBuffer();
-	this->m_cb->load(&cc, sizeof(constant));
+	this->m_cb = m_system->createConstantBuffer(&cc, sizeof(constant));
 }
 
 void Quad::update()
 {
 
 	//SET THE VERTICES OF THE TRIANGLE TO DRAW
-	graphEngine->getImmediateDeviceContext()->setVertexBuffer(this->m_vb);
+	m_system->getImmediateDeviceContext()->setVertexBuffer(this->m_vb);
 
 	//SET THE INDICES OF THE TRIANGLE TO DRAW
-	graphEngine->getImmediateDeviceContext()->setIndexBuffer(this->m_ib);
+	m_system->getImmediateDeviceContext()->setIndexBuffer(this->m_ib);
 
 	//FINALLY DRAW THE TRIANGLE
 	//graphEngine->getImmediateDeviceContext()->drawTriangleStrip(this->m_vb->getSizeVertexList(), 0);
-	graphEngine->getImmediateDeviceContext()->drawIndexedTriangleList(this->m_ib->getSizeIndexList(), 0, 0);
+	m_system->getImmediateDeviceContext()->drawIndexedTriangleList(this->m_ib->getSizeIndexList(), 0, 0);
 }
 
 void Quad::release()
 {
-	this->m_cb->release();
-	this->m_ib->release();
-	this->m_vb->release();
+	delete m_cb;
+	delete m_ib;
+	delete m_vb;
 	delete this;
 }
 

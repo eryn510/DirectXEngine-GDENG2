@@ -191,10 +191,9 @@ void AppWindow::createGraphicsWindow()
 
 	this->isPerspective = true;
 
-	m_swap_chain = m_render_system->createSwapChain();
-
 	RECT rc = this->getClientWindowRect();
-	m_swap_chain->init(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
+	m_swap_chain = m_render_system->createSwapChain(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
+
 
 	m_world_cam.setTranslation(Vector3D(0.0f, 0.0f, -2.0f));
 
@@ -395,9 +394,6 @@ void AppWindow::onUpdate()
 void AppWindow::onDestroy()
 {
 	Window::onDestroy();
-	m_swap_chain->release();
-	m_vs->release();
-	m_ps->release();
 	graphEngine->release();
 	primMngr->release();
 }

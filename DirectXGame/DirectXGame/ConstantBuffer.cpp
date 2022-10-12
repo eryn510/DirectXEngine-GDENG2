@@ -2,16 +2,10 @@
 #include "GraphicsEngine.h"
 #include "DeviceContext.h"
 #include "RenderSystem.h"
+#include <exception>
 
-ConstantBuffer::ConstantBuffer(RenderSystem* system) : m_system(system)
+ConstantBuffer::ConstantBuffer(void* buffer, UINT size_buffer, RenderSystem* system) : m_system(system)
 {
-}
-
-bool ConstantBuffer::load(void* buffer, UINT size_buffer)
-{
-	if (m_buffer)m_buffer->Release();
-
-
 	D3D11_BUFFER_DESC buff_desc = {};
 	buff_desc.Usage = D3D11_USAGE_DEFAULT;
 	buff_desc.ByteWidth = size_buffer;
@@ -23,31 +17,17 @@ bool ConstantBuffer::load(void* buffer, UINT size_buffer)
 	init_data.pSysMem = buffer;
 
 	if (FAILED(m_system->m_d3d_device->CreateBuffer(&buff_desc, &init_data, &m_buffer)))
-		return false;
+		throw std::exception("ConstantBuffer not created successfully");
 
-	D3D11_INPUT_ELEMENT_DESC layout[] =
-	{
-		// SEMANTIC	NAME - SEMANTIC INDEX - FORMAT- INPUT SLOT - ALIGNED BYTE OFFSET - INPUT SLOT CLASS - INSTANCE DATA STEP RATE
-		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-
-		{"COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0}
-	};
-
-	return true;
 }
+
 
 void ConstantBuffer::update(DeviceContext* context, void* buffer)
 {
 	context->m_device_context->UpdateSubresource(this->m_buffer, NULL, NULL, buffer, NULL, NULL);
 }
 
-bool ConstantBuffer::release()
-{
-	if (m_buffer)m_buffer->Release();
-	delete this;
-	return false;
-}
-
 ConstantBuffer::~ConstantBuffer()
 {
+	if (m_buffer)m_buffer->Release();
 }

@@ -19,7 +19,7 @@ public:
 	void setAnimSpeed(float deltaTime);
 
 public:
-	GraphicsEngine *graphEngine = GraphicsEngine::getInstance();
+	RenderSystem* m_system = GraphicsEngine::getInstance()->getRenderSystem();
 
 private:
 	VertexBuffer* m_vb;

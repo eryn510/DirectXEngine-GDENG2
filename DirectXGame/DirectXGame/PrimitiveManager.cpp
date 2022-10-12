@@ -41,6 +41,10 @@ void PrimitiveManager::release()
 {
 	for (auto cube : this->cube_list)
 		cube->release();
+	for (auto quad : this->quad_list)
+		quad->release();
+	for (auto circle : this->circle_list)
+		circle->release();
 }
 
 void PrimitiveManager::create(float radius, Vector3D centerVertex, vertex vertex_list[], void* shader_byte_code, size_t size_shader, PrimitiveType primType)
