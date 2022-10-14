@@ -40,14 +40,14 @@ void PrimitiveManager::update()
 void PrimitiveManager::release()
 {
 	for (auto cube : this->cube_list)
-		cube->release();
+		cube->~Cube();
 	for (auto quad : this->quad_list)
-		quad->release();
+		quad->~Quad();
 	for (auto circle : this->circle_list)
-		circle->release();
+		circle->~Circle();
 }
 
-void PrimitiveManager::create(float radius, Vector3D centerVertex, vertex vertex_list[], void* shader_byte_code, size_t size_shader, PrimitiveType primType)
+void PrimitiveManager::create(std::string name, void* shader_byte_code, size_t size_shader, PrimitiveType primType)
 {
 	if (primType == TRIANGLE) 
 	{
@@ -55,20 +55,18 @@ void PrimitiveManager::create(float radius, Vector3D centerVertex, vertex vertex
 	}
 	else if (primType == QUAD) 
 	{
-		Quad* quad = new Quad(vertex_list, shader_byte_code, size_shader);
-		quad->create();
+		Quad* quad = new Quad(name, shader_byte_code, size_shader);
 		this->quad_list.push_back(quad);
 	}
 	else if (primType == CUBE) 
 	{
-		Cube* cube = new Cube(vertex_list, shader_byte_code, size_shader);
-		cube->create();
+		Cube* cube = new Cube(name, shader_byte_code, size_shader);
 		this->cube_list.push_back(cube);
+		std::cout << "Cube created!" << std::endl;
 	}
 	else if (primType == CIRCLE)
 	{
-		Circle* circle = new Circle(radius, centerVertex, shader_byte_code, size_shader);
-		circle->create();
+		Circle* circle = new Circle(name, shader_byte_code, size_shader);
 		this->circle_list.push_back(circle);
 	}
 		

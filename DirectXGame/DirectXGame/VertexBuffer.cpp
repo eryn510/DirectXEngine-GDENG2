@@ -45,6 +45,6 @@ UINT VertexBuffer::getSizeVertexList()
 
 VertexBuffer::~VertexBuffer()
 {
-	m_layout->Release();
-	m_buffer->Release();
+	if (m_layout)m_layout->Release();
+	if (m_buffer)m_buffer->Release();
 }

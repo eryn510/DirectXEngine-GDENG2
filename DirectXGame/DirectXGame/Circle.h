@@ -9,13 +9,12 @@ class PrimitiveManager;
 class Circle : public AGameObject
 {
 public:
-	Circle(float radius, Vector3D centerVertex, void* shader_byte_code, size_t size_shader);
+	Circle(std::string name, void* shader_byte_code, size_t size_shader);
 	~Circle();
 
 public:
-	virtual void create() override;
-	virtual void update() override;
-	virtual void release() override;
+	virtual void update(float deltaTime) override;
+	virtual void draw(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader) override;
 	void setAnimSpeed(float deltaTime);
 
 public:
@@ -25,6 +24,12 @@ private:
 	VertexBuffer* m_vb;
 	IndexBuffer* m_ib;
 	ConstantBuffer* m_cb;
+
+private:
+	float ticks = 0.0f;
+	float deltaPos = 0.0f;
+	float deltaTime = 0.0f;
+	float speed = 10.0f;
 
 private:
 	static const int arcCount = 60;

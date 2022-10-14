@@ -1,22 +1,29 @@
 #include "Cube.h"
 #include "IndexBuffer.h"
 #include "VertexBuffer.h"
+#include "InputSystem.h"
 
-Cube::Cube(vertex vertex_list[], void* shader_byte_code, size_t size_shader) : AGameObject(shader_byte_code,size_shader)
+Cube::Cube(std::string name, void* shader_byte_code, size_t size_shader) : AGameObject(name)
 {
-	memcpy(this->vertex_list, vertex_list, sizeof(vertex) * 8);
-	this->shader_byte_code = shader_byte_code;
-	this->size_shader = size_shader;
-	
-} 
+	vertex quad_list[]
+	{
+		//	X - Y - Z
+		//FRONT FACE
+		{Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
+		{Vector3D(-0.5f, 0.5f, -0.5f),	Vector3D(-0.5f, 0.5f, -0.5f),	Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
+		{Vector3D(0.5f, 0.5f, -0.5f),	Vector3D(0.5f, 0.5f, -0.5f),	Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
+		{Vector3D(0.5f, -0.5f, -0.5f),	Vector3D(0.5f, -0.5f, -0.5f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
 
-Cube::~Cube()
-{
-}
+		//BACK FACE
+		{Vector3D(0.5f, -0.5f, 0.5f),	Vector3D(0.5f, -0.5f, 0.5f),	Vector3D(0,1,0),    Vector3D(0,0.2f,0)}, //POS5
+		{Vector3D(0.5f, 0.5f, 0.5f),	Vector3D(0.5f, 0.5f, 0.5f),	Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS6
+		{Vector3D(-0.5f, 0.5f, 0.5f),	Vector3D(-0.5f, 0.5f, 0.5f),	Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS7
+		{Vector3D(-0.5f, -0.5f, 0.5f),	Vector3D(-0.5f, -0.5f, 0.5f),	Vector3D(0,1,0),    Vector3D(0,0.2f,0)} //POS8
+	};
 
-
-void Cube::create()
-{
+	//Vertex Buffer Creation
+	UINT size_list = ARRAYSIZE(quad_list);
+	this->m_vb = m_system->createVertexBuffer(quad_list, sizeof(vertex), size_list, shader_byte_code, size_shader);
 
 	unsigned int index_list[] =
 	{
@@ -40,11 +47,6 @@ void Cube::create()
 		1,0,7
 	};
 
-
-	//Vertex Buffer Creation
-	UINT size_list = ARRAYSIZE(this->vertex_list);
-	this->m_vb = m_system->createVertexBuffer(this->vertex_list, sizeof(vertex), size_list, this->shader_byte_code, size_shader);
-
 	//Index Buffer Creation
 	UINT size_index_list = ARRAYSIZE(index_list);
 	this->m_ib = m_system->createIndexBuffer(index_list, size_index_list);
@@ -53,28 +55,98 @@ void Cube::create()
 	constant cc;
 	cc.m_time = 0;
 	this->m_cb = m_system->createConstantBuffer(&cc, sizeof(constant));
+} 
+
+Cube::~Cube()
+{
+	delete this->m_cb;
+	delete this->m_ib;
+	delete this->m_vb;
 }
 
-void Cube::update()
+void Cube::update(float deltaTime)
 {
+	this->deltaTime = deltaTime;
+	if (InputSystem::get()->isKeyDown('W')) 
+	{
+		this->ticks += deltaTime;
 
-	//SET THE VERTICES OF THE TRIANGLE TO DRAW
-	m_system->getImmediateDeviceContext()->setVertexBuffer(this->m_vb);
+		float rotSpeed = this->ticks * this->speed * this->animSpeed;
+		this->setRotation(rotSpeed, rotSpeed, rotSpeed);
+	}
+	else if (InputSystem::get()->isKeyDown('S'))
+	{
+		this->ticks -= deltaTime;
 
-	//SET THE INDICES OF THE TRIANGLE TO DRAW
-	m_system->getImmediateDeviceContext()->setIndexBuffer(this->m_ib);
-
-	//FINALLY DRAW THE TRIANGLE
-	m_system->getImmediateDeviceContext()->drawIndexedTriangleList(this->m_ib->getSizeIndexList(), 0, 0);
+		float rotSpeed = this->ticks * this->speed * this->animSpeed;
+		this->setRotation(rotSpeed, rotSpeed, rotSpeed);
+	}
 }
 
-void Cube::release()
+void Cube::draw(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader)
 {
-	delete m_cb;
-	delete m_ib;
-	delete m_vb;
+	DeviceContext* deviceContext = m_system->getImmediateDeviceContext();
+
+	constant cc = {};
+
+	/*
+	if (this->deltaPos > 1.0f)
+		this->deltaPos = 0.0f;
+	else
+		this->deltaPos += this->deltaTime * 0.1f;
+	*/
+
+	Matrix4x4 allMatrix; allMatrix.setIdentity();
+	Matrix4x4 translationMatrix;
+	translationMatrix.setIdentity();
+	translationMatrix.setTranslation(this->getLocalPosition());
+
+	Matrix4x4 scaleMatrix;
+	scaleMatrix.setIdentity();
+	scaleMatrix.setScale(this->getLocalScale());
+
+	
+	Vector3D rotation = this->getLocalRotation();
+
+	Matrix4x4 zMatrix;
+	zMatrix.setIdentity();
+	zMatrix.setRotationZ(rotation.m_z);
+
+	Matrix4x4 xMatrix;
+	xMatrix.setIdentity();
+	xMatrix.setRotationX(rotation.m_x);
+
+	Matrix4x4 yMatrix;
+	yMatrix.setIdentity();
+	yMatrix.setRotationY(rotation.m_y);
+
+	Matrix4x4 rotMatrix; rotMatrix.setIdentity();
+	rotMatrix = rotMatrix * xMatrix * yMatrix * zMatrix;
+	allMatrix = allMatrix * scaleMatrix * rotMatrix;
+	allMatrix *= translationMatrix;
+	cc.m_world = allMatrix;
+
+	//std::cout << allMatrix.m_mat[0][0] << "," << allMatrix.m_mat[1][1] << "," << allMatrix.m_mat[2][2] << std::endl;
+
+	cc.m_view.setIdentity();
+	cc.m_proj.setOrthoLH(width / 400.0f, height / 400.0f, -4.0f, 4.0f);
+
+	this->deltaTime = EngineTime::getDeltaTime();
+	this->elapsedTime += 1000.0f * deltaTime;
+	cc.m_time = this->elapsedTime;
+
+	this->m_cb->update(deviceContext, &cc);
+
+	deviceContext->setConstantBuffer(vertexShader, this->m_cb);
+	deviceContext->setConstantBuffer(pixelShader, this->m_cb);
+
+	deviceContext->setVertexBuffer(this->m_vb);
+	deviceContext->setIndexBuffer(this->m_ib);
+
+	deviceContext->drawIndexedTriangleList(this->m_ib->getSizeIndexList(), 0, 0);
 }
 
-void Cube::setAnimSpeed(float deltaTime)
+void Cube::setAnimSpeed(float multiplier)
 {
+	this->animSpeed = multiplier;
 }

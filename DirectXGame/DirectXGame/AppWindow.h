@@ -54,7 +54,6 @@ private:
 	SwapChain* m_swap_chain;
 	VertexShader* m_vs; 
 	PixelShader* m_ps;
-	ConstantBuffer* m_cb;
 	GraphicsEngine* graphEngine;
 	PrimitiveManager* primMngr;
 	RenderSystem* m_render_system;

@@ -31,5 +31,5 @@ UINT IndexBuffer::getSizeIndexList()
 
 IndexBuffer::~IndexBuffer()
 {
-	m_buffer->Release();
+	if (m_buffer)m_buffer->Release();
 }

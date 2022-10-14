@@ -1,6 +1,7 @@
 #include "AppWindow.h"
 #include <Windows.h>
 #include "InputSystem.h"
+#include "MathUtils.h"
 
 AppWindow* AppWindow::sharedInstance = NULL;
 
@@ -189,146 +190,35 @@ void AppWindow::createGraphicsWindow()
 	primMngr = PrimitiveManager:: getInstance();
 	m_render_system = graphEngine->getRenderSystem();
 
-	this->isPerspective = true;
-
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain = m_render_system->createSwapChain(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
 
-	m_world_cam.setTranslation(Vector3D(0.0f, 0.0f, -2.0f));
+	//m_world_cam.setTranslation(Vector3D(0.0f, 0.0f, -2.0f));
 
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
 
 	//Vertex Shader
 	m_render_system->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
-
 	m_vs = m_render_system->createVertexShader(shader_byte_code, size_shader);
 
+	for (int i = 0; i < 100; i++) {
+		float x = MathUtils::randomFloat(-0.75, 0.75);
+		float y = MathUtils::randomFloat(-0.75, 0.75);
 
 
-	
-	vertex vertex_list[]
-	{
-		//	X - Y - Z
-		//FRONT FACE
-		{Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
-		{Vector3D(-0.5f, 0.5f, -0.5f),	Vector3D(-0.5f, 0.5f, -0.5f),	Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
-		{Vector3D(0.5f, 0.5f, -0.5f),	Vector3D(0.5f, 0.5f, -0.5f),	Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
-		{Vector3D(0.5f, -0.5f, -0.5f),	Vector3D(0.5f, -0.5f, -0.5f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
+		primMngr->create("Cube", shader_byte_code, size_shader, CUBE); 
+		primMngr->cube_list.back()->setAnimSpeed(MathUtils::randomFloat(-3.75, 3.75));
+		primMngr->cube_list.back()->setPosition(x, y, 0.0f);
+		primMngr->cube_list.back()->setScale(0.25f, 0.25f, 0.25f);
+	}
 
-		//BACK FACE
-		{Vector3D(0.5f, -0.5f, 0.5f),	Vector3D(0.5f, -0.5f, 0.5f),	Vector3D(0,1,0),    Vector3D(0,0.2f,0)}, //POS5
-		{Vector3D(0.5f, 0.5f, 0.5f),	Vector3D(0.5f, 0.5f, 0.5f),	Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS6
-		{Vector3D(-0.5f, 0.5f, 0.5f),	Vector3D(-0.5f, 0.5f, 0.5f),	Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS7
-		{Vector3D(-0.5f, -0.5f, 0.5f),	Vector3D(-0.5f, -0.5f, 0.5f),	Vector3D(0,1,0),    Vector3D(0,0.2f,0)} //POS8
-	};
-
-	vertex vertex_list1[]
-	{
-		//	X - Y - Z
-		//FRONT FACE
-		{Vector3D(-1.0f, -1.0f, -1.0f),	Vector3D(-1.0f, -1.0f, -1.0f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
-		{Vector3D(-1.0f, -0.5f, -1.0f),	Vector3D(-1.0f, -0.5f, -1.0f),	Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
-		{Vector3D(-0.5f, -0.5f, -1.0f),	Vector3D(-0.5f, -0.5f, -1.0f),	Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
-		{Vector3D(-0.5f, -1.0f, -1.0f),	Vector3D(-0.5f, -1.0f, -1.0f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
-
-		//BACK FACE
-		{Vector3D(-0.5f, -1.0f, -0.5f),	Vector3D(-0.5f, -1.0f, -0.5f),	Vector3D(0,1,0),    Vector3D(0,0.2f,0)}, //POS5
-		{Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS6
-		{Vector3D(-1.0f, -0.5f, -0.5f),	Vector3D(-1.0f, -0.5f, -0.5f),	Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS7
-		{Vector3D(-1.0f, -1.0f, -0.5f),	Vector3D(-1.0f, -1.0f, -0.5f),	Vector3D(0,1,0),    Vector3D(0,0.2f,0)} //POS8
-	};
-
-	vertex vertex_list2[]
-	{
-		//	X - Y - Z
-		//FRONT FACE
-		{Vector3D(1.0f, 1.0f, 1.0f),  Vector3D(1.0f, 1.0f, 1.0f),		Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
-		{Vector3D(1.0f, 0.5f, 1.0f),  Vector3D(1.0f, 0.5f, 1.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
-		{Vector3D(0.5f, 0.5f, 1.0f),  Vector3D(0.5f, 0.5f, 1.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
-		{Vector3D(0.5f, 1.0f, 1.0f),  Vector3D(0.5f, 1.0f, 1.0f),		Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
-
-		//BACK FACE
-		{Vector3D(0.5f, 1.0f, 0.5f),  Vector3D(0.5f, 1.0f, 0.5f),		Vector3D(0,1,0),    Vector3D(0,0.2f,0)}, //POS5
-		{Vector3D(0.5f, 0.5f, 0.5f),  Vector3D(0.5f, 0.5f, 0.5f),		Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS6
-		{Vector3D(1.0f, 0.5f, 0.5f),  Vector3D(1.0f, 0.5f, 0.5f),		Vector3D(0,1,1),    Vector3D(0,0.2f,0.2f)}, //POS7
-		{Vector3D(1.0f, 1.0f, 0.5f),  Vector3D(1.0f, 1.0f, 0.5f),		Vector3D(0,1,0),    Vector3D(0,0.2f,0)} //POS8
-	};
-	
-	primMngr->create(0, Vector3D(0, 0, 0), vertex_list, shader_byte_code, size_shader, CUBE);
-	primMngr->create(0, Vector3D(0, 0, 0), vertex_list1, shader_byte_code, size_shader, CUBE);
-	primMngr->create(0, Vector3D(0, 0, 0), vertex_list2, shader_byte_code, size_shader, CUBE);
-	
-
-	vertex vertex_list3[]
-	{
-		//	X - Y - Z
-		//FRONT FACE
-		{Vector3D(-0.5f, -0.5f, 0.0f),  Vector3D(-0.5f, -0.5f, 0.0f),		Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
-		{Vector3D(-0.5f, 0.5f, 0.0f),	Vector3D(-0.5f, 0.5f, 0.0f),	Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
-		{Vector3D(0.5f, 0.5f, 0.0f),	Vector3D(0.5f, 0.5f, 0.0f),	Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
-		{Vector3D(0.5f, -0.5f, 0.0f),	Vector3D(0.5f, -0.5f, 0.0f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
-	};
-
-	vertex vertex_list4[]
-	{
-		//	X - Y - Z
-		//FRONT FACE
-		{Vector3D(-1.0f, -1.0f, 0.0f),	Vector3D(-1.0f, -1.0f, 0.0f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
-		{Vector3D(-1.0f, -0.5f, 0.0f),	Vector3D(-1.0f, -0.5f, 0.0f),	Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
-		{Vector3D(-0.5f, -0.5f, 0.0f),	Vector3D(-0.5f, -0.5f, 0.0f),	Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
-		{Vector3D(-0.5f, -1.0f, 0.0f),	Vector3D(-0.5f, -1.0f, 0.0f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
-	};
-
-	vertex vertex_list5[]
-	{
-		//	X - Y - Z
-		//FRONT FACE
-		{Vector3D(1.0f, 1.0f, 0.0f),  Vector3D(1.0f, 1.0f, 0.0f),		Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
-		{Vector3D(1.0f, 0.5f, 0.0f),  Vector3D(1.0f, 0.5f, 0.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
-		{Vector3D(0.5f, 0.5f, 0.0f),  Vector3D(0.5f, 0.5f, 0.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
-		{Vector3D(0.5f, 1.0f, 0.0f),  Vector3D(0.5f, 1.0f, 0.0f),		Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
-	};
-
-	primMngr->create(0, Vector3D(0, 0, 0), vertex_list3, shader_byte_code, size_shader, QUAD);
-	primMngr->create(0, Vector3D(0, 0, 0), vertex_list4, shader_byte_code, size_shader, QUAD);
-	primMngr->create(0, Vector3D(0, 0, 0), vertex_list5, shader_byte_code, size_shader, QUAD);
-	
-
-	/*
-	vertex vertex_list6[]
-	{
-		//	X - Y - Z
-		//FRONT FACE
-		{Vector3D(-0.8f, -0.8f, 0.0f), Vector3D(-0.32f,-0.11f,0.0f),	Vector3D(1,0,0),    Vector3D(0,1,1)}, //POS1
-		{Vector3D(-0.9f, 0.1f, 0.0f),	Vector3D(-0.11f,0.78f,0.0f),	Vector3D(1,0,0),    Vector3D(1,1,0)}, //POS2
-		{Vector3D(0.0f, -0.4f, 0.0f),	Vector3D(0.75f,-0.73f,0.0f),	Vector3D(0,0,1),    Vector3D(1,0,0)}, //POS3
-		{Vector3D(0.0f, 0.1f, 0.0f),	Vector3D(0.88f,0.77f,0.0f),		Vector3D(1,1,1),    Vector3D(0,1,0)}, //POS4
-	};
-
-	vertex vertex_list7[]
-	{
-		//	X - Y - Z
-		//FRONT FACE
-		{Vector3D(-0.8f, -0.95f, 0.0f), Vector3D(-0.32f,-0.05f,0.0f),	Vector3D(1,0,0),    Vector3D(0,1,1)}, //POS1
-		{Vector3D(-0.9f, 0.15f, 0.0f),	Vector3D(0.0f,1.0f,0.0f),		Vector3D(1,0,0),    Vector3D(1,1,0)}, //POS2
-		{Vector3D(1.0f, -0.4f, 0.0f),	Vector3D(0.0f,-0.9f,0.0f),		Vector3D(0,0,1),    Vector3D(1,0,0)}, //POS3
-		{Vector3D(-0.8f, -0.8f, 0.0f),	Vector3D(0.88f,0.77f,0.0f),		Vector3D(1,1,1),    Vector3D(0,1,0)}, //POS4
-	};
-
-	primMngr->create(vertex_list7, shader_byte_code, size_shader, QUAD);
-	*/
-	
-	primMngr->create(1, Vector3D(0, 0, 0), nullptr, shader_byte_code, size_shader, CIRCLE);
-	
 	m_render_system->releaseCompiledShader();
 
 	//Pixel Shader
 	m_render_system->compilePixelShader(L"PixelShader.hlsl", "psmain", &shader_byte_code, &size_shader);
-
 	m_ps = m_render_system->createPixelShader(shader_byte_code, size_shader);
-
 	m_render_system->releaseCompiledShader();
 
 }
@@ -345,47 +235,38 @@ void AppWindow::onUpdate()
 
 	InputSystem::get()->update();
 
+	//SET DEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
+	m_render_system->getImmediateDeviceContext()->setVertexShader(this->m_vs);
+	m_render_system->getImmediateDeviceContext()->setPixelShader(this->m_ps);
 	//CLEAR RENDER TARGET
-	m_render_system->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain, 0, 0.3f, 0.4f, 1);
+	m_render_system->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain, 0, 0.5f, 0.5f, 1);
 
 	//SET VIEWPORT OF RENDER TARGET IN WHICH WE HAVE TO DRAW
 	RECT rc = this->getClientWindowRect();
-	m_render_system->getImmediateDeviceContext()->setViewportSize(rc.right - rc.left, rc.bottom - rc.top);
+	float width = rc.right - rc.left;
+	float height = rc.bottom - rc.top;
+	m_render_system->getImmediateDeviceContext()->setViewportSize(width, height);
+
+	//update();
 
 
-	update();
-
-	for (auto cube : primMngr->cube_list)
+	for (auto cube : primMngr->cube_list) 
 	{
-		m_render_system->getImmediateDeviceContext()->setConstantBuffer(m_vs, cube->m_cb);
-		m_render_system->getImmediateDeviceContext()->setConstantBuffer(m_ps, cube->m_cb);
+		cube->update(EngineTime::getDeltaTime());
+		cube->draw(width, height, this->m_vs, this->m_ps);
 	}
 
-	for (auto quad : primMngr->quad_list)
+	for (auto quad : primMngr->quad_list) 
 	{
-		m_render_system->getImmediateDeviceContext()->setConstantBuffer(m_vs, quad->m_cb);
-		m_render_system->getImmediateDeviceContext()->setConstantBuffer(m_ps, quad->m_cb);
+		quad->update(EngineTime::getDeltaTime());
+		quad->draw(width, height, this->m_vs, this->m_ps);
 	}
 
-	for (auto circle : primMngr->circle_list)
+	for (auto circle : primMngr->circle_list) 
 	{
-		m_render_system->getImmediateDeviceContext()->setConstantBuffer(m_vs, circle->m_cb);
-		m_render_system->getImmediateDeviceContext()->setConstantBuffer(m_ps, circle->m_cb);
+		circle->update(EngineTime::getDeltaTime());
+		circle->draw(width, height, this->m_vs, this->m_ps);
 	}
-
-
-	//SET DEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
-	m_render_system->getImmediateDeviceContext()->setVertexShader(m_vs);
-	m_render_system->getImmediateDeviceContext()->setPixelShader(m_ps);
-
-	for (auto cube : primMngr->cube_list)
-		cube->update();
-
-	for (auto quad : primMngr->quad_list)
-		quad->update();
-
-	for (auto circle : primMngr->circle_list)
-		circle->update();
 	
 	m_swap_chain->present(true);
 
@@ -429,10 +310,6 @@ void AppWindow::onKeyDown(int key)
 	{
 		//m_rot_y -= 3.14f * m_delta_time;
 		m_rightward = 1.0f;
-	}
-	else if (key == VK_LSHIFT) 
-	{
-		this->isPerspective = !this->isPerspective;
 	}
 }
 

@@ -27,6 +27,28 @@ public:
 		return v;
 	}
 
+	static Vector3D zeros()
+	{
+		Vector3D v;
+
+		v.m_x = 0.0f;
+		v.m_y = 0.0f;
+		v.m_z = 0.0f;
+
+		return v;
+	}
+
+	static Vector3D ones()
+	{
+		Vector3D v;
+
+		v.m_x = 1.0f;
+		v.m_y = 1.0f;
+		v.m_z = 1.0f;
+
+		return v;
+	}
+
 	Vector3D operator *(float num)
 	{
 		return Vector3D(m_x * num, m_y * num, m_z * num);

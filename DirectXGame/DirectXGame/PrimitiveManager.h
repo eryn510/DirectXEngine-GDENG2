@@ -33,7 +33,7 @@ public:
 	void update();
 	void release();
 
-	void create(float radius, Vector3D centerVertex, vertex vertex_list[], void* shader_byte_code, size_t size_shader, PrimitiveType primType);
+	void create(std::string name, void* shader_byte_code, size_t size_shader, PrimitiveType primType);
 
 private:
 	std::list<Cube*> cube_list;
