@@ -35,6 +35,40 @@ public:
 		m_mat[2][2] = scale.m_z;
 	}
 
+	void setQuaternionRotation(float theta, float x, float y, float z)
+	{
+		float normU, qx, qy, qz, qw;
+
+		//normalizing axis vector
+		normU = sqrt((x * x) + (y * y) + (z * z));
+		qx = x / normU;
+		qy = y / normU;
+		qz = z / normU;
+
+		//quaternion q setup
+		qw = cos(theta / 2);
+		qx = qx * sin(theta / 2);
+		qy = qy * sin(theta / 2);
+		qz = qz * sin(theta / 2);
+
+		//set the rotation matrix
+
+		this->m_mat[0][0] = (qw * qw) + (qx * qx) - (qy * qy) - (qz * qz);
+		this->m_mat[0][1] = (2 * qx * qy) - (2 * qw * qz);
+		this->m_mat[0][2] = (2 * qx * qz) + (2 * qw * qy);
+		this->m_mat[0][3] = 0;
+
+		this->m_mat[1][0] = (2 * qx * qy) + (2 * qw * qz);
+		this->m_mat[1][1] = (qw * qw) - (qx * qx) + (qy * qy) - (qz * qz);
+		this->m_mat[1][2] = (2 * qy * qz) - (2 * qw * qx);
+		this->m_mat[1][3] = 0;
+
+		this->m_mat[2][0] = (2 * qx * qz) - (2 * qw * qy);
+		this->m_mat[2][1] = (2 * qy * qz) + (2 * qw * qx);
+		this->m_mat[2][2] = (qw * qw) - (qx * qx) - (qy * qy) + (qz * qz);
+		this->m_mat[2][3] = 0;
+	}
+
 	void setRotationX(float x) 
 	{
 		m_mat[1][1] = cos(x);

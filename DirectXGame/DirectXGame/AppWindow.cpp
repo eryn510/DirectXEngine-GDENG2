@@ -189,6 +189,8 @@ void AppWindow::createGraphicsWindow()
 	PrimitiveManager::initialize();
 	primMngr = PrimitiveManager:: getInstance();
 	m_render_system = graphEngine->getRenderSystem();
+	CameraManager::initialize();
+	m_camera_manager = CameraManager::getInstance();
 
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain = m_render_system->createSwapChain(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
@@ -203,6 +205,7 @@ void AppWindow::createGraphicsWindow()
 	m_render_system->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
 	m_vs = m_render_system->createVertexShader(shader_byte_code, size_shader);
 
+	/*
 	for (int i = 0; i < 100; i++) {
 		float x = MathUtils::randomFloat(-0.75, 0.75);
 		float y = MathUtils::randomFloat(-0.75, 0.75);
@@ -213,6 +216,10 @@ void AppWindow::createGraphicsWindow()
 		primMngr->cube_list.back()->setPosition(x, y, 0.0f);
 		primMngr->cube_list.back()->setScale(0.25f, 0.25f, 0.25f);
 	}
+	*/
+
+	primMngr->create("Cube", shader_byte_code, size_shader, CUBE);
+	primMngr->create("Plane", shader_byte_code, size_shader, PLANE);
 
 	m_render_system->releaseCompiledShader();
 
@@ -249,6 +256,8 @@ void AppWindow::onUpdate()
 
 	//update();
 
+	m_camera_manager->update();
+
 
 	for (auto cube : primMngr->cube_list) 
 	{
@@ -267,6 +276,13 @@ void AppWindow::onUpdate()
 		circle->update(EngineTime::getDeltaTime());
 		circle->draw(width, height, this->m_vs, this->m_ps);
 	}
+
+	for (auto plane : primMngr->plane_list)
+	{
+		plane->update(EngineTime::getDeltaTime());
+		plane->draw(width, height, this->m_vs, this->m_ps);
+	}
+
 	
 	m_swap_chain->present(true);
 

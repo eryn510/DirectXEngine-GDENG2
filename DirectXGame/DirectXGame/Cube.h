@@ -2,6 +2,7 @@
 #include "AGameObject.h"
 #include "GraphicsEngine.h"
 #include "Vector3D.h"
+#include "Prerequisites.h"
 
 class AppWindow;
 class PrimitiveManager;
@@ -32,6 +33,9 @@ private:
 	float speed = 1.0f;
 	float elapsedTime = 0.0f;
 	float animSpeed = 1.0f;
+
+
+	Matrix4x4 m_world_cam;
 
 private:
 	vertex vertex_list[8] = {};

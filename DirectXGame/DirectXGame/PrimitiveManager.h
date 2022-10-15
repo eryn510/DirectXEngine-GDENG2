@@ -3,13 +3,15 @@
 #include "Cube.h"
 #include "Quad.h"
 #include "Circle.h"
+#include "Plane.h"
 
 enum PrimitiveType
 {
 	TRIANGLE = 0,
 	QUAD,
 	CUBE,
-	CIRCLE
+	CIRCLE,
+	PLANE
 };
 
 class AppWindow;
@@ -39,6 +41,7 @@ private:
 	std::list<Cube*> cube_list;
 	std::list<Quad*> quad_list;
 	std::list<Circle*> circle_list;
+	std::list<Plane*> plane_list;
 
 private:
 	friend class AppWindow;

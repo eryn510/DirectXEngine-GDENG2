@@ -45,6 +45,8 @@ void PrimitiveManager::release()
 		quad->~Quad();
 	for (auto circle : this->circle_list)
 		circle->~Circle();
+	for (auto plane : this->plane_list)
+		plane->~Plane();
 }
 
 void PrimitiveManager::create(std::string name, void* shader_byte_code, size_t size_shader, PrimitiveType primType)
@@ -68,6 +70,12 @@ void PrimitiveManager::create(std::string name, void* shader_byte_code, size_t s
 	{
 		Circle* circle = new Circle(name, shader_byte_code, size_shader);
 		this->circle_list.push_back(circle);
+	}
+	else if (primType == PLANE)
+	{
+		Plane* plane = new Plane(name, shader_byte_code, size_shader);
+		this->plane_list.push_back(plane);
+		std::cout << "Plane created!" << std::endl;
 	}
 		
 }

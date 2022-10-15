@@ -147,6 +147,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AppWindow.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="ConstantBuffer.cpp" />
     <ClCompile Include="Cube.cpp" />
@@ -157,6 +159,7 @@
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PixelShader.cpp" />
+    <ClCompile Include="Plane.cpp" />
     <ClCompile Include="PrimitiveManager.cpp" />
     <ClCompile Include="Quad.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
@@ -168,6 +171,8 @@
   <ItemGroup>
     <ClInclude Include="AGameObject.h" />
     <ClInclude Include="AppWindow.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="CameraManager.h" />
     <ClInclude Include="Circle.h" />
     <ClInclude Include="ConstantBuffer.h" />
     <ClInclude Include="Cube.h" />
@@ -180,6 +185,7 @@
     <ClInclude Include="MathUtils.h" />
     <ClInclude Include="Matrix4x4.h" />
     <ClInclude Include="PixelShader.h" />
+    <ClInclude Include="Plane.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Prerequisites.h" />
     <ClInclude Include="PrimitiveManager.h" />

@@ -22,23 +22,8 @@
     <Filter Include="GameEngine\Managers">
       <UniqueIdentifier>{69bf49d1-007f-4c63-a30d-bd0cf8ac6d79}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameEngine\Managers\GameObject">
-      <UniqueIdentifier>{0c98eb25-4ffd-4419-b994-8e18207de6ef}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameEngine\Managers\GameObject\Primitives">
-      <UniqueIdentifier>{acb7bbf8-9101-4db2-a718-3af9edb44dc7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameEngine\Managers\GameObject\Primitives\Cube">
-      <UniqueIdentifier>{73744ff9-b87a-401c-adcc-e4433ebe0f4e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameEngine\Managers\GameObject\Primitives\Quad">
-      <UniqueIdentifier>{41b27d90-b0cf-4260-a742-bf94e7e0f6e2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameEngine\EngineTime">
       <UniqueIdentifier>{8a9681d6-935f-4ee5-a7e4-91c4b36033d7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameEngine\Managers\GameObject\Primitives\Circle">
-      <UniqueIdentifier>{b636b3a4-f8bc-4962-91a1-2af0288c2450}</UniqueIdentifier>
     </Filter>
     <Filter Include="GameEngine\GraphicsEngine\RenderSystem">
       <UniqueIdentifier>{571f6c66-6d9e-4d08-8786-e2d493b0e408}</UniqueIdentifier>
@@ -63,6 +48,27 @@
     </Filter>
     <Filter Include="GameEngine\GraphicsEngine\RenderSystem\VertexShader">
       <UniqueIdentifier>{d65d1515-cbf1-45b7-8ca9-bdd66d0610bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\GameObject">
+      <UniqueIdentifier>{0c98eb25-4ffd-4419-b994-8e18207de6ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\GameObject\Primitives">
+      <UniqueIdentifier>{acb7bbf8-9101-4db2-a718-3af9edb44dc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\GameObject\Primitives\Cube">
+      <UniqueIdentifier>{73744ff9-b87a-401c-adcc-e4433ebe0f4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\GameObject\Primitives\Quad">
+      <UniqueIdentifier>{41b27d90-b0cf-4260-a742-bf94e7e0f6e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\GameObject\Primitives\Circle">
+      <UniqueIdentifier>{b636b3a4-f8bc-4962-91a1-2af0288c2450}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\GameObject\Primitives\Plane">
+      <UniqueIdentifier>{73423dbf-1fa2-4ac5-ae10-6355af77dcb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\GameObject\Camera">
+      <UniqueIdentifier>{36b049d4-0554-4f83-9e76-5d0903ef5dea}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -102,23 +108,32 @@
     <ClCompile Include="InputSystem.cpp">
       <Filter>GameEngine\InputSystem</Filter>
     </ClCompile>
-    <ClCompile Include="PrimitiveManager.cpp">
-      <Filter>GameEngine\Managers\GameObject\Primitives</Filter>
-    </ClCompile>
     <ClCompile Include="Cube.cpp">
-      <Filter>GameEngine\Managers\GameObject\Primitives\Cube</Filter>
+      <Filter>GameEngine\GameObject\Primitives\Cube</Filter>
     </ClCompile>
     <ClCompile Include="Quad.cpp">
-      <Filter>GameEngine\Managers\GameObject\Primitives\Quad</Filter>
+      <Filter>GameEngine\GameObject\Primitives\Quad</Filter>
     </ClCompile>
     <ClCompile Include="EngineTime.cpp">
       <Filter>GameEngine\EngineTime</Filter>
     </ClCompile>
     <ClCompile Include="Circle.cpp">
-      <Filter>GameEngine\Managers\GameObject\Primitives\Circle</Filter>
+      <Filter>GameEngine\GameObject\Primitives\Circle</Filter>
     </ClCompile>
     <ClCompile Include="RenderSystem.cpp">
       <Filter>GameEngine\GraphicsEngine\RenderSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Plane.cpp">
+      <Filter>GameEngine\GameObject\Primitives\Plane</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>GameEngine\GameObject\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraManager.cpp">
+      <Filter>GameEngine\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="PrimitiveManager.cpp">
+      <Filter>GameEngine\Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -168,16 +183,13 @@
       <Filter>GameEngine\Math</Filter>
     </ClInclude>
     <ClInclude Include="AGameObject.h">
-      <Filter>GameEngine\Managers\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="PrimitiveManager.h">
-      <Filter>GameEngine\Managers\GameObject\Primitives</Filter>
+      <Filter>GameEngine\GameObject</Filter>
     </ClInclude>
     <ClInclude Include="Cube.h">
-      <Filter>GameEngine\Managers\GameObject\Primitives\Cube</Filter>
+      <Filter>GameEngine\GameObject\Primitives\Cube</Filter>
     </ClInclude>
     <ClInclude Include="Quad.h">
-      <Filter>GameEngine\Managers\GameObject\Primitives\Quad</Filter>
+      <Filter>GameEngine\GameObject\Primitives\Quad</Filter>
     </ClInclude>
     <ClInclude Include="Vector4D.h">
       <Filter>GameEngine\Math</Filter>
@@ -186,7 +198,7 @@
       <Filter>GameEngine\EngineTime</Filter>
     </ClInclude>
     <ClInclude Include="Circle.h">
-      <Filter>GameEngine\Managers\GameObject\Primitives\Circle</Filter>
+      <Filter>GameEngine\GameObject\Primitives\Circle</Filter>
     </ClInclude>
     <ClInclude Include="RenderSystem.h">
       <Filter>GameEngine\GraphicsEngine\RenderSystem</Filter>
@@ -196,6 +208,18 @@
     </ClInclude>
     <ClInclude Include="MathUtils.h">
       <Filter>GameEngine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Plane.h">
+      <Filter>GameEngine\GameObject\Primitives\Plane</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>GameEngine\GameObject\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraManager.h">
+      <Filter>GameEngine\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="PrimitiveManager.h">
+      <Filter>GameEngine\Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

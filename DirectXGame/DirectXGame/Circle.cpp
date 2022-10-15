@@ -77,7 +77,21 @@ Circle::~Circle()
 
 void Circle::update(float deltaTime)
 {
-	
+	this->deltaTime = deltaTime;
+	if (InputSystem::get()->isKeyDown('W'))
+	{
+		this->ticks += deltaTime;
+
+		float rotSpeed = 0;
+		this->setRotation(rotSpeed, rotSpeed, rotSpeed);
+	}
+	else if (InputSystem::get()->isKeyDown('S'))
+	{
+		this->ticks -= deltaTime;
+
+		float rotSpeed = 0;
+		this->setRotation(rotSpeed, rotSpeed, rotSpeed);
+	}
 }
 
 void Circle::draw(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader)
@@ -94,12 +108,28 @@ void Circle::draw(int width, int height, VertexShader* vertexShader, PixelShader
 	*/
 
 	Matrix4x4 allMatrix; allMatrix.setIdentity();
-	Matrix4x4 translationMatrix; translationMatrix.setTranslation(this->getLocalPosition());
-	Matrix4x4 scaleMatrix; scaleMatrix.setScale(this->getLocalScale());
+	Matrix4x4 translationMatrix;
+	translationMatrix.setIdentity();
+	translationMatrix.setTranslation(this->getLocalPosition());
+
+	Matrix4x4 scaleMatrix;
+	scaleMatrix.setIdentity();
+	scaleMatrix.setScale(this->getLocalScale());
+
+
 	Vector3D rotation = this->getLocalRotation();
-	Matrix4x4 zMatrix; zMatrix.setRotationZ(rotation.m_z);
-	Matrix4x4 xMatrix; zMatrix.setRotationX(rotation.m_x);
-	Matrix4x4 yMatrix; zMatrix.setRotationY(rotation.m_y);
+
+	Matrix4x4 zMatrix;
+	zMatrix.setIdentity();
+	zMatrix.setRotationZ(rotation.m_z);
+
+	Matrix4x4 xMatrix;
+	xMatrix.setIdentity();
+	xMatrix.setRotationX(rotation.m_x);
+
+	Matrix4x4 yMatrix;
+	yMatrix.setIdentity();
+	yMatrix.setRotationY(rotation.m_y);
 
 	Matrix4x4 rotMatrix; rotMatrix.setIdentity();
 	rotMatrix = rotMatrix * xMatrix * yMatrix * zMatrix;
@@ -107,20 +137,62 @@ void Circle::draw(int width, int height, VertexShader* vertexShader, PixelShader
 	allMatrix *= translationMatrix;
 	cc.m_world = allMatrix;
 
+	//std::cout << allMatrix.m_mat[0][0] << "," << allMatrix.m_mat[1][1] << "," << allMatrix.m_mat[2][2] << std::endl;
+
+	/*
+	this->m_world_cam.setTranslation(Vector3D(0.0f, 0.0f, -2.0f));
+
+	Matrix4x4 temp;
+
+	cc.m_world.setIdentity();
+
+	Matrix4x4 world_cam;
+	world_cam.setIdentity();
+
+	temp.setIdentity();
+	temp.setRotationX(0.0f);
+	world_cam *= temp;
+
+	temp.setIdentity();
+	temp.setRotationY(0.0f);
+	world_cam *= temp;
+
+
+	Vector3D new_pos = this->m_world_cam.getTranslation() + world_cam.getZDirection() * (0.0f * 0.3f);
+
+	new_pos = new_pos + world_cam.getXDirection() * (0.0f * 0.3f);
+
+	world_cam.setTranslation(new_pos);
+
+	this->m_world_cam = world_cam;
+
+	world_cam.inverse();
+
+	cc.m_view = world_cam;
+
+	float aspectRatio = width / height;
+	cc.m_proj.setPerspectiveFovLH(aspectRatio, aspectRatio, 0.1f, 1000.0f);
+	*/
+
 	cc.m_view.setIdentity();
 	cc.m_proj.setOrthoLH(width / 400.0f, height / 400.0f, -4.0f, 4.0f);
+
+	this->deltaTime = EngineTime::getDeltaTime();
+	this->elapsedTime += 1000.0f * deltaTime;
+	cc.m_time = this->elapsedTime;
 
 	this->m_cb->update(deviceContext, &cc);
 
 	deviceContext->setConstantBuffer(vertexShader, this->m_cb);
 	deviceContext->setConstantBuffer(pixelShader, this->m_cb);
 
-	deviceContext->setIndexBuffer(this->m_ib);
 	deviceContext->setVertexBuffer(this->m_vb);
+	deviceContext->setIndexBuffer(this->m_ib);
 
 	deviceContext->drawIndexedTriangleList(this->m_ib->getSizeIndexList(), 0, 0);
 }
 
-void Circle::setAnimSpeed(float deltaTime)
+void Circle::setAnimSpeed(float multiplier)
 {
+	this->animSpeed = multiplier;
 }

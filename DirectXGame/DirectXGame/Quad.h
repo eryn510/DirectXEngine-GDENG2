@@ -15,7 +15,7 @@ public:
 public:
 	virtual void update(float deltaTime) override;
 	virtual void draw(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader) override;
-	void setAnimSpeed(float deltaTime);
+	void setAnimSpeed(float multiplier);
 
 public:
 	RenderSystem* m_system = GraphicsEngine::getInstance()->getRenderSystem();
@@ -29,7 +29,12 @@ private:
 	float ticks = 0.0f;
 	float deltaPos = 0.0f;
 	float deltaTime = 0.0f;
-	float speed = 10.0f;
+	float speed = 1.0f;
+	float elapsedTime = 0.0f;
+	float animSpeed = 1.0f;
+
+
+	Matrix4x4 m_world_cam;
 
 private:
 	vertex vertex_list[4] = {};

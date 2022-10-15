@@ -8,6 +8,7 @@
 #include "PixelShader.h"
 #include "InputListener.h"
 #include "PrimitiveManager.h"
+#include "CameraManager.h"
 
 #include "Vector3D.h"
 #include "Matrix4x4.h"
@@ -57,6 +58,7 @@ private:
 	GraphicsEngine* graphEngine;
 	PrimitiveManager* primMngr;
 	RenderSystem* m_render_system;
+	CameraManager* m_camera_manager;
 
 
 private:
