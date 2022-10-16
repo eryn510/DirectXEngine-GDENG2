@@ -22,8 +22,6 @@ void Camera::update(float deltaTime)
 	float z = localPos.m_z;
 	float moveSpeed = 10.0f;
 
-	std::cout << "(" << x << "," << y << "," << z << ")" << std::endl;
-
 	if (this->mouseDown)
 	{
 		if (InputSystem::get()->isKeyDown('W'))
@@ -93,8 +91,8 @@ void Camera::onMouseMove(const Point& mouse_pos)
 		m_rot_y = localRot.m_y;
 		float z = localRot.m_z;
 
-		int width = (AppWindow::getInstance()->getClientWindowRect().right - AppWindow::getInstance()->getClientWindowRect().left);
-		int height = (AppWindow::getInstance()->getClientWindowRect().bottom - AppWindow::getInstance()->getClientWindowRect().top);
+		float width = (AppWindow::getInstance()->getClientWindowRect().right - AppWindow::getInstance()->getClientWindowRect().left);
+		float height = (AppWindow::getInstance()->getClientWindowRect().bottom - AppWindow::getInstance()->getClientWindowRect().top);
 
 		m_rot_x += (mouse_pos.m_y - (height / 2.0f)) * EngineTime::getDeltaTime() * 0.1f;
 		m_rot_y += (mouse_pos.m_x - (width / 2.0f)) * EngineTime::getDeltaTime() * 0.1f;
