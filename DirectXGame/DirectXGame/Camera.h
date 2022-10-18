@@ -10,7 +10,7 @@ public:
 
 	// Inherited via AGameObject
 	virtual void update(float deltaTime) override;
-	virtual void draw(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader) override;
+	virtual void draw(int width, int height, VertexShaderPtr vertexShader, PixelShaderPtr pixelShader) override;
 	Matrix4x4 getViewMatrix();
 
 

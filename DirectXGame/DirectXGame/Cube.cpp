@@ -60,9 +60,7 @@ Cube::Cube(std::string name, void* shader_byte_code, size_t size_shader) : AGame
 
 Cube::~Cube()
 {
-	delete this->m_cb;
-	delete this->m_ib;
-	delete this->m_vb;
+
 }
 
 void Cube::update(float deltaTime)
@@ -70,9 +68,9 @@ void Cube::update(float deltaTime)
 
 }
 
-void Cube::draw(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader)
+void Cube::draw(int width, int height, VertexShaderPtr vertexShader, PixelShaderPtr pixelShader)
 {
-	DeviceContext* deviceContext = m_system->getImmediateDeviceContext();
+	DeviceContextPtr deviceContext = m_system->getImmediateDeviceContext();
 
 	constant cc = {};
 

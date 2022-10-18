@@ -1,55 +1,50 @@
 #include "Window.h"
+#include <exception>
 
-Window::Window()
-{
-}
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
-	switch(msg)
-	{
-	case WM_CREATE:
-		{
-			//Event for window creation
-			Window* window = (Window*)((LPCREATESTRUCT)lparam)->lpCreateParams;
-			SetWindowLongPtr(hwnd, GWLP_USERDATA, (LONG_PTR)window);
-			window->setHWND(hwnd);
-			window->onCreate();
-			break;
-		}
-	case WM_SETFOCUS:
-	{
-		//Event for Window Focus
-		Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
-		//THIS SNIPPET OF CODE WILL RECOVER THE POINTER "THIS" FROM THE SPECIAL STRUCTURE DATA IDENTIFIED BY HWND
-		window->onFocus();
-		break;
-	}
-	case WM_KILLFOCUS:
-	{
-		//Event for Window Lost Focus
-		Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
-		//THIS SNIPPET OF CODE WILL RECOVER THE POINTER "THIS" FROM THE SPECIAL STRUCTURE DATA IDENTIFIED BY HWND
-		window->onKillFocus();
-		break;
-	}
-	case WM_DESTROY:
-		{
-			//Event for Window Destroy
-			Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
-			//THIS SNIPPET OF CODE WILL RECOVER THE POINTER "THIS" FROM THE SPECIAL STRUCTURE DATA IDENTIFIED BY HWND
+switch (msg)
+{
+case WM_CREATE:
+{
 
-			window->onDestroy();
-			::PostQuitMessage(0);
-			break;
-		}
-	default:
-		return ::DefWindowProc(hwnd, msg, wparam, lparam);
-	}
+	break;
+}
+case WM_SETFOCUS:
+{
+	//Event for Window Focus
+	Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+	//THIS SNIPPET OF CODE WILL RECOVER THE POINTER "THIS" FROM THE SPECIAL STRUCTURE DATA IDENTIFIED BY HWND
+	if (window) window->onFocus();
+	break;
+}
+case WM_KILLFOCUS:
+{
+	//Event for Window Lost Focus
+	Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+	//THIS SNIPPET OF CODE WILL RECOVER THE POINTER "THIS" FROM THE SPECIAL STRUCTURE DATA IDENTIFIED BY HWND
+	window->onKillFocus();
+	break;
+}
+case WM_DESTROY:
+{
+	//Event for Window Destroy
+	Window* window = (Window*)GetWindowLongPtr(hwnd, GWLP_USERDATA);
+	//THIS SNIPPET OF CODE WILL RECOVER THE POINTER "THIS" FROM THE SPECIAL STRUCTURE DATA IDENTIFIED BY HWND
+
+	window->onDestroy();
+	::PostQuitMessage(0);
+	break;
+}
+default:
+	return ::DefWindowProc(hwnd, msg, wparam, lparam);
+}
 
 
 
 }
-bool Window::init()
+
+Window::Window()
 {
 	WNDCLASSEX wc;
 	wc.cbClsExtra = NULL;
@@ -66,13 +61,13 @@ bool Window::init()
 	wc.lpfnWndProc = WndProc;
 
 	if (!::RegisterClassEx(&wc))
-		return false;
+		throw std::exception("Window not created");
 
-	m_hwnd=::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, L"MyWindowClass", L"DirectXApplication", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1024, 768,
-		NULL, NULL, NULL, this);
+	m_hwnd = ::CreateWindowEx(WS_EX_OVERLAPPEDWINDOW, L"MyWindowClass", L"DirectXApplication", WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, CW_USEDEFAULT, 1024, 768,
+		NULL, NULL, NULL, NULL);
 
 	if (!m_hwnd)
-		return false;
+		throw std::exception("Window not created");
 
 	::ShowWindow(m_hwnd, SW_SHOW);
 	::UpdateWindow(m_hwnd);
@@ -80,13 +75,21 @@ bool Window::init()
 	m_is_run = true;
 
 	EngineTime::initialize();
-	return true;
 }
+
 
 bool Window::broadcast()
 {
 	EngineTime::LogFrameStart();
 	MSG msg;
+
+	if (!this->m_isInit) 
+	{
+		//Event for window creation
+		SetWindowLongPtr(m_hwnd, GWLP_USERDATA, (LONG_PTR)this);
+		this->onCreate();
+		this->m_isInit = true;
+	}
 
 	this->onUpdate();
 
@@ -105,6 +108,8 @@ bool Window::broadcast()
 
 bool Window::isRun()
 {
+	if (m_is_run)
+		broadcast();
 	return m_is_run;
 }
 
@@ -114,20 +119,6 @@ RECT Window::getClientWindowRect()
 	::GetClientRect(this->m_hwnd, &rc);
 	return rc;
 }
-
-void Window::setHWND(HWND hwnd)
-{
-	this->m_hwnd = hwnd;
-}
-
-bool Window::release()
-{
-	if(!::DestroyWindow(m_hwnd))
-		return false;
-
-	return true;
-}
-
 
 void Window::onCreate()
 {
@@ -155,4 +146,5 @@ void Window::onKillFocus()
 
 Window::~Window()
 {
+	
 }

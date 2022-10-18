@@ -14,16 +14,16 @@ public:
 
 public:
 	virtual void update(float deltaTime) override;
-	virtual void draw(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader) override;
+	virtual void draw(int width, int height, VertexShaderPtr vertexShader, PixelShaderPtr pixelShader) override;
 	void setAnimSpeed(float multiplier);
 
 public:
 	RenderSystem* m_system = GraphicsEngine::getInstance()->getRenderSystem();
 
 private:
-	VertexBuffer* m_vb;
-	IndexBuffer* m_ib;
-	ConstantBuffer* m_cb;
+	VertexBufferPtr m_vb;
+	IndexBufferPtr m_ib;
+	ConstantBufferPtr m_cb;
 
 private:
 	float ticks = 0.0f;

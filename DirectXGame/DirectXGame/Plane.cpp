@@ -62,9 +62,7 @@ Plane::Plane(std::string name, void* shader_byte_code, size_t size_shader) : Cub
 
 Plane::~Plane()
 {
-	delete this->m_cb;
-	delete this->m_ib;
-	delete this->m_vb;
+
 }
 
 void Plane::update(float deltaTime)
@@ -72,7 +70,7 @@ void Plane::update(float deltaTime)
 
 }
 
-void Plane::draw(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader)
+void Plane::draw(int width, int height, VertexShaderPtr vertexShader, PixelShaderPtr pixelShader)
 {
 	Cube::draw(width, height, vertexShader, pixelShader);
 }

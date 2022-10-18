@@ -6,20 +6,11 @@ GraphicsEngine* GraphicsEngine::sharedInstance = NULL;
 
 GraphicsEngine::GraphicsEngine()
 {
-}
-
-bool GraphicsEngine::init()
-{
-	m_render_system = new RenderSystem();
-	m_render_system->init();
-	return true;
-}
-
-bool GraphicsEngine::release()
-{
-	m_render_system->release();
-	delete m_render_system;
-	return true;
+	try 
+	{
+		m_render_system = new RenderSystem();
+	}
+	catch (...) { throw std::exception("Graphics Engine not created successfully"); };
 }
 
 GraphicsEngine* GraphicsEngine::getInstance()
@@ -30,14 +21,13 @@ GraphicsEngine* GraphicsEngine::getInstance()
 void GraphicsEngine::initialize()
 {
 	sharedInstance = new GraphicsEngine();
-	sharedInstance->init();
 }
 
 void GraphicsEngine::destroy()
 {
 	if (sharedInstance != NULL)
 	{
-		sharedInstance->release();
+		sharedInstance->~GraphicsEngine();
 	}
 }
 
@@ -48,6 +38,8 @@ RenderSystem* GraphicsEngine::getRenderSystem()
 
 GraphicsEngine::~GraphicsEngine()
 {
+	m_render_system->destroy();
+	delete m_render_system;
 }
 
 

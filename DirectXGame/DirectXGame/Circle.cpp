@@ -70,33 +70,17 @@ Circle::Circle(std::string name, void* shader_byte_code, size_t size_shader) : A
 
 Circle::~Circle()
 {
-	delete this->m_cb;
-	delete this->m_ib;
-	delete this->m_vb;
+
 }
 
 void Circle::update(float deltaTime)
 {
-	this->deltaTime = deltaTime;
-	if (InputSystem::get()->isKeyDown('W'))
-	{
-		this->ticks += deltaTime;
-
-		float rotSpeed = 0;
-		this->setRotation(rotSpeed, rotSpeed, rotSpeed);
-	}
-	else if (InputSystem::get()->isKeyDown('S'))
-	{
-		this->ticks -= deltaTime;
-
-		float rotSpeed = 0;
-		this->setRotation(rotSpeed, rotSpeed, rotSpeed);
-	}
+	
 }
 
-void Circle::draw(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader)
+void Circle::draw(int width, int height, VertexShaderPtr vertexShader, PixelShaderPtr pixelShader)
 {
-	DeviceContext* deviceContext = m_system->getImmediateDeviceContext();
+	DeviceContextPtr deviceContext = m_system->getImmediateDeviceContext();
 
 	constant cc = {};
 

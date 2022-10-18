@@ -37,33 +37,17 @@ Quad::Quad(std::string name, void* shader_byte_code, size_t size_shader) : AGame
 
 Quad::~Quad()
 {
-	delete this->m_cb;
-	delete this->m_ib;
-	delete this->m_vb;
+
 }
 
 void Quad::update(float delta)
 {
-	this->deltaTime = deltaTime;
-	if (InputSystem::get()->isKeyDown('W'))
-	{
-		this->ticks += deltaTime;
-
-		float rotSpeed = this->ticks * this->speed * this->animSpeed;
-		this->setRotation(rotSpeed, rotSpeed, rotSpeed);
-	}
-	else if (InputSystem::get()->isKeyDown('S'))
-	{
-		this->ticks -= deltaTime;
-
-		float rotSpeed = this->ticks * this->speed * this->animSpeed;
-		this->setRotation(rotSpeed, rotSpeed, rotSpeed);
-	}
+	
 }
 
-void Quad::draw(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader)
+void Quad::draw(int width, int height, VertexShaderPtr vertexShader, PixelShaderPtr pixelShader)
 {
-	DeviceContext* deviceContext = m_system->getImmediateDeviceContext();
+	DeviceContextPtr deviceContext = m_system->getImmediateDeviceContext();
 
 	constant cc = {};
 

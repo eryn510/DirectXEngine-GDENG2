@@ -10,7 +10,7 @@ int main()
 
 	while (runningApp->isRun())
 	{
-		runningApp->broadcast();
+		
 	}
 
 	return 0;

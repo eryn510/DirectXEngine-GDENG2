@@ -17,9 +17,6 @@
 class AppWindow : public Window, public InputListener
 {
 public:
-	void update();
-
-public:
 	static AppWindow* getInstance();
 	static void initialize();
 	static void destroy();
@@ -52,13 +49,14 @@ public:
 	virtual void onRightMouseUp(const Point& delta_mouse_pos) override;
 
 private:
-	SwapChain* m_swap_chain;
-	VertexShader* m_vs; 
-	PixelShader* m_ps;
+	SwapChainPtr m_swap_chain;
+	VertexShaderPtr m_vs;
+	PixelShaderPtr m_ps;
 	GraphicsEngine* graphEngine;
 	PrimitiveManager* primMngr;
 	RenderSystem* m_render_system;
 	CameraManager* m_camera_manager;
+	InputSystem* m_input;
 
 
 private:

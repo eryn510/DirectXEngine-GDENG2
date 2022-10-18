@@ -6,12 +6,6 @@
 class GraphicsEngine
 {
 public:
-	//initialize graphics engine and DirectX 11 device
-	bool init();
-	//release resources loaded
-	bool release();
-
-public:
 	static GraphicsEngine* getInstance();
 	static void initialize();
 	static void destroy();
