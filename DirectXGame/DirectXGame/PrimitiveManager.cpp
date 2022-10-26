@@ -33,8 +33,31 @@ void PrimitiveManager::init()
 {
 }
 
-void PrimitiveManager::update()
+void PrimitiveManager::update(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader)
 {
+	for (auto cube : this->cube_list)
+	{
+		cube->update(EngineTime::getDeltaTime());
+		cube->draw(width, height, vertexShader, pixelShader);
+	}
+
+	for (auto quad : this->quad_list)
+	{
+		quad->update(EngineTime::getDeltaTime());
+		quad->draw(width, height, vertexShader, pixelShader);
+	}
+
+	for (auto circle : this->circle_list)
+	{
+		circle->update(EngineTime::getDeltaTime());
+		circle->draw(width, height, vertexShader, pixelShader);
+	}
+
+	for (auto plane : this->plane_list)
+	{
+		plane->update(EngineTime::getDeltaTime());
+		plane->draw(width, height, vertexShader, pixelShader);
+	}
 }
 
 void PrimitiveManager::release()
@@ -70,6 +93,7 @@ void PrimitiveManager::create(std::string name, void* shader_byte_code, size_t s
 	{
 		Circle* circle = new Circle(name, shader_byte_code, size_shader);
 		this->circle_list.push_back(circle);
+		std::cout << "Circle created!" << std::endl;
 	}
 	else if (primType == PLANE)
 	{

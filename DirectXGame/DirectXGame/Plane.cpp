@@ -74,7 +74,67 @@ void Plane::update(float deltaTime)
 
 void Plane::draw(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader)
 {
-	Cube::draw(width, height, vertexShader, pixelShader);
+	DeviceContext* deviceContext = m_system->getImmediateDeviceContext();
+
+	constant cc = {};
+
+	Matrix4x4 allMatrix;
+	allMatrix.setIdentity();
+
+	Matrix4x4 translationMatrix;
+	translationMatrix.setIdentity();
+	translationMatrix.setTranslation(this->getLocalPosition());
+
+	Matrix4x4 scaleMatrix;
+	scaleMatrix.setIdentity();
+	scaleMatrix.setScale(this->getLocalScale());
+
+
+	Vector3D rotation = this->getLocalRotation();
+	Matrix4x4 zMatrix;
+	zMatrix.setIdentity();
+	zMatrix.setQuaternionRotation(rotation.m_z, 0, 0, 1);
+
+	Matrix4x4 xMatrix;
+	xMatrix.setIdentity();
+	xMatrix.setQuaternionRotation(rotation.m_x, 1, 0, 0);
+
+	Matrix4x4 yMatrix;
+	yMatrix.setIdentity();
+	yMatrix.setQuaternionRotation(rotation.m_y, 0, 1, 0);
+
+	Matrix4x4 rotMatrix;
+	rotMatrix.setIdentity();
+	rotMatrix *= zMatrix;
+	rotMatrix *= yMatrix;
+	rotMatrix *= xMatrix;
+	allMatrix *= rotMatrix;
+
+
+	allMatrix *= scaleMatrix;
+	allMatrix *= translationMatrix;
+	cc.m_world = allMatrix;
+
+	Matrix4x4 cameraMatrix = CameraManager::getInstance()->getCameraViewMatrix();
+	cc.m_view = cameraMatrix;
+
+
+	float aspectRatio = (float)width / (float)height;
+	cc.m_proj.setPerspectiveFovLH(aspectRatio, aspectRatio, 0.1f, 1000.0f);
+
+	this->deltaTime = EngineTime::getDeltaTime();
+	this->elapsedTime += 1000.0f * deltaTime;
+	cc.m_time = this->elapsedTime;
+
+	this->m_cb->update(deviceContext, &cc);
+
+	deviceContext->setConstantBuffer(vertexShader, this->m_cb);
+	deviceContext->setConstantBuffer(pixelShader, this->m_cb);
+
+	deviceContext->setVertexBuffer(this->m_vb);
+	deviceContext->setIndexBuffer(this->m_ib);
+
+	deviceContext->drawIndexedTriangleList(this->m_ib->getSizeIndexList(), 0, 0);
 }
 
 void Plane::setAnimSpeed(float multiplier)

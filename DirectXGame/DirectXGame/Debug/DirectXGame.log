@@ -1,8 +1,84 @@
-﻿  Cube.cpp
+﻿  AppWindow.cpp
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(137,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(138,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(139,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(140,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\AppWindow.cpp(107,14): warning C4244: 'initializing': conversion from 'LONG' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\AppWindow.cpp(108,15): warning C4244: 'initializing': conversion from 'LONG' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\AppWindow.cpp(109,71): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\AppWindow.cpp(109,64): warning C4244: 'argument': conversion from 'float' to 'UINT', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\AppWindow.cpp(113,26): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\AppWindow.cpp(113,19): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Camera.cpp
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(137,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(138,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(139,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(140,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Camera.cpp(80,14): warning C4244: 'initializing': conversion from 'LONG' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Camera.cpp(81,15): warning C4244: 'initializing': conversion from 'LONG' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Camera.cpp(83,95): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Camera.cpp(84,94): warning C4244: '-=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Camera.cpp(86,67): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Camera.cpp(86,52): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  Circle.cpp
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(137,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(138,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(139,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(140,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Circle.cpp(13,7): warning C4834: discarding return value of function with 'nodiscard' attribute
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Circle.cpp(20,53): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Circle.cpp(147,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Circle.cpp(149,18): warning C4244: '=': conversion from 'float' to 'unsigned int', possible loss of data
+  ConstantBuffer.cpp
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(137,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(138,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(139,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(140,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Cube.cpp
 D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(137,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(138,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(139,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(140,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Cube.cpp(123,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Cube.cpp(125,18): warning C4244: '=': conversion from 'float' to 'unsigned int', possible loss of data
+  DeviceContext.cpp
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(137,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(138,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(139,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(140,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  IndexBuffer.cpp
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(137,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(138,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(139,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(140,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Plane.cpp
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(137,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(138,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(139,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(140,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Plane.cpp(125,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Plane.cpp(127,18): warning C4244: '=': conversion from 'float' to 'unsigned int', possible loss of data
+  Quad.cpp
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(137,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(138,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(139,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(140,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Quad.cpp(147,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Quad.cpp(149,18): warning C4244: '=': conversion from 'float' to 'unsigned int', possible loss of data
+  RenderSystem.cpp
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(137,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(138,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(139,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(140,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  VertexBuffer.cpp
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(137,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(138,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(139,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(140,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  main.cpp
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(137,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(138,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(139,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(140,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  Generating Code...
   DirectXGame.vcxproj -> D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\Debug\DirectXGame.exe

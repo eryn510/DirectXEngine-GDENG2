@@ -37,6 +37,7 @@ private:
 	float m_up = 0.0f;
 
 	float speed = 0.1f;
+	float MOUSE_SENSITIVITY = 0.1f;
 
 	Matrix4x4 viewCamera;
 };

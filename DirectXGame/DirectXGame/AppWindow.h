@@ -17,9 +17,6 @@
 class AppWindow : public Window, public InputListener
 {
 public:
-	void update();
-
-public:
 	static AppWindow* getInstance();
 	static void initialize();
 	static void destroy();
