@@ -196,8 +196,6 @@ void AppWindow::createGraphicsWindow()
 	m_swap_chain = m_render_system->createSwapChain(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
 
-	//m_world_cam.setTranslation(Vector3D(0.0f, 0.0f, -2.0f));
-
 	void* shader_byte_code = nullptr;
 	size_t size_shader = 0;
 
@@ -205,21 +203,22 @@ void AppWindow::createGraphicsWindow()
 	m_render_system->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
 	m_vs = m_render_system->createVertexShader(shader_byte_code, size_shader);
 
-	/*
+	
 	for (int i = 0; i < 100; i++) {
 		float x = MathUtils::randomFloat(-0.75, 0.75);
 		float y = MathUtils::randomFloat(-0.75, 0.75);
+		float z = MathUtils::randomFloat(-0.75, 0.75);
 
 
 		primMngr->create("Cube", shader_byte_code, size_shader, CUBE); 
 		primMngr->cube_list.back()->setAnimSpeed(MathUtils::randomFloat(-3.75, 3.75));
-		primMngr->cube_list.back()->setPosition(x, y, 0.0f);
+		primMngr->cube_list.back()->setPosition(x, y, z);
 		primMngr->cube_list.back()->setScale(0.25f, 0.25f, 0.25f);
 	}
-	*/
+	
 
-	primMngr->create("Cube", shader_byte_code, size_shader, CUBE);
-	primMngr->create("Plane", shader_byte_code, size_shader, PLANE);
+	//primMngr->create("Cube", shader_byte_code, size_shader, CUBE);
+	//primMngr->create("Plane", shader_byte_code, size_shader, PLANE);
 
 	m_render_system->releaseCompiledShader();
 
@@ -307,61 +306,35 @@ void AppWindow::onKillFocus()
 
 void AppWindow::onKeyDown(int key)
 {
-	if (key == 'W')
-	{
-		//m_rot_x += 3.14f * m_delta_time;
-		m_forward = 1.0f;
-	}
-	else if (key == 'S')
-	{
-		//m_rot_x -= 3.14f * m_delta_time;
-		m_forward = -1.0f;
-	}
-	if (key == 'A')
-	{
-		//m_rot_y += 3.14f * m_delta_time;
-		m_rightward = -1.0f;
-	}
-	else if (key == 'D')
-	{
-		//m_rot_y -= 3.14f * m_delta_time;
-		m_rightward = 1.0f;
-	}
+	
 }
 
 void AppWindow::onKeyUp(int key)
 {
-	m_forward = 0.0f;
-	m_rightward = 0.0f;
+	
 }
 
 void AppWindow::onMouseMove(const Point& mouse_pos)
 {
-	int width = (this->getClientWindowRect().right - this->getClientWindowRect().left);
-	int height = (this->getClientWindowRect().bottom - this->getClientWindowRect().top);
-
-	m_rot_x += (mouse_pos.m_y - (height / 2.0f)) * m_delta_time * 0.1f;
-	m_rot_y += (mouse_pos.m_x - (width / 2.0f)) * m_delta_time * 0.1f;
-
-	InputSystem::get()->setCursorPosition(Point(width / 2.0f, height / 2.0f));
+	
 }
 
 void AppWindow::onLeftMouseDown(const Point& delta_mouse_pos)
 {
-	m_scale_cube = 0.5f;
+	
 }
 
 void AppWindow::onLeftMouseUp(const Point& delta_mouse_pos)
 {
-	m_scale_cube = 1.0f;
+	
 }
 
 void AppWindow::onRightMouseDown(const Point& delta_mouse_pos)
 {
-	m_scale_cube = 2.0f;
+	
 }
 
 void AppWindow::onRightMouseUp(const Point& delta_mouse_pos)
 {
-	m_scale_cube = 1.0f;
+	
 }

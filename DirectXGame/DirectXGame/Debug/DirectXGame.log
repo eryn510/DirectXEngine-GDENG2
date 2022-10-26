@@ -1,12 +1,8 @@
-﻿  Camera.cpp
+﻿  Cube.cpp
 D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(137,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(138,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(139,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Matrix4x4.h(140,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Camera.cpp(94,15): warning C4244: 'initializing': conversion from 'LONG' to 'float', possible loss of data
-D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Camera.cpp(95,16): warning C4244: 'initializing': conversion from 'LONG' to 'float', possible loss of data
-D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Camera.cpp(97,83): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Camera.cpp(98,82): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Camera.cpp(100,68): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Camera.cpp(100,53): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Cube.cpp(123,44): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\DirectXGame\Cube.cpp(125,18): warning C4244: '=': conversion from 'float' to 'unsigned int', possible loss of data
   DirectXGame.vcxproj -> D:\PROJECT FILES\CODES\DirectXEngine-GDENG2\DirectXGame\Debug\DirectXGame.exe

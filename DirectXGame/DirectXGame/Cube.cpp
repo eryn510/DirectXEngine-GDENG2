@@ -10,16 +10,16 @@ Cube::Cube(std::string name, void* shader_byte_code, size_t size_shader) : AGame
 	{
 		//	X - Y - Z
 		//FRONT FACE
-		{Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(1,0,1),   Vector3D(1,1,1)}, //POS1
-		{Vector3D(-0.5f, 0.5f, -0.5f),	Vector3D(-0.5f, 0.5f, -0.5f),	Vector3D(1,0,1),   Vector3D(1,1,1)}, //POS2
-		{Vector3D(0.5f, 0.5f, -0.5f),	Vector3D(0.5f, 0.5f, -0.5f),	Vector3D(1,0,1),   Vector3D(1,1,1)}, //POS3
-		{Vector3D(0.5f, -0.5f, -0.5f),	Vector3D(0.5f, -0.5f, -0.5f),	Vector3D(1,0,1),   Vector3D(1,1,1)}, //POS4
+		{Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(1,0,0),   Vector3D(1,0,0)}, //POS1
+		{Vector3D(-0.5f, 0.5f, -0.5f),	Vector3D(-0.5f, 0.5f, -0.5f),	Vector3D(1,1,0),   Vector3D(1,1,0)}, //POS2
+		{Vector3D(0.5f, 0.5f, -0.5f),	Vector3D(0.5f, 0.5f, -0.5f),	Vector3D(1,1,0),   Vector3D(1,1,0)}, //POS3
+		{Vector3D(0.5f, -0.5f, -0.5f),	Vector3D(0.5f, -0.5f, -0.5f),	Vector3D(1,0,0),   Vector3D(1,0,0)}, //POS4
 
 		//BACK FACE
-		{Vector3D(0.5f, -0.5f, 0.5f),	Vector3D(0.5f, -0.5f, 0.5f),	Vector3D(1,0,1),   Vector3D(1,1,1)}, //POS5
-		{Vector3D(0.5f, 0.5f, 0.5f),	Vector3D(0.5f, 0.5f, 0.5f),		Vector3D(1,0,1),   Vector3D(1,1,1)}, //POS6
-		{Vector3D(-0.5f, 0.5f, 0.5f),	Vector3D(-0.5f, 0.5f, 0.5f),	Vector3D(1,0,1),   Vector3D(1,1,1)}, //POS7
-		{Vector3D(-0.5f, -0.5f, 0.5f),	Vector3D(-0.5f, -0.5f, 0.5f),	Vector3D(1,0,1),   Vector3D(1,1,1)} //POS8
+		{Vector3D(0.5f, -0.5f, 0.5f),	Vector3D(0.5f, -0.5f, 0.5f),	Vector3D(0,1,0),   Vector3D(0,1,0)}, //POS5
+		{Vector3D(0.5f, 0.5f, 0.5f),	Vector3D(0.5f, 0.5f, 0.5f),		Vector3D(0,1,1),   Vector3D(0,1,1)}, //POS6
+		{Vector3D(-0.5f, 0.5f, 0.5f),	Vector3D(-0.5f, 0.5f, 0.5f),	Vector3D(0,1,1),   Vector3D(0,1,1)}, //POS7
+		{Vector3D(-0.5f, -0.5f, 0.5f),	Vector3D(-0.5f, -0.5f, 0.5f),	Vector3D(0,1,0),   Vector3D(0,1,0)} //POS8
 	};
 
 	//Vertex Buffer Creation
@@ -76,14 +76,9 @@ void Cube::draw(int width, int height, VertexShader* vertexShader, PixelShader* 
 
 	constant cc = {};
 
-	/*
-	if (this->deltaPos > 1.0f)
-		this->deltaPos = 0.0f;
-	else
-		this->deltaPos += this->deltaTime * 0.1f;
-	*/
+	Matrix4x4 allMatrix;
+	allMatrix.setIdentity();
 
-	Matrix4x4 allMatrix; allMatrix.setIdentity();
 	Matrix4x4 translationMatrix;
 	translationMatrix.setIdentity();
 	translationMatrix.setTranslation(this->getLocalPosition());
@@ -92,20 +87,19 @@ void Cube::draw(int width, int height, VertexShader* vertexShader, PixelShader* 
 	scaleMatrix.setIdentity();
 	scaleMatrix.setScale(this->getLocalScale());
 
-	
-	Vector3D rotation = this->getLocalRotation();
 
+	Vector3D rotation = this->getLocalRotation();
 	Matrix4x4 zMatrix;
 	zMatrix.setIdentity();
-	zMatrix.setRotationZ(rotation.m_z);
+	zMatrix.setQuaternionRotation(rotation.m_z, 0, 0, 1);
 
 	Matrix4x4 xMatrix;
 	xMatrix.setIdentity();
-	xMatrix.setRotationX(rotation.m_x);
+	xMatrix.setQuaternionRotation(rotation.m_x, 1, 0, 0);
 
 	Matrix4x4 yMatrix;
 	yMatrix.setIdentity();
-	yMatrix.setRotationY(rotation.m_y);
+	yMatrix.setQuaternionRotation(rotation.m_y, 0, 1, 0);
 
 	Matrix4x4 rotMatrix;
 	rotMatrix.setIdentity();
@@ -114,17 +108,14 @@ void Cube::draw(int width, int height, VertexShader* vertexShader, PixelShader* 
 	rotMatrix *= xMatrix;
 	allMatrix *= rotMatrix;
 
+
 	allMatrix *= scaleMatrix;
 	allMatrix *= translationMatrix;
 	cc.m_world = allMatrix;
 
-	//std::cout << allMatrix.m_mat[0][0] << "," << allMatrix.m_mat[1][1] << "," << allMatrix.m_mat[2][2] << std::endl;
-
-	/*
-	*/
-
 	Matrix4x4 cameraMatrix = CameraManager::getInstance()->getCameraViewMatrix();
 	cc.m_view = cameraMatrix;
+
 
 	float aspectRatio = (float)width / (float)height;
 	cc.m_proj.setPerspectiveFovLH(aspectRatio, aspectRatio, 0.1f, 1000.0f);
