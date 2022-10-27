@@ -23,7 +23,7 @@ public:
 
 public:
 	virtual void update(float deltaTime) = 0;
-	virtual void draw(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader) = 0;
+	virtual void draw(int width, int height) = 0;
 
 	void setPosition(float x, float y, float z)
 	{

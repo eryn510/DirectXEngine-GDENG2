@@ -3,7 +3,7 @@
 
 Camera::Camera(std::string name) : AGameObject(name)
 {
-	this->setPosition(0.0f, 0.0f, -10.0f);
+	this->setPosition(0.0f, 4.0f, -10.0f);
 	//this->worldCameraMatrix.setTranslation(this->getLocalPosition());
 	this->updateViewMatrix();
 	InputSystem::get()->addListener(this);
@@ -19,7 +19,7 @@ void Camera::update(float deltaTime)
 	
 }
 
-void Camera::draw(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader)
+void Camera::draw(int width, int height)
 {
 }
 

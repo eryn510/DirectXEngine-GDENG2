@@ -49,14 +49,6 @@ void AppWindow::createGraphicsWindow()
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain = m_render_system->createSwapChain(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
-
-	void* shader_byte_code = nullptr;
-	size_t size_shader = 0;
-
-	//Vertex Shader
-	m_render_system->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_code, &size_shader);
-	m_vs = m_render_system->createVertexShader(shader_byte_code, size_shader);
-
 	/*
 	for (int i = 0; i < 100; i++) {
 		float x = MathUtils::randomFloat(-0.75, 0.75);
@@ -71,17 +63,9 @@ void AppWindow::createGraphicsWindow()
 	}
 	*/
 
-	primMngr->create("Cube", shader_byte_code, size_shader, CUBE);
-	primMngr->create("Plane", shader_byte_code, size_shader, PLANE);
-	primMngr->create("Circle", shader_byte_code, size_shader, CIRCLE);
-
-	m_render_system->releaseCompiledShader();
-
-	//Pixel Shader
-	m_render_system->compilePixelShader(L"PixelShader.hlsl", "psmain", &shader_byte_code, &size_shader);
-	m_ps = m_render_system->createPixelShader(shader_byte_code, size_shader);
-	m_render_system->releaseCompiledShader();
-
+	primMngr->create("Cube", CUBE);
+	primMngr->create("Plane", PLANE);
+	//primMngr->create("Circle", shader_byte_code, size_shader, CIRCLE);
 }
 
 
@@ -96,9 +80,6 @@ void AppWindow::onUpdate()
 
 	InputSystem::get()->update();
 
-	//SET DEFAULT SHADER IN THE GRAPHICS PIPELINE TO BE ABLE TO DRAW
-	m_render_system->getImmediateDeviceContext()->setVertexShader(this->m_vs);
-	m_render_system->getImmediateDeviceContext()->setPixelShader(this->m_ps);
 	//CLEAR RENDER TARGET
 	m_render_system->getImmediateDeviceContext()->clearRenderTargetColor(this->m_swap_chain, 0, 0.5f, 0.5f, 1);
 
@@ -110,7 +91,7 @@ void AppWindow::onUpdate()
 
 	m_camera_manager->update();
 
-	primMngr->update(width, height, this->m_vs, this->m_ps);
+	primMngr->update(width, height);
 
 	m_swap_chain->present(true);
 

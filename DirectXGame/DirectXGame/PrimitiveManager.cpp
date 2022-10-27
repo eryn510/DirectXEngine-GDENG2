@@ -33,30 +33,30 @@ void PrimitiveManager::init()
 {
 }
 
-void PrimitiveManager::update(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader)
+void PrimitiveManager::update(int width, int height)
 {
 	for (auto cube : this->cube_list)
 	{
-		cube->update(EngineTime::getDeltaTime());
-		cube->draw(width, height, vertexShader, pixelShader);
+		cube->update(0);
+		cube->draw(width, height);
 	}
 
 	for (auto quad : this->quad_list)
 	{
-		quad->update(EngineTime::getDeltaTime());
-		quad->draw(width, height, vertexShader, pixelShader);
+		quad->update(0);
+		quad->draw(width, height);
 	}
 
 	for (auto circle : this->circle_list)
 	{
-		circle->update(EngineTime::getDeltaTime());
-		circle->draw(width, height, vertexShader, pixelShader);
+		circle->update(0);
+		circle->draw(width, height);
 	}
 
 	for (auto plane : this->plane_list)
 	{
-		plane->update(EngineTime::getDeltaTime());
-		plane->draw(width, height, vertexShader, pixelShader);
+		plane->update(0);
+		plane->draw(width, height);
 	}
 }
 
@@ -72,7 +72,7 @@ void PrimitiveManager::release()
 		plane->~Plane();
 }
 
-void PrimitiveManager::create(std::string name, void* shader_byte_code, size_t size_shader, PrimitiveType primType)
+void PrimitiveManager::create(std::string name, PrimitiveType primType)
 {
 	if (primType == TRIANGLE) 
 	{
@@ -80,24 +80,24 @@ void PrimitiveManager::create(std::string name, void* shader_byte_code, size_t s
 	}
 	else if (primType == QUAD) 
 	{
-		Quad* quad = new Quad(name, shader_byte_code, size_shader);
+		Quad* quad = new Quad(name);
 		this->quad_list.push_back(quad);
 	}
 	else if (primType == CUBE) 
 	{
-		Cube* cube = new Cube(name, shader_byte_code, size_shader);
+		Cube* cube = new Cube(name);
 		this->cube_list.push_back(cube);
 		std::cout << "Cube created!" << std::endl;
 	}
 	else if (primType == CIRCLE)
 	{
-		Circle* circle = new Circle(name, shader_byte_code, size_shader);
+		Circle* circle = new Circle(name);
 		this->circle_list.push_back(circle);
 		std::cout << "Circle created!" << std::endl;
 	}
 	else if (primType == PLANE)
 	{
-		Plane* plane = new Plane(name, shader_byte_code, size_shader);
+		Plane* plane = new Plane(name);
 		this->plane_list.push_back(plane);
 		std::cout << "Plane created!" << std::endl;
 	}

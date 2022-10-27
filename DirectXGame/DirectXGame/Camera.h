@@ -10,7 +10,7 @@ public:
 
 	// Inherited via AGameObject
 	virtual void update(float deltaTime) override;
-	virtual void draw(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader) override;
+	virtual void draw(int width, int height) override;
 	Matrix4x4 getViewMatrix();
 
 
@@ -25,8 +25,7 @@ public:
 
 private:
 	void updateViewMatrix();
-
-	float ticks = 0.0f;
+	
 	float mouseDown = false;
 
 	float m_rot_x = 0.0f;

@@ -32,10 +32,10 @@ public:
 
 public:
 	void init();
-	void update(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader);
+	void update(int width, int height);
 	void release();
 
-	void create(std::string name, void* shader_byte_code, size_t size_shader, PrimitiveType primType);
+	void create(std::string name, PrimitiveType primType);
 
 private:
 	std::list<Cube*> cube_list;

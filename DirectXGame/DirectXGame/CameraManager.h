@@ -8,15 +8,15 @@ public:
 	static void initialize();
 	static void destroy();
 
-	void update(); //TODO: Game object manager should perform update of all game objects
+	void update();
 
 	Matrix4x4 getCameraViewMatrix();
 
 private:
 	CameraManager();
 	~CameraManager();
-	CameraManager(CameraManager const&) {};             // copy constructor is private
-	CameraManager& operator=(CameraManager const&) {};  // assignment operator is private*/
+	CameraManager(CameraManager const&) {};
+	CameraManager& operator=(CameraManager const&) {};
 	static CameraManager* sharedInstance;
 
 	Camera* sceneCamera;

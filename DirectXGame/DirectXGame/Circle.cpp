@@ -4,7 +4,7 @@
 #include "VertexBuffer.h"
 #include <cmath>
 
-Circle::Circle(std::string name, void* shader_byte_code, size_t size_shader) : AGameObject(name)
+Circle::Circle(std::string name) : AGameObject(name)
 {
 	this->radius = 1;
 	this->centerPoint = Vector3D::zeros();
@@ -54,18 +54,38 @@ Circle::Circle(std::string name, void* shader_byte_code, size_t size_shader) : A
 		this->vertex_list[j].color1 = Vector3D(0, 0, 1);
 	}
 
-	//Vertex Buffer Creation
-	UINT size_list = ARRAYSIZE(this->vertex_list);
-	this->m_vb = m_system->createVertexBuffer(this->vertex_list, sizeof(vertex), size_list, shader_byte_code, size_shader);
-
-	//Index Buffer Creation
+	//INDEX BUFFER Creation
 	UINT size_index_list = ARRAYSIZE(index_list);
 	this->m_ib = m_system->createIndexBuffer(index_list, size_index_list);
 
-	//Constant Buffer Creation
+	void* shader_byte_codes = nullptr;
+	size_t size_shaders = 0;
+
+	//VERTEX SHADER
+	m_system->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_codes, &size_shaders);
+	m_vs = m_system->createVertexShader(shader_byte_codes, size_shaders);
+
+
+	//VERTEX BUFFER Creation
+	UINT size_list = ARRAYSIZE(this->vertex_list);
+	this->m_vb = m_system->createVertexBuffer(this->vertex_list, sizeof(vertex), size_list, shader_byte_codes, size_shaders);
+
+
+	m_system->releaseCompiledShader();
+
+	//PIXEL SHADER
+	m_system->compilePixelShader(L"PixelShader.hlsl", "psmain", &shader_byte_codes, &size_shaders);
+	m_ps = m_system->createPixelShader(shader_byte_codes, size_shaders);
+	m_system->releaseCompiledShader();
+
+	//CONSTANT BUFFER Creation
 	constant cc;
 	cc.m_time = 0;
 	this->m_cb = m_system->createConstantBuffer(&cc, sizeof(constant));
+
+	//set SHADERS
+	m_system->getImmediateDeviceContext()->setVertexShader(this->m_vs);
+	m_system->getImmediateDeviceContext()->setPixelShader(this->m_ps);
 }
 
 Circle::~Circle()
@@ -82,19 +102,19 @@ void Circle::update(float deltaTime)
 	{
 		this->ticks += deltaTime;
 
-		float rotSpeed = 0;
+		float rotSpeed = this->ticks * this->speed * this->animSpeed;
 		this->setRotation(rotSpeed, rotSpeed, rotSpeed);
 	}
 	else if (InputSystem::get()->isKeyDown('S'))
 	{
 		this->ticks -= deltaTime;
 
-		float rotSpeed = 0;
+		float rotSpeed = this->ticks * this->speed * this->animSpeed;
 		this->setRotation(rotSpeed, rotSpeed, rotSpeed);
 	}
 }
 
-void Circle::draw(int width, int height, VertexShader* vertexShader, PixelShader* pixelShader)
+void Circle::draw(int width, int height)
 {
 	DeviceContext* deviceContext = m_system->getImmediateDeviceContext();
 
@@ -150,8 +170,8 @@ void Circle::draw(int width, int height, VertexShader* vertexShader, PixelShader
 
 	this->m_cb->update(deviceContext, &cc);
 
-	deviceContext->setConstantBuffer(vertexShader, this->m_cb);
-	deviceContext->setConstantBuffer(pixelShader, this->m_cb);
+	deviceContext->setConstantBuffer(this->m_vs, this->m_cb);
+	deviceContext->setConstantBuffer(this->m_ps, this->m_cb);
 
 	deviceContext->setVertexBuffer(this->m_vb);
 	deviceContext->setIndexBuffer(this->m_ib);
