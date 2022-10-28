@@ -14,6 +14,13 @@ enum PrimitiveType
 	PLANE
 };
 
+enum TransformType
+{
+	TRANSLATION = 0,
+	ROTATION,
+	SCALE
+};
+
 class AppWindow;
 
 class PrimitiveManager
@@ -35,7 +42,9 @@ public:
 	void update(int width, int height);
 	void release();
 
-	void create(std::string name, PrimitiveType primType);
+	AGameObject* create(std::string name, PrimitiveType primType, bool canUpdate);
+	void createWithTransform(std::string name, PrimitiveType primType, Vector3D transform, TransformType transformType, bool canUpdate);
+	void createMultipleRandom(std::string name, PrimitiveType primType, bool canUpdate, int count);
 
 private:
 	std::list<Cube*> cube_list;

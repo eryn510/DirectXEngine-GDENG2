@@ -97,20 +97,23 @@ Circle::~Circle()
 
 void Circle::update(float deltaTime)
 {
-	this->deltaTime = deltaTime;
-	if (InputSystem::get()->isKeyDown('W'))
+	if (this->canUpdate)
 	{
-		this->ticks += deltaTime;
+		this->deltaTime = deltaTime;
+		if (InputSystem::get()->isKeyDown('W'))
+		{
+			this->ticks += deltaTime;
 
-		float rotSpeed = this->ticks * this->speed * this->animSpeed;
-		this->setRotation(rotSpeed, rotSpeed, rotSpeed);
-	}
-	else if (InputSystem::get()->isKeyDown('S'))
-	{
-		this->ticks -= deltaTime;
+			float rotSpeed = this->ticks * this->speed * this->animSpeed;
+			this->setRotation(rotSpeed, rotSpeed, rotSpeed);
+		}
+		else if (InputSystem::get()->isKeyDown('S'))
+		{
+			this->ticks -= deltaTime;
 
-		float rotSpeed = this->ticks * this->speed * this->animSpeed;
-		this->setRotation(rotSpeed, rotSpeed, rotSpeed);
+			float rotSpeed = this->ticks * this->speed * this->animSpeed;
+			this->setRotation(rotSpeed, rotSpeed, rotSpeed);
+		}
 	}
 }
 

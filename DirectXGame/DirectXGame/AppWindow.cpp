@@ -49,22 +49,10 @@ void AppWindow::createGraphicsWindow()
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain = m_render_system->createSwapChain(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
-	/*
-	for (int i = 0; i < 100; i++) {
-		float x = MathUtils::randomFloat(-0.75, 0.75);
-		float y = MathUtils::randomFloat(-0.75, 0.75);
-		float z = MathUtils::randomFloat(-0.75, 0.75);
+	primMngr->createMultipleRandom("Circle", CIRCLE, true, 100);
 
-
-		primMngr->create("Cube", shader_byte_code, size_shader, CUBE); 
-		primMngr->cube_list.back()->setAnimSpeed(MathUtils::randomFloat(-3.75, 3.75));
-		primMngr->cube_list.back()->setPosition(x, y, z);
-		primMngr->cube_list.back()->setScale(0.25f, 0.25f, 0.25f);
-	}
-	*/
-
-	primMngr->create("Cube", CUBE);
-	primMngr->create("Plane", PLANE);
+	//primMngr->createWithTransform("Cube", CUBE, Vector3D(4,4,4), SCALE, false);
+	//primMngr->create("Plane", PLANE, true);
 	//primMngr->create("Circle", shader_byte_code, size_shader, CIRCLE);
 }
 
