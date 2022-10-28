@@ -10,16 +10,16 @@ Cube::Cube(std::string name) : AGameObject(name)
 	{
 		//	X - Y - Z
 		//FRONT FACE
-		{Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(1,0,0),   Vector3D(1,0,0)}, //POS1
-		{Vector3D(-0.5f, 0.5f, -0.5f),	Vector3D(-0.5f, 0.5f, -0.5f),	Vector3D(1,1,0),   Vector3D(1,1,0)}, //POS2
-		{Vector3D(0.5f, 0.5f, -0.5f),	Vector3D(0.5f, 0.5f, -0.5f),	Vector3D(1,1,0),   Vector3D(1,1,0)}, //POS3
-		{Vector3D(0.5f, -0.5f, -0.5f),	Vector3D(0.5f, -0.5f, -0.5f),	Vector3D(1,0,0),   Vector3D(1,0,0)}, //POS4
+		{Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(1,0,0),   Vector3D(1,0,0)}, //POS1
+		{Vector3D(-0.5f, 0.5f, -0.5f),	Vector3D(1,1,0),   Vector3D(1,1,0)}, //POS2
+		{Vector3D(0.5f, 0.5f, -0.5f),	Vector3D(1,1,0),   Vector3D(1,1,0)}, //POS3
+		{Vector3D(0.5f, -0.5f, -0.5f),	Vector3D(1,0,0),   Vector3D(1,0,0)}, //POS4
 
 		//BACK FACE
-		{Vector3D(0.5f, -0.5f, 0.5f),	Vector3D(0.5f, -0.5f, 0.5f),	Vector3D(0,1,0),   Vector3D(0,1,0)}, //POS5
-		{Vector3D(0.5f, 0.5f, 0.5f),	Vector3D(0.5f, 0.5f, 0.5f),		Vector3D(0,1,1),   Vector3D(0,1,1)}, //POS6
-		{Vector3D(-0.5f, 0.5f, 0.5f),	Vector3D(-0.5f, 0.5f, 0.5f),	Vector3D(0,1,1),   Vector3D(0,1,1)}, //POS7
-		{Vector3D(-0.5f, -0.5f, 0.5f),	Vector3D(-0.5f, -0.5f, 0.5f),	Vector3D(0,1,0),   Vector3D(0,1,0)} //POS8
+		{Vector3D(0.5f, -0.5f, 0.5f),	Vector3D(0,1,0),   Vector3D(0,1,0)}, //POS5
+		{Vector3D(0.5f, 0.5f, 0.5f),		Vector3D(0,1,1),   Vector3D(0,1,1)}, //POS6
+		{Vector3D(-0.5f, 0.5f, 0.5f),	Vector3D(0,1,1),   Vector3D(0,1,1)}, //POS7
+		{Vector3D(-0.5f, -0.5f, 0.5f),	Vector3D(0,1,0),   Vector3D(0,1,0)} //POS8
 	};
 
 

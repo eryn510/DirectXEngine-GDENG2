@@ -49,11 +49,9 @@ void AppWindow::createGraphicsWindow()
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain = m_render_system->createSwapChain(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
 
-	primMngr->createMultipleRandom("Circle", CIRCLE, true, 100);
-
-	//primMngr->createWithTransform("Cube", CUBE, Vector3D(4,4,4), SCALE, false);
-	//primMngr->create("Plane", PLANE, true);
-	//primMngr->create("Circle", shader_byte_code, size_shader, CIRCLE);
+	//primMngr->createMultipleRandom("Cube", CUBE, true, 100);
+	primMngr->createWithTransform("Cube", CUBE, Vector3D(2,2,2), SCALE, false);
+	primMngr->create("Plane", PLANE, false);
 }
 
 

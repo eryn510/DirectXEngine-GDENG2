@@ -38,7 +38,7 @@ Circle::Circle(std::string name) : AGameObject(name)
 		indice2++;
 		indice3++;
 
-		std::cout << index_list[i] << "," << index_list[i + 1] << "," << index_list[i + 2] << std::endl;
+		//std::cout << index_list[i] << "," << index_list[i + 1] << "," << index_list[i + 2] << std::endl;
 	}
 
 	index_list[(arcCount * 3) - 3] = 0;
@@ -49,7 +49,6 @@ Circle::Circle(std::string name) : AGameObject(name)
 	for (int j = 0; j < arcCount; j++)
 	{
 		this->vertex_list[j].position = Vector3D(vertexPoints[j].m_x, vertexPoints[j].m_y, vertexPoints[j].m_z);
-		this->vertex_list[j].position1 = Vector3D(vertexPoints[j].m_x, vertexPoints[j].m_y, vertexPoints[j].m_z);
 		this->vertex_list[j].color = Vector3D(1, 1, 1);
 		this->vertex_list[j].color1 = Vector3D(0, 0, 1);
 	}

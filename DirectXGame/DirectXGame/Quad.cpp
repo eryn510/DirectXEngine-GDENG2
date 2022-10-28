@@ -8,10 +8,10 @@ Quad::Quad(std::string name) : AGameObject(name)
 	{
 		//	X - Y - Z
 		//FRONT FACE
-		{Vector3D(-0.5f, -0.5f, 0.0f),  Vector3D(-0.5f, -0.5f, 0.0f),		Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
-		{Vector3D(-0.5f, 0.5f, 0.0f),	Vector3D(-0.5f, 0.5f, 0.0f),	Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
-		{Vector3D(0.5f, 0.5f, 0.0f),	Vector3D(0.5f, 0.5f, 0.0f),	Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
-		{Vector3D(0.5f, -0.5f, 0.0f),	Vector3D(0.5f, -0.5f, 0.0f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
+		{Vector3D(-0.5f, -0.5f, 0.0f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS1
+		{Vector3D(-0.5f, 0.5f, 0.0f),	Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS2
+		{Vector3D(0.5f, 0.5f, 0.0f),		Vector3D(1,1,0),    Vector3D(0.2f,0.2f,0)}, //POS3
+		{Vector3D(0.5f, -0.5f, 0.0f),	Vector3D(1,0,0),    Vector3D(0.2f,0,0)}, //POS4
 	};
 
 	unsigned int index_list[] =

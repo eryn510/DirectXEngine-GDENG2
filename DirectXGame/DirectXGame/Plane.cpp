@@ -9,16 +9,16 @@ Plane::Plane(std::string name) : Cube(name)
 	{
 		//	X - Y - Z
 		//FRONT FACE
-		{Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS1
-		{Vector3D(-0.5f, 0.5f, -0.5f),	Vector3D(-0.5f, 0.5f, -0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS2
-		{Vector3D(0.5f, 0.5f, -0.5f),	Vector3D(0.5f, 0.5f, -0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS3
-		{Vector3D(0.5f, -0.5f, -0.5f),	Vector3D(0.5f, -0.5f, -0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS4
+		{Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS1
+		{Vector3D(-0.5f, 0.5f, -0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS2
+		{Vector3D(0.5f, 0.5f, -0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS3
+		{Vector3D(0.5f, -0.5f, -0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS4
 
 		//BACK FACE
-		{Vector3D(0.5f, -0.5f, 0.5f),	Vector3D(0.5f, -0.5f, 0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS5
-		{Vector3D(0.5f, 0.5f, 0.5f),	Vector3D(0.5f, 0.5f, 0.5f),		Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS6
-		{Vector3D(-0.5f, 0.5f, 0.5f),	Vector3D(-0.5f, 0.5f, 0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS7
-		{Vector3D(-0.5f, -0.5f, 0.5f),	Vector3D(-0.5f, -0.5f, 0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)} //POS8
+		{Vector3D(0.5f, -0.5f, 0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS5
+		{Vector3D(0.5f, 0.5f, 0.5f),		Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS6
+		{Vector3D(-0.5f, 0.5f, 0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS7
+		{Vector3D(-0.5f, -0.5f, 0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)} //POS8
 	};
 
 	unsigned int index_list[] =
