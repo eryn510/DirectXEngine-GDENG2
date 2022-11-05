@@ -72,21 +72,28 @@ void Camera::onKeyUp(int key)
 
 void Camera::onMouseMove(const Point& mouse_pos)
 {
-	Vector3D localRot = this->getLocalRotation();
-	m_rot_x = localRot.m_x;
-	m_rot_y = localRot.m_y;
-	float z = localRot.m_z;
+	if (this->mouseDown) 
+	{
+		InputSystem::get()->showCursor(false);
+		Vector3D localRot = this->getLocalRotation();
+		m_rot_x = localRot.m_x;
+		m_rot_y = localRot.m_y;
+		float z = localRot.m_z;
 
-	float width = (AppWindow::getInstance()->getClientWindowRect().right - AppWindow::getInstance()->getClientWindowRect().left);
-	float height = (AppWindow::getInstance()->getClientWindowRect().bottom - AppWindow::getInstance()->getClientWindowRect().top);
+		float width = (AppWindow::getInstance()->getClientWindowRect().right - AppWindow::getInstance()->getClientWindowRect().left);
+		float height = (AppWindow::getInstance()->getClientWindowRect().bottom - AppWindow::getInstance()->getClientWindowRect().top);
 
-	m_rot_x -= (mouse_pos.m_y - (height / 2.0f)) * EngineTime::getDeltaTime() * MOUSE_SENSITIVITY;
-	m_rot_y -= (mouse_pos.m_x - (width / 2.0f)) * EngineTime::getDeltaTime() * MOUSE_SENSITIVITY;
+		m_rot_x -= (mouse_pos.m_y - (height / 2.0f)) * EngineTime::getDeltaTime() * MOUSE_SENSITIVITY;
+		m_rot_y -= (mouse_pos.m_x - (width / 2.0f)) * EngineTime::getDeltaTime() * MOUSE_SENSITIVITY;
 
-	InputSystem::get()->setCursorPosition(Point(width / 2.0f, height / 2.0f));
+		InputSystem::get()->setCursorPosition(Point(width / 2.0f, height / 2.0f));
 
-	this->setRotation(m_rot_x, m_rot_y, z);
-	this->updateViewMatrix();
+		this->setRotation(m_rot_x, m_rot_y, z);
+		this->updateViewMatrix();
+	}
+	if(!this->mouseDown)
+		InputSystem::get()->showCursor(true);
+	
 }
 
 void Camera::onLeftMouseDown(const Point& delta_mouse_pos)
@@ -104,7 +111,7 @@ void Camera::onRightMouseDown(const Point& delta_mouse_pos)
 
 void Camera::onRightMouseUp(const Point& delta_mouse_pos)
 {
-	this->mouseDown = false;
+	this->mouseDown = false; 
 }
 
 void Camera::updateViewMatrix()

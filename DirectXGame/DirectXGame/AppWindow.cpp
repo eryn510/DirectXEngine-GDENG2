@@ -3,6 +3,7 @@
 #include "InputSystem.h"
 #include "MathUtils.h"
 
+
 AppWindow* AppWindow::sharedInstance = NULL;
 
 AppWindow::AppWindow()
@@ -36,15 +37,20 @@ AppWindow::~AppWindow()
 void AppWindow::createGraphicsWindow()
 {
 	InputSystem::get()->addListener(this);
-	InputSystem::get()->showCursor(false);
+	//InputSystem::get()->showCursor(false);
 
+	//initialization
 	GraphicsEngine::initialize();
-	graphEngine = GraphicsEngine::getInstance();
 	PrimitiveManager::initialize();
+	CameraManager::initialize();
+	UIManager::initialize(this->m_hwnd);
+
+	//pointer assignment
+	graphEngine = GraphicsEngine::getInstance();
 	primMngr = PrimitiveManager:: getInstance();
 	m_render_system = graphEngine->getRenderSystem();
-	CameraManager::initialize();
 	m_camera_manager = CameraManager::getInstance();
+	m_ui_manager = UIManager::getInstance();
 
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain = m_render_system->createSwapChain(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
@@ -52,6 +58,8 @@ void AppWindow::createGraphicsWindow()
 	//primMngr->createMultipleRandom("Cube", CUBE, true, 100);
 	primMngr->createWithTransform("Cube", CUBE, Vector3D(2,2,2), SCALE, false);
 	primMngr->create("Plane", PLANE, false);
+
+
 }
 
 
@@ -78,6 +86,8 @@ void AppWindow::onUpdate()
 	m_camera_manager->update();
 
 	primMngr->update(width, height);
+
+	m_ui_manager->drawAllUI();
 
 	m_swap_chain->present(true);
 

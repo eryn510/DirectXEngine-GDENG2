@@ -1,10 +1,20 @@
 #include "Window.h"
+#include "IMGUI/imgui.h"
+#include "IMGUI/imgui_impl_win32.h"
+
 
 Window::Window()
 {
 }
+
+//declare fore handling mouse and key events in IMGUI
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
+	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam)) 
+	{
+		return true;
+	}
 	switch(msg)
 	{
 	case WM_CREATE:

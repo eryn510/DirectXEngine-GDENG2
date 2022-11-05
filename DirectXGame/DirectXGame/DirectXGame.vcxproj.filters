@@ -70,6 +70,21 @@
     <Filter Include="GameEngine\GameObject\Camera">
       <UniqueIdentifier>{36b049d4-0554-4f83-9e76-5d0903ef5dea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="IMGUI">
+      <UniqueIdentifier>{7078726e-0ebb-4cf8-9ea6-ef02d7b13b64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\User Interface">
+      <UniqueIdentifier>{641356ab-fb5c-45cf-8f7e-0093d0d10627}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\Managers\Camera">
+      <UniqueIdentifier>{1ff6bc7a-c12d-4048-bcc5-8a1dc713bdde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\Managers\Primitives">
+      <UniqueIdentifier>{c46a2c48-2750-418f-9551-1e48df6f2290}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\Managers\UI">
+      <UniqueIdentifier>{85f37224-00c1-4f4a-b9a7-4c07ad46c806}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -129,11 +144,38 @@
     <ClCompile Include="Camera.cpp">
       <Filter>GameEngine\GameObject\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="IMGUI\imgui.cpp">
+      <Filter>IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUI\imgui_demo.cpp">
+      <Filter>IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUI\imgui_draw.cpp">
+      <Filter>IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUI\imgui_impl_dx11.cpp">
+      <Filter>IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUI\imgui_impl_win32.cpp">
+      <Filter>IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUI\imgui_tables.cpp">
+      <Filter>IMGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="IMGUI\imgui_widgets.cpp">
+      <Filter>IMGUI</Filter>
+    </ClCompile>
     <ClCompile Include="CameraManager.cpp">
-      <Filter>GameEngine\Managers</Filter>
+      <Filter>GameEngine\Managers\Camera</Filter>
     </ClCompile>
     <ClCompile Include="PrimitiveManager.cpp">
-      <Filter>GameEngine\Managers</Filter>
+      <Filter>GameEngine\Managers\Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="UIManager.cpp">
+      <Filter>GameEngine\Managers\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CreditsScreen.cpp">
+      <Filter>GameEngine\User Interface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -215,11 +257,44 @@
     <ClInclude Include="Camera.h">
       <Filter>GameEngine\GameObject\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="IMGUI\imconfig.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUI\imgui.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUI\imgui_impl_dx11.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUI\imgui_impl_win32.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUI\imgui_internal.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUI\imstb_rectpack.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUI\imstb_textedit.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IMGUI\imstb_truetype.h">
+      <Filter>IMGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="AUIScreen.h">
+      <Filter>GameEngine\User Interface</Filter>
+    </ClInclude>
     <ClInclude Include="CameraManager.h">
-      <Filter>GameEngine\Managers</Filter>
+      <Filter>GameEngine\Managers\Camera</Filter>
     </ClInclude>
     <ClInclude Include="PrimitiveManager.h">
-      <Filter>GameEngine\Managers</Filter>
+      <Filter>GameEngine\Managers\Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="UIManager.h">
+      <Filter>GameEngine\Managers\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CreditsScreen.h">
+      <Filter>GameEngine\User Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
