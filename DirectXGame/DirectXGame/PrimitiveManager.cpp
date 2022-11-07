@@ -117,7 +117,7 @@ AGameObject* PrimitiveManager::create(std::string name, PrimitiveType primType, 
 	return primitive;
 }
 
-void PrimitiveManager::createWithTransform(std::string name, PrimitiveType primType, Vector3D transform, TransformType transformType, bool canUpdate)
+AGameObject* PrimitiveManager::createWithTransform(std::string name, PrimitiveType primType, Vector3D transform, TransformType transformType, bool canUpdate)
 {
 	AGameObject* primitive = create(name, primType, canUpdate);
 
@@ -127,6 +127,8 @@ void PrimitiveManager::createWithTransform(std::string name, PrimitiveType primT
 		primitive->setRotation(transform);
 	else if (transformType == SCALE)
 		primitive->setScale(transform);
+
+	return primitive;
 }
 
 void PrimitiveManager::createMultipleRandom(std::string name, PrimitiveType primType, bool canUpdate, int count)

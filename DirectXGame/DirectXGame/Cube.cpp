@@ -3,25 +3,45 @@
 #include "VertexBuffer.h"
 #include "InputSystem.h"
 #include "CameraManager.h"
+#include <cmath>
 
 Cube::Cube(std::string name) : AGameObject(name)
 {
+	///* FOR NUMBER 1 AND 3 (RAINBOW SHADER)
 	vertex quad_list[]
 	{
 		//	X - Y - Z
 		//FRONT FACE
 		{Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(1,0,0),   Vector3D(1,0,0)}, //POS1
 		{Vector3D(-0.5f, 0.5f, -0.5f),	Vector3D(1,1,0),   Vector3D(1,1,0)}, //POS2
-		{Vector3D(0.5f, 0.5f, -0.5f),	Vector3D(1,1,0),   Vector3D(1,1,0)}, //POS3
-		{Vector3D(0.5f, -0.5f, -0.5f),	Vector3D(1,0,0),   Vector3D(1,0,0)}, //POS4
+		{Vector3D(0.5f, 0.5f, -0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS3
+		{Vector3D(0.5f, -0.5f, -0.5f),	Vector3D(1,0,1),   Vector3D(1,0,1)}, //POS4
 
 		//BACK FACE
 		{Vector3D(0.5f, -0.5f, 0.5f),	Vector3D(0,1,0),   Vector3D(0,1,0)}, //POS5
-		{Vector3D(0.5f, 0.5f, 0.5f),		Vector3D(0,1,1),   Vector3D(0,1,1)}, //POS6
-		{Vector3D(-0.5f, 0.5f, 0.5f),	Vector3D(0,1,1),   Vector3D(0,1,1)}, //POS7
-		{Vector3D(-0.5f, -0.5f, 0.5f),	Vector3D(0,1,0),   Vector3D(0,1,0)} //POS8
+		{Vector3D(0.5f, 0.5f, 0.5f),	Vector3D(0,1,1),   Vector3D(0,1,1)}, //POS6
+		{Vector3D(-0.5f, 0.5f, 0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS7
+		{Vector3D(-0.5f, -0.5f, 0.5f),	Vector3D(1,1,0),   Vector3D(1,1,0)} //POS8
 	};
+	//*/
 
+	/* FOR NUMBER 2 AND 6 (WHITE SHADER)
+	vertex quad_list[]
+	{
+		//	X - Y - Z
+		//FRONT FACE
+		{Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS1
+		{Vector3D(-0.5f, 0.5f, -0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS2
+		{Vector3D(0.5f, 0.5f, -0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS3
+		{Vector3D(0.5f, -0.5f, -0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS4
+
+		//BACK FACE
+		{Vector3D(0.5f, -0.5f, 0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS5
+		{Vector3D(0.5f, 0.5f, 0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS6
+		{Vector3D(-0.5f, 0.5f, 0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS7
+		{Vector3D(-0.5f, -0.5f, 0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)} //POS8
+	};
+	*/
 
 	unsigned int index_list[] =
 	{
@@ -88,10 +108,19 @@ Cube::~Cube()
 
 void Cube::update(float deltaTime)
 {
+	//FOR NUMBER 3
+	translation = Vector3D(5, 5, 5);
+	scale = Vector3D(0.25f, 0.25f, 0.25f);
+
+	//FOR NUMBER 5
+	//scale = Vector3D(10.0f, 0.1f, 10.0f);
+
 	if(this->canUpdate)
 	{
 		this->deltaTime = deltaTime;
-		if (InputSystem::get()->isKeyDown('W'))
+
+		///* ENABLE FOR NUMBER 2 AND 4 (DEFAULT STATE)
+		if (InputSystem::get()->isKeyDown('W') || true)
 		{
 			this->ticks += deltaTime;
 
@@ -105,6 +134,21 @@ void Cube::update(float deltaTime)
 			float rotSpeed = this->ticks * this->speed * this->animSpeed;
 			this->setRotation(rotSpeed, rotSpeed, rotSpeed);
 		}
+		//*/
+		
+		/* ENABLE FOR NUMBER 3 AND 5
+		this->ticks += deltaTime;
+
+
+		this->setScale(std::lerp(this->getLocalScale().m_x, scale.m_x, sin(this->ticks) / 100.0f),
+			std::lerp(this->getLocalScale().m_y, scale.m_y, sin(this->ticks) / 100.0f),
+			std::lerp(this->getLocalScale().m_z, scale.m_z, sin(this->ticks) / 100.0f));
+		/*
+		this->setPosition(std::lerp(this->getLocalPosition().m_x, translation.m_x, sin(this->ticks) / 100.0f),
+			std::lerp(this->getLocalPosition().m_y, translation.m_y, sin(this->ticks) / 100.0f),
+			this->getLocalPosition().m_z);
+		*/
+
 	}
 }
 
@@ -139,6 +183,8 @@ void Cube::draw(int width, int height)
 	yMatrix.setIdentity();
 	yMatrix.setQuaternionRotation(rotation.m_y, 0, 1, 0);
 
+	allMatrix *= scaleMatrix;
+
 	Matrix4x4 rotMatrix;
 	rotMatrix.setIdentity();
 	rotMatrix *= zMatrix;
@@ -147,7 +193,6 @@ void Cube::draw(int width, int height)
 	allMatrix *= rotMatrix;
 
 
-	allMatrix *= scaleMatrix;
 	allMatrix *= translationMatrix;
 	cc.m_world = allMatrix;
 

@@ -35,6 +35,8 @@ private:
 	float speed = 1.0f;
 	float elapsedTime = 0.0f;
 	float animSpeed = 1.0f;
+	Vector3D translation;
+	Vector3D scale;
 
 
 	Matrix4x4 m_world_cam;

@@ -59,6 +59,15 @@ public:
 		return Vector3D(m_x + vec.m_x, m_y + vec.m_y, m_z + vec.m_z);
 	}
 
+	bool operator <(Vector3D vec)
+	{
+		if (m_x < vec.m_x && m_y < vec.m_y && m_z < vec.m_z)
+			return true;
+		else
+			return false;
+		
+	}
+
 	~Vector3D()
 	{
 		

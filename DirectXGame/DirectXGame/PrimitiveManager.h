@@ -43,7 +43,7 @@ public:
 	void release();
 
 	AGameObject* create(std::string name, PrimitiveType primType, bool canUpdate);
-	void createWithTransform(std::string name, PrimitiveType primType, Vector3D transform, TransformType transformType, bool canUpdate);
+	AGameObject* createWithTransform(std::string name, PrimitiveType primType, Vector3D transform, TransformType transformType, bool canUpdate);
 	void createMultipleRandom(std::string name, PrimitiveType primType, bool canUpdate, int count);
 
 private:

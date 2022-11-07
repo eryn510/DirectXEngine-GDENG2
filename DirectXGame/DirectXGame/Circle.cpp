@@ -147,6 +147,9 @@ void Circle::draw(int width, int height)
 	yMatrix.setIdentity();
 	yMatrix.setQuaternionRotation(rotation.m_y, 0, 1, 0);
 
+
+	allMatrix *= scaleMatrix;
+
 	Matrix4x4 rotMatrix;
 	rotMatrix.setIdentity();
 	rotMatrix *= zMatrix;
@@ -155,7 +158,6 @@ void Circle::draw(int width, int height)
 	allMatrix *= rotMatrix;
 
 
-	allMatrix *= scaleMatrix;
 	allMatrix *= translationMatrix;
 	cc.m_world = allMatrix;
 
