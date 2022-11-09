@@ -27,7 +27,7 @@ void UIManager::drawAllUI()
 
 	for (int i = 0; i < this->uiList.size(); i++) 
 	{
-		if (this->uiList[i]->isActive = true)
+		if (this->uiList[i]->isActive == true)
 			this->uiList[i]->drawUI();
 	}
 
@@ -51,9 +51,18 @@ UIManager::UIManager(HWND windowHandle)
 	ImGui_ImplDX11_Init(m_system->getDevice(), m_system->getDeviceContext());
 
 	UINames uiNames;
+
+	MenuScreen* menuScreen = new MenuScreen("Menu");
+	this->uiTable[uiNames.MENU_SCREEN] = menuScreen;
+	this->uiList.push_back(menuScreen);
+
 	CreditsScreen* creditsScreen = new CreditsScreen("Credits");
 	this->uiTable[uiNames.CREDITS_SCREEN] = creditsScreen;
 	this->uiList.push_back(creditsScreen);
+
+	ColorPickerScreen* colorPickerScreen = new ColorPickerScreen("Color Picker");
+	this->uiTable[uiNames.COLORPICKER_SCREEN] = colorPickerScreen;
+	this->uiList.push_back(colorPickerScreen);
 }
 
 UIManager::~UIManager()

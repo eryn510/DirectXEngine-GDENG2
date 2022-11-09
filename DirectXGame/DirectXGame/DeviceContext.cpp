@@ -6,6 +6,7 @@
 #include "VertexShader.h"
 #include "PixelShader.h"
 #include "RenderSystem.h"
+#include "Texture.h"
 #include <exception>
 
 DeviceContext::DeviceContext(ID3D11DeviceContext* device_context, RenderSystem* system):m_device_context(device_context), m_system(system)
@@ -76,6 +77,16 @@ void DeviceContext::setVertexShader(VertexShader* vertex_shader)
 void DeviceContext::setPixelShader(PixelShader* pixel_shader)
 {
 	m_device_context->PSSetShader(pixel_shader->m_ps, nullptr, 0);
+}
+
+void DeviceContext::setTexture(VertexShader* vertex_shader, Texture* texture)
+{
+	m_device_context->VSGetShaderResources(0, 1, &texture->m_shader_res_view);
+}
+
+void DeviceContext::setTexture(PixelShader* pixel_shader, Texture* texture)
+{
+	m_device_context->VSGetShaderResources(0, 1, &texture->m_shader_res_view);
 }
 
 void DeviceContext::setConstantBuffer(VertexShader* vertex_shader, ConstantBuffer* buffer)

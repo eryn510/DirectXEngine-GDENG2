@@ -61,6 +61,7 @@ private:
 	RenderSystem* m_render_system;
 	CameraManager* m_camera_manager;
 	UIManager* m_ui_manager;
+	TextureManager* m_tex_manager;
 
 
 private:

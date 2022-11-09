@@ -85,6 +85,12 @@
     <Filter Include="GameEngine\Managers\UI">
       <UniqueIdentifier>{85f37224-00c1-4f4a-b9a7-4c07ad46c806}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\ResourceManager">
+      <UniqueIdentifier>{fe18d9a4-4c4c-4dc6-80a5-3ce1b5ceafd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\ResourceManager\TextureManager">
+      <UniqueIdentifier>{12d615de-df81-4e3b-9380-1851135423ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -175,6 +181,24 @@
       <Filter>GameEngine\Managers\UI</Filter>
     </ClCompile>
     <ClCompile Include="CreditsScreen.cpp">
+      <Filter>GameEngine\User Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource.cpp">
+      <Filter>GameEngine\GraphicsEngine\ResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>GameEngine\GraphicsEngine\ResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>GameEngine\GraphicsEngine\ResourceManager\TextureManager</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>GameEngine\GraphicsEngine\ResourceManager\TextureManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuScreen.cpp">
+      <Filter>GameEngine\User Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="ColorPickerScreen.cpp">
       <Filter>GameEngine\User Interface</Filter>
     </ClCompile>
   </ItemGroup>
@@ -294,6 +318,27 @@
       <Filter>GameEngine\Managers\UI</Filter>
     </ClInclude>
     <ClInclude Include="CreditsScreen.h">
+      <Filter>GameEngine\User Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>GameEngine\GraphicsEngine\ResourceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>GameEngine\GraphicsEngine\ResourceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>GameEngine\GraphicsEngine\ResourceManager\TextureManager</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>GameEngine\GraphicsEngine\ResourceManager\TextureManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2D.h">
+      <Filter>GameEngine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuScreen.h">
+      <Filter>GameEngine\User Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="ColorPickerScreen.h">
       <Filter>GameEngine\User Interface</Filter>
     </ClInclude>
   </ItemGroup>

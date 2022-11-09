@@ -9,6 +9,8 @@
 #include "Window.h"
 #include "AUIScreen.h"
 #include "CreditsScreen.h"
+#include "MenuScreen.h"
+#include "ColorPickerScreen.h"
 
 class UINames 
 {
@@ -18,6 +20,7 @@ public:
 	const std::string INSPECTOR_SCREEN = "INSPECTOR_SCREEN";
 	const std::string HIERARCHY_SCREEN = "HIERARCHY_SCREEN";
 	const std::string CREDITS_SCREEN = "CREDITS_SCREEN";
+	const std::string COLORPICKER_SCREEN = "COLORPICKER_SCREEN";
 };
 
 class UIManager
@@ -45,5 +48,8 @@ private:
 
 	UIList uiList;
 	UITable uiTable;
+
+private:
+	friend class MenuScreen;
 };
 

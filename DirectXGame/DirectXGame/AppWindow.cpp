@@ -51,6 +51,9 @@ void AppWindow::createGraphicsWindow()
 	m_render_system = graphEngine->getRenderSystem();
 	m_camera_manager = CameraManager::getInstance();
 	m_ui_manager = UIManager::getInstance();
+	m_tex_manager = graphEngine->getTextureManager();
+
+	Texture* m_wood_tex = m_tex_manager->createTextureFromFile(L"..\\Assets\\Texture\\wood.jpg");
 
 	RECT rc = this->getClientWindowRect();
 	m_swap_chain = m_render_system->createSwapChain(this->m_hwnd, rc.right - rc.left, rc.bottom - rc.top);
