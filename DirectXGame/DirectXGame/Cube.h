@@ -10,7 +10,7 @@ class PrimitiveManager;
 class Cube : public AGameObject
 {
 public:
-	Cube(std::string name);
+	Cube(std::string name, Texture* texture, Mesh* mesh);
 	~Cube();
 
 public:
@@ -42,9 +42,18 @@ private:
 	Matrix4x4 m_world_cam;
 
 private:
+	Vector3D position_list[8] = {};
+
 	vertex vertex_list[8] = {};
+	texturevertex texturevertex_list[24] = {};
+
 	void* shader_byte_code;
 	size_t size_shader;
+
+private:
+	void setAlbedoVertex();
+	void setTextureVertex();
+
 
 private:
 	friend class AppWindow;

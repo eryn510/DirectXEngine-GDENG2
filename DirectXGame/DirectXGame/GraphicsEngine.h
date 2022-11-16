@@ -3,6 +3,7 @@
 #include "Prerequisites.h"
 #include "RenderSystem.h"
 #include "TextureManager.h"
+#include "MeshManager.h"
 
 class GraphicsEngine
 {
@@ -20,6 +21,7 @@ public:
 public:
 	RenderSystem* getRenderSystem();
 	TextureManager* getTextureManager();
+	MeshManager* getMeshManager();
 
 private:
 	GraphicsEngine();
@@ -31,6 +33,7 @@ private:
 private:
 	RenderSystem* m_render_system = nullptr;
 	TextureManager* m_tex_manager = nullptr;
+	MeshManager* m_mesh_manager = nullptr;
 
 };
 

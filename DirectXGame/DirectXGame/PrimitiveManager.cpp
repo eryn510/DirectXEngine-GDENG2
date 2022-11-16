@@ -75,7 +75,7 @@ void PrimitiveManager::release()
 		plane->~Plane();
 }
 
-AGameObject* PrimitiveManager::create(std::string name, PrimitiveType primType, bool canUpdate)
+AGameObject* PrimitiveManager::create(std::string name, PrimitiveType primType, bool canUpdate, Texture* texture)
 {
 	AGameObject* primitive = nullptr;
 
@@ -92,7 +92,7 @@ AGameObject* PrimitiveManager::create(std::string name, PrimitiveType primType, 
 	}
 	else if (primType == CUBE)
 	{
-		Cube* cube = new Cube(name);
+		Cube* cube = new Cube(name, texture, NULL);
 		this->cube_list.push_back(cube);
 		std::cout << "Cube created!" << std::endl;
 		primitive = cube;
@@ -106,11 +106,25 @@ AGameObject* PrimitiveManager::create(std::string name, PrimitiveType primType, 
 	}
 	else if (primType == PLANE)
 	{
-		Plane* plane = new Plane(name);
+		Plane* plane = new Plane(name, texture, NULL);
 		this->plane_list.push_back(plane);
 		std::cout << "Plane created!" << std::endl;
 		primitive = plane;
 	}
+
+	primitive->canUpdate = canUpdate;
+
+	return primitive;
+}
+
+AGameObject* PrimitiveManager::createMeshObject(std::string name, bool canUpdate, Texture* texture, Mesh* mesh)
+{
+	AGameObject* primitive = nullptr;
+
+	Cube* cube = new Cube(name, texture, mesh);
+	this->cube_list.push_back(cube);
+	std::cout << "Mesh Object created!" << std::endl;
+	primitive = cube;
 
 	primitive->canUpdate = canUpdate;
 

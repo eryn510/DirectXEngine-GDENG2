@@ -62,6 +62,7 @@ private:
 	CameraManager* m_camera_manager;
 	UIManager* m_ui_manager;
 	TextureManager* m_tex_manager;
+	MeshManager* m_mesh_manager;
 
 
 private:
@@ -85,5 +86,7 @@ private:
 
 	Matrix4x4 m_world_cam;
 	
+	Texture* m_text;
+	Mesh* m_mesh[3];
 };
 

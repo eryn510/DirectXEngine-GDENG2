@@ -119,12 +119,12 @@ DeviceContext* RenderSystem::getImmediateDeviceContext()
 	return this->m_imm_device_context;
 }
 
-VertexBuffer* RenderSystem::createVertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, void* shader_byte_code, UINT size_byte_shader)
+VertexBuffer* RenderSystem::createVertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, void* shader_byte_code, UINT size_byte_shader, bool isTextured)
 {
 	VertexBuffer* vb = nullptr;
 	try
 	{
-		vb = new VertexBuffer(list_vertices, size_vertex, size_list, shader_byte_code, size_byte_shader, this);
+		vb = new VertexBuffer(list_vertices, size_vertex, size_list, shader_byte_code, size_byte_shader, this, isTextured);
 	}
 	catch (...) {}
 

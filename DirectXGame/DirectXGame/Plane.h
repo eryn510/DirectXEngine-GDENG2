@@ -8,7 +8,7 @@ class PrimitiveManager;
 class Plane : public Cube
 {
 public:
-	Plane(std::string name);
+	Plane(std::string name, Texture* texture, Mesh* mesh);
 	~Plane();
 
 public:

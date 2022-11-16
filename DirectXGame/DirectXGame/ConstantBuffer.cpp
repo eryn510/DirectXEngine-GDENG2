@@ -31,3 +31,8 @@ ConstantBuffer::~ConstantBuffer()
 {
 	if (m_buffer)m_buffer->Release();
 }
+
+ID3D11Buffer* ConstantBuffer::getCB()
+{
+	return m_buffer;
+}

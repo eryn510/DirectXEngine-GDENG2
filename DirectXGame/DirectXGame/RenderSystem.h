@@ -26,7 +26,7 @@ private:
 public:
 	SwapChain* createSwapChain(HWND hwnd, UINT width, UINT height);
 	DeviceContext* getImmediateDeviceContext();
-	VertexBuffer* createVertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, void* shader_byte_code, UINT size_byte_shader);
+	VertexBuffer* createVertexBuffer(void* list_vertices, UINT size_vertex, UINT size_list, void* shader_byte_code, UINT size_byte_shader, bool isTextured = false);
 	IndexBuffer* createIndexBuffer(void* list_indices, UINT size_list);
 	ConstantBuffer* createConstantBuffer(void* buffer, UINT size_buffer);
 	VertexShader* createVertexShader(const void* shader_byte_code, size_t byte_code_size);

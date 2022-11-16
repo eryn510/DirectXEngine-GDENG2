@@ -1,4 +1,5 @@
 #pragma once
+#include "Vector2D.h"
 
 
 class Vector3D
@@ -82,5 +83,10 @@ struct vertex
 	Vector3D position;
 	Vector3D color;
 	Vector3D color1;
+};
+
+struct texturevertex {
+	Vector3D position;
+	Vector2D texCoord;
 };
 

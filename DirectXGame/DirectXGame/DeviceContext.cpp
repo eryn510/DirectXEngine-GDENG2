@@ -69,34 +69,24 @@ void DeviceContext::setViewportSize(UINT width, UINT height)
 	m_device_context->RSSetViewports(1, &vp);
 }
 
-void DeviceContext::setVertexShader(VertexShader* vertex_shader)
+void DeviceContext::setShaderConfig(VertexShader* vertex_shader, PixelShader* pixel_shader)
 {
 	m_device_context->VSSetShader(vertex_shader->m_vs, nullptr, 0);
-}
-
-void DeviceContext::setPixelShader(PixelShader* pixel_shader)
-{
 	m_device_context->PSSetShader(pixel_shader->m_ps, nullptr, 0);
 }
 
-void DeviceContext::setTexture(VertexShader* vertex_shader, Texture* texture)
+void DeviceContext::setTexture(Texture* texture)
 {
-	m_device_context->VSGetShaderResources(0, 1, &texture->m_shader_res_view);
+	ID3D11ShaderResourceView* shaderRes = texture->getShaderResourceView();
+	this->m_device_context->VSSetShaderResources(0, 1, &shaderRes);
+	this->m_device_context->PSSetShaderResources(0, 1, &shaderRes);
 }
 
-void DeviceContext::setTexture(PixelShader* pixel_shader, Texture* texture)
+void DeviceContext::setConstantBuffer(ConstantBuffer* buffer)
 {
-	m_device_context->VSGetShaderResources(0, 1, &texture->m_shader_res_view);
-}
-
-void DeviceContext::setConstantBuffer(VertexShader* vertex_shader, ConstantBuffer* buffer)
-{
-	m_device_context->VSSetConstantBuffers(0, 1, &buffer->m_buffer);
-}
-
-void DeviceContext::setConstantBuffer(PixelShader* pixel_shader, ConstantBuffer* buffer)
-{
-	m_device_context->PSSetConstantBuffers(0, 1, &buffer->m_buffer);
+	ID3D11Buffer* deviceBuffer = buffer->getCB();
+	this->m_device_context->VSSetConstantBuffers(0, 1, &deviceBuffer);
+	this->m_device_context->PSSetConstantBuffers(0, 1, &deviceBuffer);
 }
 
 DeviceContext::~DeviceContext()

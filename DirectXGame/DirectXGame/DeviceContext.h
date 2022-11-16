@@ -17,14 +17,11 @@ public:
 
 	void setViewportSize(UINT width, UINT height);
 
-	void setVertexShader(VertexShader* vertex_shader);
-	void setPixelShader(PixelShader* pixel_shader);
+	void setShaderConfig(VertexShader* vertex_shader, PixelShader* pixel_shader);
 
-	void setTexture(VertexShader* vertex_shader, Texture* texture);
-	void setTexture(PixelShader* pixel_shader, Texture* texture);
+	void setTexture(Texture* texture);
 
-	void setConstantBuffer(VertexShader* vertex_shader, ConstantBuffer* buffer);
-	void setConstantBuffer(PixelShader* pixel_shader, ConstantBuffer* buffer);
+	void setConstantBuffer(ConstantBuffer* buffer);
 
 	~DeviceContext();
 

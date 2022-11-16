@@ -73,9 +73,6 @@
     <Filter Include="IMGUI">
       <UniqueIdentifier>{7078726e-0ebb-4cf8-9ea6-ef02d7b13b64}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameEngine\User Interface">
-      <UniqueIdentifier>{641356ab-fb5c-45cf-8f7e-0093d0d10627}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameEngine\Managers\Camera">
       <UniqueIdentifier>{1ff6bc7a-c12d-4048-bcc5-8a1dc713bdde}</UniqueIdentifier>
     </Filter>
@@ -90,6 +87,18 @@
     </Filter>
     <Filter Include="GameEngine\GraphicsEngine\ResourceManager\TextureManager">
       <UniqueIdentifier>{12d615de-df81-4e3b-9380-1851135423ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\ShaderLibrary">
+      <UniqueIdentifier>{56283f0e-c20f-496d-93ec-317cb03a477c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\UserInterface">
+      <UniqueIdentifier>{641356ab-fb5c-45cf-8f7e-0093d0d10627}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\ShaderLibrary\Shaders">
+      <UniqueIdentifier>{3d84dbfc-c8ba-4fca-8eee-544da0623dd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameEngine\GraphicsEngine\ResourceManager\MeshManager">
+      <UniqueIdentifier>{b5d8319b-72bc-4383-98dd-095f9a0b907b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -181,7 +190,7 @@
       <Filter>GameEngine\Managers\UI</Filter>
     </ClCompile>
     <ClCompile Include="CreditsScreen.cpp">
-      <Filter>GameEngine\User Interface</Filter>
+      <Filter>GameEngine\UserInterface</Filter>
     </ClCompile>
     <ClCompile Include="Resource.cpp">
       <Filter>GameEngine\GraphicsEngine\ResourceManager</Filter>
@@ -196,10 +205,22 @@
       <Filter>GameEngine\GraphicsEngine\ResourceManager\TextureManager</Filter>
     </ClCompile>
     <ClCompile Include="MenuScreen.cpp">
-      <Filter>GameEngine\User Interface</Filter>
+      <Filter>GameEngine\UserInterface</Filter>
     </ClCompile>
     <ClCompile Include="ColorPickerScreen.cpp">
-      <Filter>GameEngine\User Interface</Filter>
+      <Filter>GameEngine\UserInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderLibrary.cpp">
+      <Filter>GameEngine\ShaderLibrary</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshManager.cpp">
+      <Filter>GameEngine\GraphicsEngine\ResourceManager\MeshManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>GameEngine\GraphicsEngine\ResourceManager\MeshManager</Filter>
+    </ClCompile>
+    <ClCompile Include="InspectorScreen.cpp">
+      <Filter>GameEngine\UserInterface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -306,7 +327,7 @@
       <Filter>IMGUI</Filter>
     </ClInclude>
     <ClInclude Include="AUIScreen.h">
-      <Filter>GameEngine\User Interface</Filter>
+      <Filter>GameEngine\UserInterface</Filter>
     </ClInclude>
     <ClInclude Include="CameraManager.h">
       <Filter>GameEngine\Managers\Camera</Filter>
@@ -318,7 +339,7 @@
       <Filter>GameEngine\Managers\UI</Filter>
     </ClInclude>
     <ClInclude Include="CreditsScreen.h">
-      <Filter>GameEngine\User Interface</Filter>
+      <Filter>GameEngine\UserInterface</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
       <Filter>GameEngine\GraphicsEngine\ResourceManager</Filter>
@@ -336,10 +357,25 @@
       <Filter>GameEngine\Math</Filter>
     </ClInclude>
     <ClInclude Include="MenuScreen.h">
-      <Filter>GameEngine\User Interface</Filter>
+      <Filter>GameEngine\UserInterface</Filter>
     </ClInclude>
     <ClInclude Include="ColorPickerScreen.h">
-      <Filter>GameEngine\User Interface</Filter>
+      <Filter>GameEngine\UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderLibrary.h">
+      <Filter>GameEngine\ShaderLibrary</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshManager.h">
+      <Filter>GameEngine\GraphicsEngine\ResourceManager\MeshManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>GameEngine\GraphicsEngine\ResourceManager\MeshManager</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexMesh.h">
+      <Filter>GameEngine\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="InspectorScreen.h">
+      <Filter>GameEngine\UserInterface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -347,10 +383,19 @@
       <Filter>GameEngine</Filter>
     </FxCompile>
     <FxCompile Include="VertexShader.hlsl">
-      <Filter>App</Filter>
+      <Filter>GameEngine\ShaderLibrary\Shaders</Filter>
     </FxCompile>
     <FxCompile Include="PixelShader.hlsl">
-      <Filter>App</Filter>
+      <Filter>GameEngine\ShaderLibrary\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="TexturedVertexShader.hlsl">
+      <Filter>GameEngine\ShaderLibrary\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="TexturedPixelShader.hlsl">
+      <Filter>GameEngine\ShaderLibrary\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="VertexMeshShader.hlsl">
+      <Filter>GameEngine\ShaderLibrary\Shaders</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

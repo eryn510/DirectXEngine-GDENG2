@@ -1,9 +1,15 @@
 #include "Quad.h"
 #include "IndexBuffer.h"
 #include "VertexBuffer.h"
+#include "ShaderLibrary.h"
 
 Quad::Quad(std::string name) : AGameObject(name)
 {
+	ShaderNames shaderNames;
+	void* shader_byte_codes = NULL;
+	size_t size_shaders = 0;
+	ShaderLibrary::getInstance()->requestShaderData(shaderNames.BASE_VERTEX_SHADER_NAME, &shader_byte_codes, &size_shaders);
+
 	vertex quad_list[]
 	{
 		//	X - Y - Z
@@ -22,37 +28,15 @@ Quad::Quad(std::string name) : AGameObject(name)
 	};
 
 	//INDEX BUFFER Creation
-	UINT size_index_list = ARRAYSIZE(index_list);
-	this->m_ib = m_system->createIndexBuffer(index_list, size_index_list);
-
-	void* shader_byte_codes = nullptr;
-	size_t size_shaders = 0;
-
-	//VERTEX SHADER
-	m_system->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_codes, &size_shaders);
-	m_vs = m_system->createVertexShader(shader_byte_codes, size_shaders);
-
+	this->m_ib = m_system->createIndexBuffer(index_list, ARRAYSIZE(index_list));
 
 	//VERTEX BUFFER Creation
-	UINT size_list = ARRAYSIZE(quad_list);
-	this->m_vb = m_system->createVertexBuffer(quad_list, sizeof(vertex), size_list, shader_byte_codes, size_shaders);
-
-
-	m_system->releaseCompiledShader();
-
-	//PIXEL SHADER
-	m_system->compilePixelShader(L"PixelShader.hlsl", "psmain", &shader_byte_codes, &size_shaders);
-	m_ps = m_system->createPixelShader(shader_byte_codes, size_shaders);
-	m_system->releaseCompiledShader();
+	this->m_vb = m_system->createVertexBuffer(quad_list, sizeof(vertex), ARRAYSIZE(quad_list), shader_byte_codes, size_shaders);
 
 	//CONSTANT BUFFER Creation
 	constant cc;
 	cc.m_time = 0;
 	this->m_cb = m_system->createConstantBuffer(&cc, sizeof(constant));
-
-	//set SHADERS
-	m_system->getImmediateDeviceContext()->setVertexShader(this->m_vs);
-	m_system->getImmediateDeviceContext()->setPixelShader(this->m_ps);
 }
 
 Quad::~Quad()
@@ -86,6 +70,12 @@ void Quad::update(float delta)
 
 void Quad::draw(int width, int height)
 {
+	//set SHADERS
+	ShaderNames shaderNames;
+	m_system->getImmediateDeviceContext()->setShaderConfig
+	(ShaderLibrary::getInstance()->getVertexShader(shaderNames.BASE_VERTEX_SHADER_NAME),
+		ShaderLibrary::getInstance()->getPixelShader(shaderNames.BASE_PIXEL_SHADER_NAME));
+
 	DeviceContext* deviceContext = m_system->getImmediateDeviceContext();
 
 	constant cc = {};
@@ -141,9 +131,7 @@ void Quad::draw(int width, int height)
 
 	this->m_cb->update(deviceContext, &cc);
 
-	deviceContext->setConstantBuffer(this->m_vs, this->m_cb);
-	deviceContext->setConstantBuffer(this->m_ps, this->m_cb);
-
+	deviceContext->setConstantBuffer(this->m_cb);
 	deviceContext->setVertexBuffer(this->m_vb);
 	deviceContext->setIndexBuffer(this->m_ib);
 

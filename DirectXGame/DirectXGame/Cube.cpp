@@ -3,46 +3,49 @@
 #include "VertexBuffer.h"
 #include "InputSystem.h"
 #include "CameraManager.h"
+#include "ShaderLibrary.h"
+#include "Mesh.h"
 #include <cmath>
 
-Cube::Cube(std::string name) : AGameObject(name)
+Cube::Cube(std::string name, Texture* texture, Mesh* mesh) : AGameObject(name)
 {
-	///* FOR NUMBER 1 AND 3 (RAINBOW SHADER)
-	vertex quad_list[]
+	Vector3D position_list[]
 	{
-		//	X - Y - Z
-		//FRONT FACE
-		{Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(1,0,0),   Vector3D(1,0,0)}, //POS1
-		{Vector3D(-0.5f, 0.5f, -0.5f),	Vector3D(1,1,0),   Vector3D(1,1,0)}, //POS2
-		{Vector3D(0.5f, 0.5f, -0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS3
-		{Vector3D(0.5f, -0.5f, -0.5f),	Vector3D(1,0,1),   Vector3D(1,0,1)}, //POS4
+		Vector3D(-0.5f, -0.5f, -0.5f),//POS1
+		Vector3D(-0.5f, 0.5f, -0.5f),//POS2
+		Vector3D(0.5f, 0.5f, -0.5f),//POS3
+		Vector3D(0.5f, -0.5f, -0.5f), //POS4
 
 		//BACK FACE
-		{Vector3D(0.5f, -0.5f, 0.5f),	Vector3D(0,1,0),   Vector3D(0,1,0)}, //POS5
-		{Vector3D(0.5f, 0.5f, 0.5f),	Vector3D(0,1,1),   Vector3D(0,1,1)}, //POS6
-		{Vector3D(-0.5f, 0.5f, 0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS7
-		{Vector3D(-0.5f, -0.5f, 0.5f),	Vector3D(1,1,0),   Vector3D(1,1,0)} //POS8
+		Vector3D(0.5f, -0.5f, 0.5f),//POS5
+		Vector3D(0.5f, 0.5f, 0.5f), //POS6
+		Vector3D(-0.5f, 0.5f, 0.5f), //POS7
+		Vector3D(-0.5f, -0.5f, 0.5f) //POS8
 	};
-	//*/
 
-	/* FOR NUMBER 2 AND 6 (WHITE SHADER)
-	vertex quad_list[]
+	memcpy(this->position_list, position_list, sizeof(Vector3D) * 8);
+
+	ShaderNames shaderNames;
+	void* shader_byte_codes = NULL;
+	size_t size_shaders = 0;
+
+	if (texture == NULL)
 	{
-		//	X - Y - Z
-		//FRONT FACE
-		{Vector3D(-0.5f, -0.5f, -0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS1
-		{Vector3D(-0.5f, 0.5f, -0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS2
-		{Vector3D(0.5f, 0.5f, -0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS3
-		{Vector3D(0.5f, -0.5f, -0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS4
+		ShaderLibrary::getInstance()->requestShaderData(shaderNames.BASE_VERTEX_SHADER_NAME, &shader_byte_codes, &size_shaders);
+		setAlbedoVertex();
 
-		//BACK FACE
-		{Vector3D(0.5f, -0.5f, 0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS5
-		{Vector3D(0.5f, 0.5f, 0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS6
-		{Vector3D(-0.5f, 0.5f, 0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS7
-		{Vector3D(-0.5f, -0.5f, 0.5f),	Vector3D(1,1,1),   Vector3D(1,1,1)} //POS8
-	};
-	*/
+		//VERTEX BUFFER Creation
+		this->m_vb = m_system->createVertexBuffer(this->vertex_list, sizeof(vertex), ARRAYSIZE(this->vertex_list), shader_byte_codes, size_shaders);
+	}
+		
+	else 
+	{
+		ShaderLibrary::getInstance()->requestShaderData(shaderNames.TEXTURED_VERTEX_SHADER_NAME, &shader_byte_codes, &size_shaders);
+		setTextureVertex();
 
+		this->m_vb = m_system->createVertexBuffer(this->texturevertex_list, sizeof(texturevertex), ARRAYSIZE(this->texturevertex_list), shader_byte_codes, size_shaders, true);
+	}
+		
 	unsigned int index_list[] =
 	{
 		//FRONT SIDE
@@ -66,37 +69,15 @@ Cube::Cube(std::string name) : AGameObject(name)
 	};
 
 	//INDEX BUFFER Creation
-	UINT size_index_list = ARRAYSIZE(index_list);
-	this->m_ib = m_system->createIndexBuffer(index_list, size_index_list);
+	this->m_ib = m_system->createIndexBuffer(index_list, ARRAYSIZE(index_list));
 	
-	void* shader_byte_codes = nullptr;
-	size_t size_shaders = 0;
-
-	//VERTEX SHADER
-	m_system->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_codes, &size_shaders);
-	m_vs = m_system->createVertexShader(shader_byte_codes, size_shaders);
-
-
-	//VERTEX BUFFER Creation
-	UINT size_list = ARRAYSIZE(quad_list);
-	this->m_vb = m_system->createVertexBuffer(quad_list, sizeof(vertex), size_list, shader_byte_codes, size_shaders);
-	
-
-	m_system->releaseCompiledShader();
-
-	//PIXEL SHADER
-	m_system->compilePixelShader(L"PixelShader.hlsl", "psmain", &shader_byte_codes, &size_shaders);
-	m_ps = m_system->createPixelShader(shader_byte_codes, size_shaders);
-	m_system->releaseCompiledShader();
-
 	//CONSTANT BUFFER Creation
 	constant cc;
 	cc.m_time = 0;
 	this->m_cb = m_system->createConstantBuffer(&cc, sizeof(constant));
 
-	//set SHADERS
-	m_system->getImmediateDeviceContext()->setVertexShader(this->m_vs);
-	m_system->getImmediateDeviceContext()->setPixelShader(this->m_ps);
+	this->setTexture(texture);
+	this->setMesh(mesh);
 } 
 
 Cube::~Cube()
@@ -108,18 +89,10 @@ Cube::~Cube()
 
 void Cube::update(float deltaTime)
 {
-	//FOR NUMBER 3
-	translation = Vector3D(5, 5, 5);
-	scale = Vector3D(0.25f, 0.25f, 0.25f);
-
-	//FOR NUMBER 5
-	//scale = Vector3D(10.0f, 0.1f, 10.0f);
-
 	if(this->canUpdate)
 	{
 		this->deltaTime = deltaTime;
 
-		///* ENABLE FOR NUMBER 2 AND 4 (DEFAULT STATE)
 		if (InputSystem::get()->isKeyDown('W') || true)
 		{
 			this->ticks += deltaTime;
@@ -134,26 +107,26 @@ void Cube::update(float deltaTime)
 			float rotSpeed = this->ticks * this->speed * this->animSpeed;
 			this->setRotation(rotSpeed, rotSpeed, rotSpeed);
 		}
-		//*/
-		
-		/* ENABLE FOR NUMBER 3 AND 5
-		this->ticks += deltaTime;
-
-
-		this->setScale(std::lerp(this->getLocalScale().m_x, scale.m_x, sin(this->ticks) / 100.0f),
-			std::lerp(this->getLocalScale().m_y, scale.m_y, sin(this->ticks) / 100.0f),
-			std::lerp(this->getLocalScale().m_z, scale.m_z, sin(this->ticks) / 100.0f));
-		/*
-		this->setPosition(std::lerp(this->getLocalPosition().m_x, translation.m_x, sin(this->ticks) / 100.0f),
-			std::lerp(this->getLocalPosition().m_y, translation.m_y, sin(this->ticks) / 100.0f),
-			this->getLocalPosition().m_z);
-		*/
-
 	}
 }
 
 void Cube::draw(int width, int height)
 {
+	//set SHADERS
+	ShaderNames shaderNames;
+
+	if (this->texture == NULL) {
+		m_system->getImmediateDeviceContext()->setShaderConfig
+		(ShaderLibrary::getInstance()->getVertexShader(shaderNames.BASE_VERTEX_SHADER_NAME),
+			ShaderLibrary::getInstance()->getPixelShader(shaderNames.BASE_PIXEL_SHADER_NAME));
+	}
+	else 
+	{
+		m_system->getImmediateDeviceContext()->setTexture(this->texture);
+		m_system->getImmediateDeviceContext()->setShaderConfig(ShaderLibrary::getInstance()->getVertexShader(shaderNames.TEXTURED_VERTEX_SHADER_NAME),
+			ShaderLibrary::getInstance()->getPixelShader(shaderNames.TEXTURED_PIXEL_SHADER_NAME));
+	}
+	
 	DeviceContext* deviceContext = m_system->getImmediateDeviceContext();
 
 	constant cc = {};
@@ -209,16 +182,96 @@ void Cube::draw(int width, int height)
 
 	this->m_cb->update(deviceContext, &cc);
 
-	deviceContext->setConstantBuffer(this->m_vs, this->m_cb);
-	deviceContext->setConstantBuffer(this->m_ps, this->m_cb);
 
-	deviceContext->setVertexBuffer(this->m_vb);
-	deviceContext->setIndexBuffer(this->m_ib);
+	deviceContext->setConstantBuffer(this->m_cb);
 
-	deviceContext->drawIndexedTriangleList(this->m_ib->getSizeIndexList(), 0, 0);
+	if (mesh == NULL) 
+	{
+		deviceContext->setVertexBuffer(this->m_vb);
+		deviceContext->setIndexBuffer(this->m_ib);
+		deviceContext->drawIndexedTriangleList(this->m_ib->getSizeIndexList(), 0, 0);
+	}
+	else 
+	{
+		deviceContext->setVertexBuffer(this->mesh->getVertexBuffer());
+		deviceContext->setIndexBuffer(this->mesh->getIndexBuffer());
+		deviceContext->drawIndexedTriangleList(this->mesh->getIndexBuffer()->getSizeIndexList(), 0, 0);
+	}
+
 }
 
 void Cube::setAnimSpeed(float multiplier)
 {
 	this->animSpeed = multiplier;
+}
+
+void Cube::setAlbedoVertex()
+{
+	vertex quad_list[]
+	{
+		//	X - Y - Z
+		//FRONT FACE
+		{this->position_list[0],	Vector3D(1,0,0),   Vector3D(1,0,0)}, //POS1
+		{this->position_list[1],	Vector3D(1,1,0),   Vector3D(1,1,0)}, //POS2
+		{this->position_list[2],	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS3
+		{this->position_list[3],	Vector3D(1,0,1),   Vector3D(1,0,1)}, //POS4
+
+		//BACK FACE
+		{this->position_list[4],	Vector3D(0,1,0),   Vector3D(0,1,0)}, //POS5
+		{this->position_list[5],	Vector3D(0,1,1),   Vector3D(0,1,1)}, //POS6
+		{this->position_list[6],	Vector3D(1,1,1),   Vector3D(1,1,1)}, //POS7
+		{this->position_list[7],	Vector3D(1,1,0),   Vector3D(1,1,0)} //POS8
+	};
+
+	memcpy(this->vertex_list, quad_list, sizeof(vertex) * 8);
+}
+
+void Cube::setTextureVertex()
+{
+	Vector2D texcoord_list[] =
+	{
+		{ Vector2D(0.0f,0.0f) },
+		{ Vector2D(0.0f,1.0f) },
+		{ Vector2D(1.0f,0.0f) },
+		{ Vector2D(1.0f,1.0f) }
+	};
+
+	texturevertex quadList[] =
+	{
+		//X - Y - Z
+		//FRONT FACE
+		{ this->position_list[0],texcoord_list[1] },
+		{ this->position_list[1],texcoord_list[0] },
+		{ this->position_list[2],texcoord_list[2] },
+		{ this->position_list[3],texcoord_list[3] },
+
+
+		{ this->position_list[4],texcoord_list[1] },
+		{ this->position_list[5],texcoord_list[0] },
+		{ this->position_list[6],texcoord_list[2] },
+		{ this->position_list[7],texcoord_list[3] },
+
+
+		{ this->position_list[1],texcoord_list[1] },
+		{ this->position_list[6],texcoord_list[0] },
+		{ this->position_list[5],texcoord_list[2] },
+		{ this->position_list[2],texcoord_list[3] },
+
+		{ this->position_list[7],texcoord_list[1] },
+		{ this->position_list[0],texcoord_list[0] },
+		{ this->position_list[3],texcoord_list[2] },
+		{ this->position_list[4],texcoord_list[3] },
+
+		{ this->position_list[3],texcoord_list[1] },
+		{ this->position_list[2],texcoord_list[0] },
+		{ this->position_list[5],texcoord_list[2] },
+		{ this->position_list[4],texcoord_list[3] },
+
+		{ this->position_list[7],texcoord_list[1] },
+		{ this->position_list[6],texcoord_list[0] },
+		{ this->position_list[1],texcoord_list[2] },
+		{ this->position_list[0],texcoord_list[3] }
+	};
+
+	memcpy(this->texturevertex_list, quadList, sizeof(texturevertex) * 24);
 }

@@ -4,6 +4,7 @@
 #include "Vector3D.h"
 #include "Matrix4x4.h"
 #include "InputSystem.h"
+#include "Texture.h"
 
 class AGameObject
 {
@@ -26,6 +27,14 @@ public:
 	virtual void draw(int width, int height) = 0;
 	bool canUpdate = false;
 
+	void setTexture(Texture* texture)
+	{
+		this->texture = texture;
+	};
+	void setMesh(Mesh* mesh)
+	{
+		this->mesh = mesh;
+	};
 	void setPosition(float x, float y, float z)
 	{
 		this->localPosition = Vector3D(x, y, z);
@@ -92,4 +101,7 @@ protected:
 	Vector3D localScale;
 	Vector3D localRotation;
 	Matrix4x4 localMatrix;
+
+	Texture* texture = NULL;
+	Mesh* mesh = NULL;
 };

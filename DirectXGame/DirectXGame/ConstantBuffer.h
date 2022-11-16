@@ -9,6 +9,8 @@ public:
 	void update(DeviceContext* context, void* buffer);
 	~ConstantBuffer();
 
+	ID3D11Buffer* getCB();
+
 private:
 	ID3D11Buffer* m_buffer;
 	RenderSystem* m_system = nullptr;

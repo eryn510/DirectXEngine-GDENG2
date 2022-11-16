@@ -42,7 +42,8 @@ public:
 	void update(int width, int height);
 	void release();
 
-	AGameObject* create(std::string name, PrimitiveType primType, bool canUpdate);
+	AGameObject* create(std::string name, PrimitiveType primType, bool canUpdate, Texture* texture = NULL);
+	AGameObject* createMeshObject(std::string name, bool canUpdate, Texture* texture = NULL, Mesh* mesh = NULL);
 	AGameObject* createWithTransform(std::string name, PrimitiveType primType, Vector3D transform, TransformType transformType, bool canUpdate);
 	void createMultipleRandom(std::string name, PrimitiveType primType, bool canUpdate, int count);
 
@@ -54,5 +55,6 @@ private:
 
 private:
 	friend class AppWindow;
+	friend class InspectorScreen;
 };
 

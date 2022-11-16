@@ -11,6 +11,7 @@
 #include "CreditsScreen.h"
 #include "MenuScreen.h"
 #include "ColorPickerScreen.h"
+#include "InspectorScreen.h"
 
 class UINames 
 {

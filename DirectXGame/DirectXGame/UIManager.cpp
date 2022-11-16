@@ -63,6 +63,10 @@ UIManager::UIManager(HWND windowHandle)
 	ColorPickerScreen* colorPickerScreen = new ColorPickerScreen("Color Picker");
 	this->uiTable[uiNames.COLORPICKER_SCREEN] = colorPickerScreen;
 	this->uiList.push_back(colorPickerScreen);
+
+	InspectorScreen* inspectorScreen = new InspectorScreen("Inspector Screen");
+	this->uiTable[uiNames.INSPECTOR_SCREEN] = inspectorScreen;
+	this->uiList.push_back(inspectorScreen);
 }
 
 UIManager::~UIManager()

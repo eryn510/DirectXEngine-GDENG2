@@ -2,9 +2,15 @@
 #include "IndexBuffer.h"
 #include "VertexBuffer.h"
 #include "InputSystem.h"
+#include "ShaderLibrary.h"
 
-Plane::Plane(std::string name) : Cube(name)
+Plane::Plane(std::string name, Texture* texture, Mesh* mesh) : Cube(name, texture, mesh)
 {
+	ShaderNames shaderNames;
+	void* shader_byte_codes = NULL;
+	size_t size_shaders = 0;
+	ShaderLibrary::getInstance()->requestShaderData(shaderNames.BASE_VERTEX_SHADER_NAME, &shader_byte_codes, &size_shaders);
+
 	vertex quad_list[]
 	{
 		//	X - Y - Z
@@ -44,28 +50,10 @@ Plane::Plane(std::string name) : Cube(name)
 	};
 
 	//INDEX BUFFER Creation
-	UINT size_index_list = ARRAYSIZE(index_list);
-	this->m_ib = m_system->createIndexBuffer(index_list, size_index_list);
-
-	void* shader_byte_codes = nullptr;
-	size_t size_shaders = 0;
-
-	//VERTEX SHADER
-	m_system->compileVertexShader(L"VertexShader.hlsl", "vsmain", &shader_byte_codes, &size_shaders);
-	m_vs = m_system->createVertexShader(shader_byte_codes, size_shaders);
-
+	this->m_ib = m_system->createIndexBuffer(index_list, ARRAYSIZE(index_list));
 
 	//VERTEX BUFFER Creation
-	UINT size_list = ARRAYSIZE(quad_list);
-	this->m_vb = m_system->createVertexBuffer(quad_list, sizeof(vertex), size_list, shader_byte_codes, size_shaders);
-
-
-	m_system->releaseCompiledShader();
-
-	//PIXEL SHADER
-	m_system->compilePixelShader(L"PixelShader.hlsl", "psmain", &shader_byte_codes, &size_shaders);
-	m_ps = m_system->createPixelShader(shader_byte_codes, size_shaders);
-	m_system->releaseCompiledShader();
+	this->m_vb = m_system->createVertexBuffer(quad_list, sizeof(vertex), ARRAYSIZE(quad_list), shader_byte_codes, size_shaders);
 
 	//CONSTANT BUFFER Creation
 	constant cc;
@@ -74,11 +62,6 @@ Plane::Plane(std::string name) : Cube(name)
 
 	this->setScale(8.0f, 0.1f, 8.0f);
 	this->setRotation(0.0f, 0.0f, 0.0f);
-
-	//set SHADERS
-	m_system->getImmediateDeviceContext()->setVertexShader(this->m_vs);
-	m_system->getImmediateDeviceContext()->setPixelShader(this->m_ps);
-
 }
 
 Plane::~Plane()
@@ -112,6 +95,12 @@ void Plane::update(float deltaTime)
 
 void Plane::draw(int width, int height)
 {
+	//set SHADERS
+	ShaderNames shaderNames;
+	m_system->getImmediateDeviceContext()->setShaderConfig
+	(ShaderLibrary::getInstance()->getVertexShader(shaderNames.BASE_VERTEX_SHADER_NAME),
+		ShaderLibrary::getInstance()->getPixelShader(shaderNames.BASE_PIXEL_SHADER_NAME));
+
 	DeviceContext* deviceContext = m_system->getImmediateDeviceContext();
 
 	constant cc = {};
@@ -168,9 +157,7 @@ void Plane::draw(int width, int height)
 
 	this->m_cb->update(deviceContext, &cc);
 
-	deviceContext->setConstantBuffer(this->m_vs, this->m_cb);
-	deviceContext->setConstantBuffer(this->m_ps, this->m_cb);
-
+	deviceContext->setConstantBuffer(this->m_cb);
 	deviceContext->setVertexBuffer(this->m_vb);
 	deviceContext->setIndexBuffer(this->m_ib);
 
