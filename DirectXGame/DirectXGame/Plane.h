@@ -1,20 +1,25 @@
 #pragma once
-#include "Cube.h"
+#include "AGameObject.h"
+#include "GraphicsEngine.h"
+#include "Vector3D.h"
 #include "Prerequisites.h"
 
 class AppWindow;
 class GameObjectManager;
 
-class Plane : public Cube
+class Plane : public AGameObject
 {
 public:
-	Plane(std::string name, Texture* texture, Mesh* mesh);
+	Plane(std::string name, Texture* texture);
 	~Plane();
 
 public:
 	virtual void update(float deltaTime) override;
 	virtual void draw(int width, int height) override;
 	virtual void setAnimSpeed(float multiplier) override;
+
+protected:
+	virtual void awake() override;
 
 public:
 	RenderSystem* m_system = GraphicsEngine::getInstance()->getRenderSystem();

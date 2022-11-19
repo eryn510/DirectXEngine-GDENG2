@@ -17,6 +17,9 @@ public:
 	virtual void draw(int width, int height) override;
 	virtual void setAnimSpeed(float multiplier) override;
 
+protected:
+	virtual void awake() override;
+
 public:
 	RenderSystem* m_system = GraphicsEngine::getInstance()->getRenderSystem();
 
@@ -37,6 +40,8 @@ private:
 
 
 	Matrix4x4 m_world_cam;
+
+
 
 private:
 	static const int arcCount = 60;

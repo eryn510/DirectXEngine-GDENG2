@@ -18,6 +18,9 @@ public:
 	virtual void draw(int width, int height) override;
 	virtual void setAnimSpeed(float deltaTime) override;
 
+protected:
+	virtual void awake() override;
+
 public:
 	RenderSystem* m_system = GraphicsEngine::getInstance()->getRenderSystem();
 
@@ -49,6 +52,7 @@ private:
 
 	void* shader_byte_code;
 	size_t size_shader;
+
 
 private:
 	void setAlbedoVertex();

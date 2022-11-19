@@ -79,6 +79,11 @@ Circle::~Circle()
 	delete this->m_vb;
 }
 
+void Circle::awake()
+{
+
+}
+
 void Circle::update(float deltaTime)
 {
 	if (this->canUpdate)

@@ -6,7 +6,8 @@ int main()
 {
 	AppWindow::initialize();
 	AppWindow* runningApp = (AppWindow*)AppWindow::getInstance();
-	runningApp->createGraphicsWindow();
+	runningApp->initializeEngine();
+	runningApp->Start();
 
 	while (runningApp->isRun())
 	{

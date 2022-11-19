@@ -62,28 +62,25 @@ AGameObject* GameObjectManager::create(std::string name, PrimitiveType primType,
 	else if (primType == QUAD)
 	{
 		obj = new Quad(name);
-		this->object_list.push_back(obj);
 		std::cout << "Quad created!" << std::endl;
 	}
 	else if (primType == CUBE)
 	{
 		obj = new Cube(name, texture, NULL);
-		this->object_list.push_back(obj);
 		std::cout << "Cube created!" << std::endl;
 	}
 	else if (primType == CIRCLE)
 	{
 		obj = new Circle(name);
-		this->object_list.push_back(obj);
 		std::cout << "Circle created!" << std::endl;
 	}
 	else if (primType == PLANE)
 	{
-		obj = new Plane(name, texture, NULL);
-		this->object_list.push_back(obj);
+		obj = new Plane(name, texture);
 		std::cout << "Plane created!" << std::endl;
 	}
 
+	this->object_list.push_back(obj);
 	obj->canUpdate = canUpdate;
 
 	return obj;

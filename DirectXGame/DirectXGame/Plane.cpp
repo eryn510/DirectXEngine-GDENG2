@@ -3,8 +3,9 @@
 #include "VertexBuffer.h"
 #include "InputSystem.h"
 #include "ShaderLibrary.h"
+#include "PhysicsSystem.h"
 
-Plane::Plane(std::string name, Texture* texture, Mesh* mesh) : Cube(name, texture, mesh)
+Plane::Plane(std::string name, Texture* texture) : AGameObject(name)
 {
 	ShaderNames shaderNames;
 	void* shader_byte_codes = NULL;
@@ -60,8 +61,16 @@ Plane::Plane(std::string name, Texture* texture, Mesh* mesh) : Cube(name, textur
 	cc.m_time = 0;
 	this->m_cb = m_system->createConstantBuffer(&cc, sizeof(constant));
 
-	this->setScale(8.0f, 0.1f, 8.0f);
+	this->setPosition(0.0f, -5.0f, 0.0f);
+	this->setScale(100.0f, 1.0f, 100.0f);
 	this->setRotation(0.0f, 0.0f, 0.0f);
+	this->updateLocalMatrix();
+	this->attachComponent(new PhysicsComponent("PhysicsComponent", this));
+
+	PhysicsComponent* component = (PhysicsComponent*)this->findComponentOfType(AComponent::ComponentType::Physics, "PhysicsComponent");
+	component->getRigidBody()->setType(BodyType::KINEMATIC);
+
+	std::cout << this->getComponentsOfTypeRecursive(AComponent::ComponentType::Physics).size() << std::endl;
 }
 
 Plane::~Plane()
@@ -69,6 +78,11 @@ Plane::~Plane()
 	delete this->m_cb;
 	delete this->m_ib;
 	delete this->m_vb;
+}
+
+void Plane::awake()
+{
+
 }
 
 void Plane::update(float deltaTime)
@@ -104,45 +118,15 @@ void Plane::draw(int width, int height)
 	DeviceContext* deviceContext = m_system->getImmediateDeviceContext();
 
 	constant cc = {};
+	cc.m_world.setIdentity();
 
-	Matrix4x4 allMatrix;
-	allMatrix.setIdentity();
-
-	Matrix4x4 translationMatrix;
-	translationMatrix.setIdentity();
-	translationMatrix.setTranslation(this->getLocalPosition());
-
-	Matrix4x4 scaleMatrix;
-	scaleMatrix.setIdentity();
-	scaleMatrix.setScale(this->getLocalScale());
-
-
-	Vector3D rotation = this->getLocalRotation();
-	Matrix4x4 zMatrix;
-	zMatrix.setIdentity();
-	zMatrix.setQuaternionRotation(rotation.m_z, 0, 0, 1);
-
-	Matrix4x4 xMatrix;
-	xMatrix.setIdentity();
-	xMatrix.setQuaternionRotation(rotation.m_x, 1, 0, 0);
-
-	Matrix4x4 yMatrix;
-	yMatrix.setIdentity();
-	yMatrix.setQuaternionRotation(rotation.m_y, 0, 1, 0);
-
-
-	allMatrix *= scaleMatrix;
-
-	Matrix4x4 rotMatrix;
-	rotMatrix.setIdentity();
-	rotMatrix *= zMatrix;
-	rotMatrix *= yMatrix;
-	rotMatrix *= xMatrix;
-	allMatrix *= rotMatrix;
-
-
-	allMatrix *= translationMatrix;
-	cc.m_world = allMatrix;
+	if (this->overrideMatrix) {
+		cc.m_world = this->localMatrix;
+	}
+	else {
+		this->updateLocalMatrix();
+		cc.m_world = this->localMatrix;
+	}
 
 	Matrix4x4 cameraMatrix = CameraManager::getInstance()->getCameraViewMatrix();
 	cc.m_view = cameraMatrix;
@@ -166,5 +150,5 @@ void Plane::draw(int width, int height)
 
 void Plane::setAnimSpeed(float multiplier)
 {
-	Cube::setAnimSpeed(multiplier);
+	
 }

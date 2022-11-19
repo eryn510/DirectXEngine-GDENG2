@@ -5,22 +5,17 @@
 #include "Matrix4x4.h"
 #include "InputSystem.h"
 #include "Texture.h"
+#include "AComponent.h"
 
 class AGameObject
 {
 public:
-	AGameObject(std::string name)
-	{
-		this->name = name;
-		this->localRotation = Vector3D::zeros();
-		this->localPosition = Vector3D::zeros();
-		this->localScale = Vector3D::ones();
-	}
+	typedef std::string String;
+	typedef std::vector<AComponent*> ComponentList;
 
-	~AGameObject()
-	{
-		
-	}
+	AGameObject(std::string name);
+
+	~AGameObject();
 
 public:
 	virtual void update(float deltaTime) = 0;
@@ -28,57 +23,40 @@ public:
 	virtual void setAnimSpeed(float deltaTime) = 0;
 	bool canUpdate = false;
 
-	void setTexture(Texture* texture)
-	{
-		this->texture = texture;
-	};
-	void setMesh(Mesh* mesh)
-	{
-		this->mesh = mesh;
-	};
-	void setPosition(float x, float y, float z)
-	{
-		this->localPosition = Vector3D(x, y, z);
-	};
-	void setPosition(Vector3D pos)
-	{
-		this->localPosition = pos;
-	};
-	Vector3D getLocalPosition()
-	{
-		return this->localPosition;
-	};
+	void setTexture(Texture* texture);
+	void setMesh(Mesh* mesh);
 
-	void setScale(float x, float y, float z)
-	{
-		this->localScale = Vector3D(x, y, z);
-	};
-	void setScale(Vector3D scale)
-	{
-		this->localScale = scale;
-	};
-	Vector3D getLocalScale()
-	{
-		return this->localScale;
-	};
+	//POSITION
+	void setPosition(float x, float y, float z);
+	void setPosition(Vector3D pos);
+	Vector3D getLocalPosition();
 
-	void setRotation(float x, float y, float z)
-	{
-		this->localRotation = Vector3D(x, y, z);
-	};
-	void setRotation(Vector3D rotate)
-	{
-		this->localRotation = rotate;
-	};
-	Vector3D getLocalRotation()
-	{
-		return this->localRotation;
-	};
+	//SCALE
+	void setScale(float x, float y, float z);
+	void setScale(Vector3D scale);
+	Vector3D getLocalScale();
 
-	std::string getName()
-	{
-		return this->name;
-	};
+	//ROTATION
+	void setRotation(float x, float y, float z);
+	void setRotation(Vector3D rotate);
+	Vector3D getLocalRotation();
+
+	std::string getName();
+
+	//COMPONENT
+	void attachComponent(AComponent* component);
+	void detachComponent(AComponent* component);
+
+	AComponent* findComponentByName(String name);
+	AComponent* findComponentOfType(AComponent::ComponentType type, String name);
+	ComponentList getComponentsOfType(AComponent::ComponentType type);
+	ComponentList getComponentsOfTypeRecursive(AComponent::ComponentType type);
+
+
+	void updateLocalMatrix(); //updates local matrix based from latest position, rotation, and scale.
+	void recomputeMatrix(float matrix[16]);
+	float* getRawMatrix();
+	float* getPhysicsLocalMatrix();
 
 	struct vertex
 	{
@@ -102,6 +80,12 @@ protected:
 	Vector3D localScale;
 	Vector3D localRotation;
 	Matrix4x4 localMatrix;
+
+	ComponentList componentList;
+
+	bool overrideMatrix = false;
+
+	virtual void awake() = 0;
 
 	Texture* texture = NULL;
 	Mesh* mesh = NULL;

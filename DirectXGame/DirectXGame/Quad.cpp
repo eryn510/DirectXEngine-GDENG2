@@ -46,6 +46,11 @@ Quad::~Quad()
 	delete this->m_vb;
 }
 
+void Quad::awake()
+{
+
+}
+
 void Quad::update(float delta)
 {
 	if(this->canUpdate)

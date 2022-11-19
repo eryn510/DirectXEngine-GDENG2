@@ -14,6 +14,11 @@ Camera::~Camera()
 	InputSystem::get()->removeListener(this);
 }
 
+void Camera::awake()
+{
+
+}
+
 void Camera::update(float deltaTime)
 {
 	

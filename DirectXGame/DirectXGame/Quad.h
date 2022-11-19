@@ -17,6 +17,9 @@ public:
 	virtual void draw(int width, int height) override;
 	virtual void setAnimSpeed(float multiplier) override;
 
+protected:
+	virtual void awake() override;
+
 public:
 	RenderSystem* m_system = GraphicsEngine::getInstance()->getRenderSystem();
 

@@ -5,6 +5,7 @@
 #include "CameraManager.h"
 #include "ShaderLibrary.h"
 #include "Mesh.h"
+#include "PhysicsSystem.h"
 #include <cmath>
 
 Cube::Cube(std::string name, Texture* texture, Mesh* mesh) : AGameObject(name)
@@ -76,8 +77,11 @@ Cube::Cube(std::string name, Texture* texture, Mesh* mesh) : AGameObject(name)
 	cc.m_time = 0;
 	this->m_cb = m_system->createConstantBuffer(&cc, sizeof(constant));
 
+	this->setPosition(0, 5, 0);
 	this->setTexture(texture);
 	this->setMesh(mesh);
+	this->updateLocalMatrix();
+	this->attachComponent(new PhysicsComponent("PhysicsComponent", this));
 } 
 
 Cube::~Cube()
@@ -85,6 +89,11 @@ Cube::~Cube()
 	delete this->m_cb;
 	delete this->m_ib;
 	delete this->m_vb;
+}
+
+void Cube::awake() 
+{
+
 }
 
 void Cube::update(float deltaTime)
@@ -131,43 +140,13 @@ void Cube::draw(int width, int height)
 
 	constant cc = {};
 
-	Matrix4x4 allMatrix;
-	allMatrix.setIdentity();
-
-	Matrix4x4 translationMatrix;
-	translationMatrix.setIdentity();
-	translationMatrix.setTranslation(this->getLocalPosition());
-
-	Matrix4x4 scaleMatrix;
-	scaleMatrix.setIdentity();
-	scaleMatrix.setScale(this->getLocalScale());
-
-
-	Vector3D rotation = this->getLocalRotation();
-	Matrix4x4 zMatrix;
-	zMatrix.setIdentity();
-	zMatrix.setQuaternionRotation(rotation.m_z, 0, 0, 1);
-
-	Matrix4x4 xMatrix;
-	xMatrix.setIdentity();
-	xMatrix.setQuaternionRotation(rotation.m_x, 1, 0, 0);
-
-	Matrix4x4 yMatrix;
-	yMatrix.setIdentity();
-	yMatrix.setQuaternionRotation(rotation.m_y, 0, 1, 0);
-
-	allMatrix *= scaleMatrix;
-
-	Matrix4x4 rotMatrix;
-	rotMatrix.setIdentity();
-	rotMatrix *= zMatrix;
-	rotMatrix *= yMatrix;
-	rotMatrix *= xMatrix;
-	allMatrix *= rotMatrix;
-
-
-	allMatrix *= translationMatrix;
-	cc.m_world = allMatrix;
+	if (this->overrideMatrix) {
+		cc.m_world = this->localMatrix;
+	}
+	else {
+		this->updateLocalMatrix();
+		cc.m_world = this->localMatrix;
+	}
 
 	Matrix4x4 cameraMatrix = CameraManager::getInstance()->getCameraViewMatrix();
 	cc.m_view = cameraMatrix;
@@ -197,7 +176,6 @@ void Cube::draw(int width, int height)
 		deviceContext->setIndexBuffer(this->mesh->getIndexBuffer());
 		deviceContext->drawIndexedTriangleList(this->mesh->getIndexBuffer()->getSizeIndexList(), 0, 0);
 	}
-
 }
 
 void Cube::setAnimSpeed(float multiplier)

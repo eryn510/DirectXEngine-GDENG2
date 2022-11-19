@@ -24,6 +24,9 @@ public:
 	virtual void onRightMouseDown(const Point& delta_mouse_pos) override;
 	virtual void onRightMouseUp(const Point& delta_mouse_pos) override;
 
+protected:
+	virtual void awake();
+
 private:
 	void updateViewMatrix();
 	

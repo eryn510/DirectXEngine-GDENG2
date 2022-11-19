@@ -9,6 +9,7 @@
 #include "InputListener.h"
 #include "GameObjectManager.h"
 #include "CameraManager.h"
+#include "BaseComponentSystem.h"
 #include "UIManager.h"
 
 #include "Vector3D.h"
@@ -31,7 +32,8 @@ private:
 	static AppWindow* sharedInstance;
 
 public:
-	void createGraphicsWindow();
+	void initializeEngine();
+	void Start();
 
 public:
 	virtual void onCreate() override;
@@ -63,6 +65,7 @@ private:
 	UIManager* m_ui_manager;
 	TextureManager* m_tex_manager;
 	MeshManager* m_mesh_manager;
+	BaseComponentSystem* m_component_system;
 
 
 private:
