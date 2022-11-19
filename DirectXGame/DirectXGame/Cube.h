@@ -5,7 +5,7 @@
 #include "Prerequisites.h"
 
 class AppWindow;
-class PrimitiveManager;
+class GameObjectManager;
 
 class Cube : public AGameObject
 {
@@ -16,7 +16,7 @@ public:
 public:
 	virtual void update(float deltaTime) override;
 	virtual void draw(int width, int height) override;
-	void setAnimSpeed(float deltaTime);
+	virtual void setAnimSpeed(float deltaTime) override;
 
 public:
 	RenderSystem* m_system = GraphicsEngine::getInstance()->getRenderSystem();
@@ -57,7 +57,7 @@ private:
 
 private:
 	friend class AppWindow;
-	friend class PrimitiveManager;
+	friend class GameObjectManager;
 };
 
 

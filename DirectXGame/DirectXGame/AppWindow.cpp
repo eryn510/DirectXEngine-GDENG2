@@ -43,14 +43,14 @@ void AppWindow::createGraphicsWindow()
 
 	//initialization
 	GraphicsEngine::initialize();
-	PrimitiveManager::initialize();
+	GameObjectManager::initialize();
 	CameraManager::initialize();
 	ShaderLibrary::initialize();
 	UIManager::initialize(this->m_hwnd);
 
 	//pointer assignment
 	graphEngine = GraphicsEngine::getInstance();
-	primMngr = PrimitiveManager:: getInstance();
+	objMngr = GameObjectManager:: getInstance();
 	m_render_system = graphEngine->getRenderSystem();
 	m_camera_manager = CameraManager::getInstance();
 	m_ui_manager = UIManager::getInstance();
@@ -68,11 +68,11 @@ void AppWindow::createGraphicsWindow()
 
 	AGameObject* gameObject;
 	//primMngr->create("Cube", CUBE, false, m_text);
-	gameObject = primMngr->createMeshObject("Teapot", false, m_text, m_mesh[0]);
+	gameObject = objMngr->createMeshObject("Teapot", false, m_text, m_mesh[0]);
 	gameObject->setPosition(-3, 0, 0);
-	gameObject = primMngr->createMeshObject("Bunny", false, m_text, m_mesh[1]);
+	gameObject = objMngr->createMeshObject("Bunny", false, m_text, m_mesh[1]);
 	gameObject->setScale(10, 10, 10);
-	gameObject = primMngr->createMeshObject("Armadillo", false, m_text, m_mesh[2]);
+	gameObject = objMngr->createMeshObject("Armadillo", false, m_text, m_mesh[2]);
 	gameObject->setPosition(3, 0, 0);
 
 }
@@ -100,7 +100,7 @@ void AppWindow::onUpdate()
 
 	m_camera_manager->update();
 
-	primMngr->update(width, height);
+	objMngr->update(width, height);
 
 	m_ui_manager->drawAllUI();
 
@@ -112,7 +112,7 @@ void AppWindow::onDestroy()
 {
 	Window::onDestroy();
 	graphEngine->release();
-	primMngr->release();
+	objMngr->release();
 }
 
 void AppWindow::onFocus()

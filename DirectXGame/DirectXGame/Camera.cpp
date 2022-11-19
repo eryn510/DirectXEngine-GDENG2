@@ -23,6 +23,10 @@ void Camera::draw(int width, int height)
 {
 }
 
+void Camera::setAnimSpeed(float deltaTime)
+{
+}
+
 Matrix4x4 Camera::getViewMatrix()
 {
 	return this->viewCamera;

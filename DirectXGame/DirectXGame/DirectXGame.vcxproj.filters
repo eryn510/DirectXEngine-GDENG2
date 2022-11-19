@@ -183,7 +183,7 @@
     <ClCompile Include="CameraManager.cpp">
       <Filter>GameEngine\Managers\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="PrimitiveManager.cpp">
+    <ClCompile Include="GameObjectManager.cpp">
       <Filter>GameEngine\Managers\Primitives</Filter>
     </ClCompile>
     <ClCompile Include="UIManager.cpp">
@@ -332,7 +332,7 @@
     <ClInclude Include="CameraManager.h">
       <Filter>GameEngine\Managers\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="PrimitiveManager.h">
+    <ClInclude Include="GameObjectManager.h">
       <Filter>GameEngine\Managers\Primitives</Filter>
     </ClInclude>
     <ClInclude Include="UIManager.h">

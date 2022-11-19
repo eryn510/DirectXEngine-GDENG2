@@ -7,7 +7,7 @@
 #include "VertexShader.h"
 #include "PixelShader.h"
 #include "InputListener.h"
-#include "PrimitiveManager.h"
+#include "GameObjectManager.h"
 #include "CameraManager.h"
 #include "UIManager.h"
 
@@ -57,7 +57,7 @@ private:
 //SINGLETONS
 private:
 	GraphicsEngine* graphEngine;
-	PrimitiveManager* primMngr;
+	GameObjectManager* objMngr;
 	RenderSystem* m_render_system;
 	CameraManager* m_camera_manager;
 	UIManager* m_ui_manager;

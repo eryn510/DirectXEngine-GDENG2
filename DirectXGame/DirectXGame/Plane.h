@@ -3,7 +3,7 @@
 #include "Prerequisites.h"
 
 class AppWindow;
-class PrimitiveManager;
+class GameObjectManager;
 
 class Plane : public Cube
 {
@@ -14,7 +14,7 @@ public:
 public:
 	virtual void update(float deltaTime) override;
 	virtual void draw(int width, int height) override;
-	void setAnimSpeed(float multiplier);
+	virtual void setAnimSpeed(float multiplier) override;
 
 public:
 	RenderSystem* m_system = GraphicsEngine::getInstance()->getRenderSystem();
@@ -41,6 +41,6 @@ private:
 
 private:
 	friend class AppWindow;
-	friend class PrimitiveManager;
+	friend class GameObjectManager;
 };
 

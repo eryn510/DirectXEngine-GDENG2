@@ -11,6 +11,7 @@ public:
 	// Inherited via AGameObject
 	virtual void update(float deltaTime) override;
 	virtual void draw(int width, int height) override;
+	virtual void setAnimSpeed(float deltaTime) override;
 	Matrix4x4 getViewMatrix();
 
 

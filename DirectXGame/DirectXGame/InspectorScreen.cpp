@@ -2,7 +2,7 @@
 #include <limits>
 #include "InspectorScreen.h"
 
-#include "PrimitiveManager.h"
+#include "GameObjectManager.h"
 #include "EngineTime.h"
 
 InspectorScreen::InspectorScreen(std::string name) : AUIScreen(name)
@@ -19,7 +19,7 @@ void InspectorScreen::drawUI()
 {
 	//DRAW HERE
 	ImGui::Begin("Inspector");
-	AGameObject* gameObject = PrimitiveManager::getInstance()->cube_list.front();
+	AGameObject* gameObject = GameObjectManager::getInstance()->object_list.front();
 
 	if (ImGui::CollapsingHeader("Transform"))
 	{

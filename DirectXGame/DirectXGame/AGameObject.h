@@ -24,7 +24,8 @@ public:
 
 public:
 	virtual void update(float deltaTime) = 0;
-	virtual void draw(int width, int height) = 0;
+	virtual void draw(int width, int height) = 0; 
+	virtual void setAnimSpeed(float deltaTime) = 0;
 	bool canUpdate = false;
 
 	void setTexture(Texture* texture)

@@ -175,7 +175,7 @@
     <ClCompile Include="MeshManager.cpp" />
     <ClCompile Include="PixelShader.cpp" />
     <ClCompile Include="Plane.cpp" />
-    <ClCompile Include="PrimitiveManager.cpp" />
+    <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="Quad.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="Resource.cpp" />
@@ -224,7 +224,7 @@
     <ClInclude Include="Plane.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Prerequisites.h" />
-    <ClInclude Include="PrimitiveManager.h" />
+    <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="Quad.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Resource.h" />
